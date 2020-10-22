@@ -17,7 +17,7 @@ Your agile team is to write an application that stores the given National Footba
 
 ### Clone
 
-- Clone this repo to your local machine using `https://github.com/kboniadi/European-Vacation-App.git`
+- Clone this repo to your local machine using `https://github.com/kboniadi/Lets_Play_Football`
 
 ### Setup
 
