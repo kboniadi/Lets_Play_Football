@@ -1,0 +1,9 @@
+San Diego Sailors,Qualcomm Stadium,71500,"San Diego, California",American Football Conference,AFC West,Bermuda Grass,Open,2022
+//distances
+Beginning Stadium,Ending Stadium,Distance
+Qualcomm Stadium,State Farm Stadium,300
+Qualcomm Stadium,Sofi Stadium,121
+Qualcomm Stadium,Empower Field at Mile High,830
+State Farm Stadium,Qualcomm Stadium,300
+Sofi Stadium,Qualcomm Stadium,121
+Broncos Stadium at Mile High,Qualcomm Stadium,830
