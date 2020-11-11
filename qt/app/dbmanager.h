@@ -30,7 +30,7 @@ public:
 	 */
 	DBManager& operator=(const DBManager&) = delete;
 private:
-	QSqlDatabase query;
+    QSqlQuery query;
 	/*!
 	 * @brief DBManager (private)
 	 * @param parent; Linked to QWidget class

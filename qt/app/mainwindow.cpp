@@ -155,7 +155,7 @@ void MainWindow::clearButtons() // resets most program states
     // trip planning buttons
     ui->pushButton_plan_sort->setVisible(false);
     ui->gridWidget_plan_custom->setVisible(false);
-    ui->tableWidget_plan_custom->setVisible(false);
+    ui->tableView_plan_custom->setVisible(false);
     ui->pushButton_plan_continue->setDisabled(true);
     ui->pushButton_plan_packers->setDisabled(false);
     ui->pushButton_plan_patriots->setDisabled(false);
@@ -215,7 +215,7 @@ void MainWindow::on_pushButton_plan_packers_clicked()
     clearButtons();
     ui->pushButton_plan_packers->setDisabled(true);
     ui->gridWidget_plan_custom->setVisible(true);
-    ui->tableWidget_plan_custom->setVisible(true);
+    ui->tableView_plan_custom->setVisible(true);
     // planning logic
 
     ui->pushButton_plan_continue->setDisabled(false);
@@ -256,7 +256,7 @@ void MainWindow::on_pushButton_plan_custom_clicked()
     clearButtons();
     ui->pushButton_plan_sort->setVisible(true);
     ui->gridWidget_plan_custom->setVisible(true);
-    ui->tableWidget_plan_custom->setVisible(true);
+    ui->tableView_plan_custom->setVisible(true);
     ui->pushButton_plan_custom->setDisabled(true);
 
     // planning logic
