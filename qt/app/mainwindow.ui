@@ -153,7 +153,7 @@
     <item row="1" column="0">
      <widget class="QStackedWidget" name="stackedWidget_pages">
       <property name="currentIndex">
-       <number>2</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="page_HOME">
        <layout class="QGridLayout" name="gridLayout_home">
@@ -256,7 +256,7 @@
         <item row="1" column="0">
          <widget class="QStackedWidget" name="stackedWidget_view_pages">
           <property name="currentIndex">
-           <number>0</number>
+           <number>1</number>
           </property>
           <widget class="QWidget" name="page_SEARCH">
            <layout class="QGridLayout" name="gridLayout_search">
@@ -327,10 +327,22 @@
            <layout class="QGridLayout" name="gridLayout_list_2">
             <item row="0" column="0">
              <layout class="QGridLayout" name="gridLayout_list">
+              <item row="2" column="0" colspan="5">
+               <widget class="QLabel" name="label_list_total">
+                <property name="font">
+                 <font>
+                  <pointsize>12</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>Total &quot;______&quot;: </string>
+                </property>
+               </widget>
+              </item>
               <item row="0" column="3">
                <widget class="QComboBox" name="comboBox_list_sort">
                 <property name="sizePolicy">
-                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                   <horstretch>0</horstretch>
                   <verstretch>0</verstretch>
                  </sizepolicy>
@@ -350,7 +362,7 @@
               <item row="0" column="4">
                <widget class="QComboBox" name="comboBox_list_filter">
                 <property name="sizePolicy">
-                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                   <horstretch>0</horstretch>
                   <verstretch>0</verstretch>
                  </sizepolicy>
@@ -373,7 +385,7 @@
               <item row="0" column="2">
                <widget class="QComboBox" name="comboBox_list_type">
                 <property name="sizePolicy">
-                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                   <horstretch>0</horstretch>
                   <verstretch>0</verstretch>
                  </sizepolicy>
@@ -393,18 +405,6 @@
                   <string>Stadiums</string>
                  </property>
                 </item>
-               </widget>
-              </item>
-              <item row="2" column="0" colspan="5">
-               <widget class="QLabel" name="label_list_total">
-                <property name="font">
-                 <font>
-                  <pointsize>12</pointsize>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>Total &quot;______&quot;: </string>
-                </property>
                </widget>
               </item>
              </layout>
@@ -589,20 +589,10 @@
           <item row="0" column="1">
            <widget class="QWidget" name="gridWidget_plan_custom" native="true">
             <layout class="QGridLayout" name="gridLayout_plan_custom">
-             <item row="0" column="0">
-              <widget class="QTableWidget" name="tableWidget_plan_custom">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-              </widget>
-             </item>
              <item row="0" column="1">
               <layout class="QGridLayout" name="gridLayout_plan_custom_buttons">
-               <item row="0" column="0">
-                <widget class="QPushButton" name="pushButton_plan_add">
+               <item row="2" column="0">
+                <widget class="QPushButton" name="pushButton_plan_sort">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                    <horstretch>0</horstretch>
@@ -615,7 +605,7 @@
                   </font>
                  </property>
                  <property name="text">
-                  <string>Add Team</string>
+                  <string>Sort</string>
                  </property>
                 </widget>
                </item>
@@ -637,8 +627,8 @@
                  </property>
                 </widget>
                </item>
-               <item row="2" column="0">
-                <widget class="QPushButton" name="pushButton_plan_sort">
+               <item row="0" column="0">
+                <widget class="QPushButton" name="pushButton_plan_add">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                    <horstretch>0</horstretch>
@@ -651,11 +641,21 @@
                   </font>
                  </property>
                  <property name="text">
-                  <string>Sort</string>
+                  <string>Add Team</string>
                  </property>
                 </widget>
                </item>
               </layout>
+             </item>
+             <item row="0" column="0">
+              <widget class="QTableWidget" name="tableWidget_plan_custom">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+              </widget>
              </item>
             </layout>
            </widget>
@@ -1017,7 +1017,7 @@
              </sizepolicy>
             </property>
             <property name="currentIndex">
-             <number>0</number>
+             <number>1</number>
             </property>
             <widget class="QWidget" name="page_IMPORT">
              <layout class="QGridLayout" name="gridLayout_import_2">

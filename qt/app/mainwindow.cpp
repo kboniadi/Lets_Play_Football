@@ -44,6 +44,23 @@ void MainWindow::on_pushButton_pages_view_clicked()
         ui->stackedWidget_view_pages->setCurrentIndex(LIST);
         ui->pushButton_view_search->setDisabled(false);
         ui->pushButton_view_list->setDisabled(true);
+        on_comboBox_list_type_activated(0);
+    }
+
+    void MainWindow::on_comboBox_list_type_activated(int index)
+    {
+        clearButtons();
+        if (index == 0)
+        {
+            ui->comboBox_list_sort->addItems(sortTeams);
+            ui->comboBox_list_filter->addItems(filterTeams);
+        }
+        else
+        {
+            ui->comboBox_list_sort->addItems(sortStadiums);
+            ui->comboBox_list_filter->addItems(filterStadiums);
+        }
+
     }
 
 void MainWindow::on_pushButton_pages_plan_clicked()
@@ -130,6 +147,10 @@ void MainWindow::clearButtons() // resets most program states
     ui->pushButton_pages_view->setDisabled(false);
     ui->pushButton_pages_plan->setDisabled(false);
     ui->pushButton_pages_admin->setDisabled(false);
+
+    // view combo boxes
+    ui->comboBox_list_sort->clear();
+    ui->comboBox_list_filter->clear();
 
     // trip planning buttons
     ui->pushButton_plan_sort->setVisible(false);
@@ -250,3 +271,4 @@ void MainWindow::on_pushButton_plan_MST_clicked()
 }
 
 /*----END HELPER FUNCTIONS----*/
+
