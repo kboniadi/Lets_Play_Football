@@ -8,6 +8,9 @@ MainWindow::MainWindow(QWidget *parent)
 {
 	ui->setupUi(this);
 	DBManager::instance();
+
+    ui->pushButton_pages_home->setDisabled(true);
+
 }
 
 MainWindow::~MainWindow()
