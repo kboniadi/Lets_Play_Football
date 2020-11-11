@@ -44,8 +44,32 @@ private slots:
         void on_pushButton_admin_import_clicked();
 
         void on_pushButton_admin_edit_clicked();
+
+        void on_comboBox_edit_activated(int index);
     /*----END NAVIGATION----*/
 
+    /*----HELPER FUNCTIONS----*/
+    void initializeLayout();
+
+    void clearButtons();
+
+    void on_pushButton_edit_add_clicked();
+
+    void on_pushButton_edit_confirm_clicked();
+
+    void on_pushButton_edit_cancel_clicked();
+
+    void on_pushButton_plan_packers_clicked();
+
+    void on_pushButton_plan_patriots_clicked();
+
+    void on_pushButton_plan_rams_clicked();
+
+    void on_pushButton_plan_vikings_clicked();
+
+    void on_pushButton_plan_custom_clicked();
+
+    void on_pushButton_plan_MST_clicked();
 
 private:
     /*----NAVIGATION ENUMS----*/
