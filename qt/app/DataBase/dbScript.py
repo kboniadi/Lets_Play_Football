@@ -107,7 +107,7 @@ if __name__ == "__main__":
     ImportFile('nfl_information.csv', 'information', stadiumName = 'TEXT',
     seatCap = 'TEXT', location = 'TEXT', conference = 'TEXT', division = 'TEXT',
     surfaceType = 'TEXT', roofType = 'TEXT', dateOpen = 'TEXT')
-    ImportFile('nfl_team_souvenir.csv', 'souvenir', signedHelmet = 'TEXT', price = 'TEXT')
+    ImportFile('nfl_team_souvenir.csv', 'souvenir', items = 'TEXT', price = 'TEXT')
     ImportAccounts('admin', 'password', 'ADMIN');
     
     # getData()
