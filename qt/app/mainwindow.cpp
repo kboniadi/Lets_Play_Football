@@ -1,20 +1,58 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "dbmanager.h"
+#include <QSqlQueryModel>
+#include <QStringListModel>
 
 MainWindow::MainWindow(QWidget *parent)
-	: QMainWindow(parent)
-	, ui(new Ui::MainWindow)
+    : QMainWindow(parent)
+    , ui(new Ui::MainWindow)
 {
-	ui->setupUi(this);
-	DBManager::instance();
+    ui->setupUi(this);
+    DBManager::instance();
 
     initializeLayout();
 }
 
 MainWindow::~MainWindow()
 {
-	delete ui;
+    delete ui;
+}
+
+void MainWindow::populateStadiumInfo(int sortIndex, int filterIndex)
+{
+
+    QSqlQuery query;
+    QString queryString = "SELECT stadiumName,seatCap,conference,division,surfaceType,roofType,dateOpen FROM information";
+    if (filterIndex == OpenRoof)
+        queryString += " WHERE roofType = 'Open'";
+
+    switch(sortIndex)
+    {
+    case StadiumName: queryString += " ORDER BY stadiumName ASC";
+                      break;
+    case Capacity: queryString += " ORDER BY seatCap ASC";
+                   break;
+    case DateOpened: queryString += " ORDER BY dateOpen ASC";
+                    break;
+    }
+
+    query.exec(queryString);
+    QSqlQueryModel* model = new QSqlQueryModel;
+    model->setQuery(query);
+    model->setHeaderData(0, Qt::Horizontal, QObject::tr("Stadium Name"));
+    model->setHeaderData(1, Qt::Horizontal, QObject::tr("Seat Cap"));
+    model->setHeaderData(2, Qt::Horizontal, QObject::tr("Conference"));
+    model->setHeaderData(3, Qt::Horizontal, QObject::tr("Division"));
+    model->setHeaderData(4, Qt::Horizontal, QObject::tr("Surface Type"));
+    model->setHeaderData(5, Qt::Horizontal, QObject::tr("Roof Type"));
+    model->setHeaderData(6, Qt::Horizontal, QObject::tr("Date Open"));
+
+    ui->tableView_list->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    ui->tableView_list->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+
+    ui->tableView_list->setModel(model);
+
 }
 
 /*----NAVIGATION----*/
@@ -37,6 +75,7 @@ void MainWindow::on_pushButton_pages_view_clicked()
         ui->stackedWidget_view_pages->setCurrentIndex(SEARCH);
         ui->pushButton_view_search->setDisabled(true);
         ui->pushButton_view_list->setDisabled(false);
+        populateTeams();
     }
 
     void MainWindow::on_pushButton_view_list_clicked()
@@ -272,3 +311,63 @@ void MainWindow::on_pushButton_plan_MST_clicked()
 
 /*----END HELPER FUNCTIONS----*/
 
+
+void MainWindow::on_comboBox_list_type_currentIndexChanged(int index)
+{
+    QSqlQueryModel* model = new QSqlQueryModel;
+    ui->tableView_list->setModel(model);
+    if (index == 1) // case stadium view
+        populateStadiumInfo(StadiumName,All);
+    //if (index == 0)
+}
+
+
+void MainWindow::on_comboBox_list_sort_currentIndexChanged(int index)
+{
+    if (ui->comboBox_list_type->currentIndex() == 1)
+        populateStadiumInfo(index, ui->comboBox_list_filter->currentIndex());
+}
+
+
+
+
+void MainWindow::on_comboBox_list_filter_currentIndexChanged(int index)
+{
+    if (ui->comboBox_list_type->currentIndex() == 1)
+        populateStadiumInfo(ui->comboBox_list_sort->currentIndex(), index);
+}
+
+void MainWindow::populateTeams()
+{
+    QStringList teamList;
+    DBManager::instance()->getTeams(teamList);
+
+    QStringListModel* model = new QStringListModel;
+    model->setStringList(teamList);
+    model->setHeaderData(0, Qt::Horizontal, QObject::tr("Teams"));
+
+    ui->tableView_search_teams->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    ui->tableView_search_teams->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+
+    ui->tableView_search_teams->setModel(model);
+    ui->tableView_search_teams->setEditTriggers(QAbstractItemView::NoEditTriggers);
+}
+
+
+void MainWindow::on_tableView_search_teams_doubleClicked(const QModelIndex &index)
+{
+    populateSouvenirs(index.data().toString());
+}
+
+void MainWindow::populateSouvenirs(QString team)
+{
+    QSqlQueryModel *model = new QSqlQueryModel;
+    model->setQuery("SELECT items, price FROM souvenir WHERE id = (SELECT teams.id FROM teams WHERE teams.teamNames = '" + team + "')");
+
+    model->setHeaderData(0, Qt::Horizontal, QObject::tr("Souvenir"));
+    model->setHeaderData(1, Qt::Horizontal, QObject::tr("Price"));
+
+    ui->tableView_search_souvenirs->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    ui->tableView_search_souvenirs->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    ui->tableView_search_souvenirs->setModel(model);
+}

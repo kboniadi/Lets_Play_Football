@@ -11,11 +11,11 @@ class DBManager;
 
 class MainWindow : public QMainWindow
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	MainWindow(QWidget *parent = nullptr);
-	~MainWindow();
+    MainWindow(QWidget *parent = nullptr);
+    ~MainWindow();
 
 private slots:
     /*----NAVIGATION----*/
@@ -51,6 +51,8 @@ private slots:
     /*----END NAVIGATION----*/
 
     /*----HELPER FUNCTIONS----*/
+
+
     void initializeLayout();
 
     void clearButtons();
@@ -73,6 +75,27 @@ private slots:
 
     void on_pushButton_plan_MST_clicked();
     /*----END HELPER FUNCTIONS----*/
+
+    //Change between stadium & team view
+    void on_comboBox_list_type_currentIndexChanged(int index);
+
+    //Change sort type
+    void on_comboBox_list_sort_currentIndexChanged(int index);
+
+    //Change filter type
+    void on_comboBox_list_filter_currentIndexChanged(int index);
+
+    //Populate table for stadium view
+    void populateStadiumInfo(int sortIndex, int filterIndex);
+
+    //Populate table for team search view
+    void populateTeams();
+
+    //Handle double click on team search view
+    void on_tableView_search_teams_doubleClicked(const QModelIndex &index);
+
+    //Populate souvenir table for selected team search
+    void populateSouvenirs(QString team);
 
 private:
     /*----NAVIGATION ENUMS----*/
@@ -98,6 +121,20 @@ private:
         IMPORT,
         EDIT
     };
+
+    enum sortStadiums
+    {
+        StadiumName,
+        DateOpened,
+        Capacity
+    };
+
+    enum filterStadiums
+    {
+        All,
+        OpenRoof
+    };
+
     /*----END NAVIGATION ENUMS----*/
 
     /*----DIRECTORY COMBO BOXES----*/
@@ -107,6 +144,9 @@ private:
     QStringList filterStadiums = { "All", "Open Roof" };
     /*----END DIRECTORY COMBO BOXES----*/
 
-	Ui::MainWindow *ui;
+    Ui::MainWindow *ui;
 };
+
+
+
 #endif // MAINWINDOW_H
