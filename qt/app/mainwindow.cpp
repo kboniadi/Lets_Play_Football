@@ -68,6 +68,7 @@ void MainWindow::on_pushButton_pages_plan_clicked()
     ui->stackedWidget_pages->setCurrentIndex(PLAN);
     clearButtons();
     ui->pushButton_pages_plan->setDisabled(true);
+    on_pushButton_plan_MST_clicked();
 }
 
     void MainWindow::on_pushButton_plan_continue_clicked()
@@ -145,6 +146,11 @@ void MainWindow::on_pushButton_pages_admin_clicked()
             ui->formWidget_edit_souvenir->setVisible(false);
             ui->formWidget_edit_stadium->setVisible(true);
         }
+    }
+
+    void MainWindow::on_pushButton_pages_exit_clicked()
+    {
+        QApplication::quit();
     }
 /*----END NAVIGATION----*/
 
