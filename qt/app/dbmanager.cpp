@@ -48,7 +48,7 @@ bool DBManager::checkLogin(const QString &username, const QString &password)
         if(query.next())
         {
             found = true;
-            qDebug() << "Login Successfull";
+            qDebug() << "Login Successful";
         }
     }
     else // If query fails, print failure
