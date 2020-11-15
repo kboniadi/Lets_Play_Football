@@ -29,6 +29,13 @@ public:
 	 * @brief Deleted copy assignment
 	 */
 	DBManager& operator=(const DBManager&) = delete;
+
+    /*!
+     * @brief Compares user login to values in the database
+     * @return bool representing successful login
+     */
+    bool checkLogin(const QString &username, const QString &password);
+
 private:
     QSqlQuery query;
 	/*!

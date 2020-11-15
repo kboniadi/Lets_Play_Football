@@ -28,3 +28,33 @@ DBManager* DBManager::instance()
 	static DBManager instance;
 	return &instance;
 }
+
+bool DBManager::checkLogin(const QString &username, const QString &password)
+{
+    // Prep initial login bool
+    bool found = false;
+
+    // Prep query
+    query.prepare("SELECT * FROM accounts WHERE username = :username AND password = :password AND level = 'ADMIN';");
+
+    // Bind values safely
+    query.bindValue(":username", username);
+    query.bindValue(":password", password);
+
+    // If query executes successfully, check values
+    if(query.exec())
+    {
+        // If values are correct, login
+        if(query.next())
+        {
+            found = true;
+            qDebug() << "Login Successfull";
+        }
+    }
+    else // If query fails, print failure
+    {
+        qDebug() << "Login Query Failed";
+    }
+
+    return found;
+}
