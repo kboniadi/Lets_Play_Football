@@ -5,18 +5,18 @@
 #include <QStringListModel>
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
+	: QMainWindow(parent)
+	, ui(new Ui::MainWindow)
 {
-    ui->setupUi(this);
-    DBManager::instance();
+	ui->setupUi(this);
+	DBManager::instance();
 
     initializeLayout();
 }
 
 MainWindow::~MainWindow()
 {
-    delete ui;
+	delete ui;
 }
 
 void MainWindow::populateStadiumInfo(int sortIndex, int filterIndex)
@@ -38,6 +38,24 @@ void MainWindow::populateStadiumInfo(int sortIndex, int filterIndex)
     }
 
     query.exec(queryString);
+
+    int capacity = 0;
+    int openRoofCount = 0;
+
+    QLocale c(QLocale::C);  // to set the string with "," (ex: 12,500) into int
+    while(query.next())
+    {
+
+        capacity += c.toInt(query.value(1).toString());
+        if (query.value(5).toString() == "Open")
+            openRoofCount++;
+    }
+    ui->label_list_totalroofs->setText("Total Open Roof Stadiums: " + QString::number(openRoofCount));
+    ui->label_list_totalcapacity->setText("Total Capacity: " + QString("%L1").arg(capacity));
+
+    ui->label_list_totalroofs->show();
+    ui->label_list_totalcapacity->show();
+
     QSqlQueryModel* model = new QSqlQueryModel;
     model->setQuery(query);
     model->setHeaderData(0, Qt::Horizontal, QObject::tr("Stadium Name"));
@@ -52,6 +70,8 @@ void MainWindow::populateStadiumInfo(int sortIndex, int filterIndex)
     ui->tableView_list->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
     ui->tableView_list->setModel(model);
+
+
 
 }
 
@@ -80,9 +100,11 @@ void MainWindow::on_pushButton_pages_view_clicked()
 
     void MainWindow::on_pushButton_view_list_clicked()
     {
+        clearButtons();
         ui->stackedWidget_view_pages->setCurrentIndex(LIST);
         ui->pushButton_view_search->setDisabled(false);
         ui->pushButton_view_list->setDisabled(true);
+        ui->comboBox_list_type->setCurrentIndex(0);
         on_comboBox_list_type_activated(0);
     }
 
@@ -224,6 +246,10 @@ void MainWindow::clearButtons() // resets most program states
     ui->LineEdit_edit_stadium_name->clear();
     ui->LineEdit_edit_stadium_roof->clear();
     ui->LineEdit_edit_stadium_surface->clear();
+
+    // labels
+    ui->label_list_totalroofs->clear();
+    ui->label_list_totalcapacity->clear();
 }
 
 void MainWindow::on_pushButton_edit_add_clicked() // admin add button
@@ -314,11 +340,13 @@ void MainWindow::on_pushButton_plan_MST_clicked()
 
 void MainWindow::on_comboBox_list_type_currentIndexChanged(int index)
 {
+    clearButtons();
+
     QSqlQueryModel* model = new QSqlQueryModel;
     ui->tableView_list->setModel(model);
     if (index == 1) // case stadium view
         populateStadiumInfo(StadiumName,All);
-    //if (index == 0)
+    //if (index == 0)   // case team view
 }
 
 
