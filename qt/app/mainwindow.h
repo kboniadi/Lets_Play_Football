@@ -8,6 +8,7 @@ namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
 class DBManager;
+class TableManager;
 
 class MainWindow : public QMainWindow
 {
@@ -76,7 +77,7 @@ private slots:
     void on_pushButton_plan_MST_clicked();
     /*----END HELPER FUNCTIONS----*/
 
-
+	void on_pushButton_import_clicked();
 
 private:
     /*----NAVIGATION ENUMS----*/
@@ -100,9 +101,10 @@ private:
     enum AdminPages
     {
         IMPORT,
-        EDIT
+		EDIT,
     };
 
+<<<<<<< HEAD
     enum SortTeams
     {
         NOTEAMSORT,
@@ -132,6 +134,12 @@ private:
         ALLSTADIUMS,
         OPENROOF
     };
+=======
+	enum AdminEdit {
+		EDITSOUV,
+		EDITSTAD
+	};
+>>>>>>> tables displayed for admin ui
 
     /*----END NAVIGATION ENUMS----*/
 
@@ -143,5 +151,6 @@ private:
     /*----END DIRECTORY COMBO BOXES----*/
 
 	Ui::MainWindow *ui;
+	TableManager *table;
 };
 #endif // MAINWINDOW_H

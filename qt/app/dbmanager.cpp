@@ -90,6 +90,11 @@ void DBManager::ImportTeams()
 	QStringList teams;
 	// opens system file directory in your home path
 	QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"), QDir::currentPath(), filter);
+
+	if (fileName.isEmpty()) {
+		qDebug() << "No file name specified";
+		return;
+	}
 	// needed to iterate through file...similar to fstream
 	QFile file(fileName);
 	// populates cities with all the cities in the DB
@@ -191,7 +196,7 @@ void DBManager::ImportTeams()
 		}
 		query.finish();
 	}
-	qDebug() << "Elapse time: " << timer.elapsed() << " ms";
+	qDebug() << "Elapse time: " << timer.elapsed() << "ms";
 }
 
 void DBManager::GetTeams(QStringList &teams)
@@ -202,6 +207,63 @@ void DBManager::GetTeams(QStringList &teams)
 			teams.push_back(query.value(0).toString());
 		query.finish();
 	} else {
-		qDebug() << "DBManager::GetTeams() : query failed";
+		qDebug() << "DBManager::GetTeams(QStringList &teams) : query failed";
 	}
+}
+
+void DBManager::GetSouvenirs(QString teamName, QStringList &list)
+{
+	query.prepare("SELECT items FROM souvenir, teams WHERE teamNames = :teamName AND teams.id = souvenir.id");
+	query.bindValue(":teamName", teamName);
+
+	if (query.exec()) {
+		while (query.next())
+			list.push_back(query.value(0).toString());
+		query.finish();
+	} else {
+		qDebug() << "DBManager::GetSouvenirs(QString teamName, QStringList &list) : query failed";
+	}
+}
+
+int DBManager::GetNumSouvenir(QString teamName)
+{
+
+	query.prepare("SELECT COUNT(*) FROM souvenir, teams WHERE teamNames = "
+				  ":teamName AND teams.id = souvenir.id");
+	query.bindValue(":teamName", teamName);
+
+	if (query.exec()) {
+		query.first();
+		return query.value(0).toInt();
+	}
+	qDebug() << "DBManager::GetNumSouvenir(QString teamName) : query failed";
+	return -1;
+}
+
+int DBManager::GetNumTeams()
+{
+	query.prepare("SELECT COUNT(*) teams");
+	if (query.exec()) {
+		query.first();
+		return query.value(0).toInt();
+	}
+	qDebug() << "DBManager::GetNumTeams() : query failed";
+	return -1;
+}
+
+QString DBManager::SouvenirNameToPrice(QString team, QString souvenir)
+{
+	query.prepare("SELECT price FROM souvenir, teams WHERE teamNames = :team "
+				  "AND teams.id = souvenir.id AND souvenir.items = :souvenir");
+
+	query.bindValue(":team", team);
+	query.bindValue(":souvenir", souvenir);
+
+	if (query.exec()) {
+		query.first();
+		return query.value(0).toString();
+	} else { // If query does not execute, print error
+		qDebug() << "DBManager::SouvenirNameToPrice(QString team, QString souvenir) : query failed";
+	}
+	return QString("Error");
 }

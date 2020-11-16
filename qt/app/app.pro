@@ -12,11 +12,13 @@ CONFIG += c++11
 SOURCES += \
     dbmanager.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    tablemanager.cpp
 
 HEADERS += \
     dbmanager.h \
-    mainwindow.h
+    mainwindow.h \
+    tablemanager.h
 
 FORMS += \
     mainwindow.ui

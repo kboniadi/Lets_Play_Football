@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "dbmanager.h"
+#include "tablemanager.h"
 
 MainWindow::MainWindow(QWidget *parent)
 	: QMainWindow(parent)
@@ -8,6 +9,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
 	ui->setupUi(this);
 	DBManager::instance();
+	table = new TableManager;
 
     initializeLayout();
 }
@@ -78,7 +80,7 @@ void MainWindow::on_pushButton_pages_admin_clicked()
 {
     ui->stackedWidget_pages->setCurrentIndex(LOGIN);
     clearButtons();
-    on_pushButton_admin_import_clicked();
+	on_pushButton_admin_import_clicked();
     ui->pushButton_pages_admin->setDisabled(true);
 }
 
@@ -109,25 +111,42 @@ void MainWindow::on_pushButton_pages_admin_clicked()
         ui->pushButton_admin_edit->setDisabled(false);
     }
 
+		void MainWindow::on_pushButton_import_clicked()
+		{
+			DBManager::instance()->ImportTeams();
+			table->AdminInfoTable(ui->tableView_import);
+			table->AdminDistTable(ui->tableView_import_2);
+			table->AdminSouvTable(ui->tableView_import_3);
+		}
+
     void MainWindow::on_pushButton_admin_edit_clicked()
     {
         ui->stackedWidget_admin_pages->setCurrentIndex(EDIT);
+		ui->stackedWidget_edit->setCurrentIndex(EDITSOUV);
         ui->pushButton_admin_import->setDisabled(false);
         ui->pushButton_admin_edit->setDisabled(true);
+		table->InitializeAdminEditTable(ui->tableWidget_edit);
+		table->PopulateAdminEditTable(ui->tableWidget_edit);
     }
 
     void MainWindow::on_comboBox_edit_activated(int index)
     {
         clearButtons();
+
         if (index == 0)
         {
+			ui->stackedWidget_edit->setCurrentIndex(EDITSOUV);
             ui->formWidget_edit_souvenir->setVisible(true);
-            ui->formWidget_edit_stadium->setVisible(false);
+			ui->formWidget_edit_stadium->setVisible(false);
+			table->InitializeAdminEditTable(ui->tableWidget_edit);
+			table->PopulateAdminEditTable(ui->tableWidget_edit);
         }
         else
         {
+			ui->stackedWidget_edit->setCurrentIndex(EDITSTAD);
             ui->formWidget_edit_souvenir->setVisible(false);
             ui->formWidget_edit_stadium->setVisible(true);
+			table->AdminInfoTable(ui->tableView_edit);
         }
     }
 
@@ -289,4 +308,3 @@ void MainWindow::on_pushButton_plan_MST_clicked()
 }
 
 /*----END HELPER FUNCTIONS----*/
-

@@ -37,6 +37,10 @@ public:
 
 	void ImportTeams();
 	void GetTeams(QStringList &teams);
+	void GetSouvenirs(QString teamName, QStringList &list);
+	int GetNumSouvenir(QString teamName);
+	int GetNumTeams();
+	QString SouvenirNameToPrice(QString team, QString souvenir);
 private:
     QSqlQuery query;
 	/*!
