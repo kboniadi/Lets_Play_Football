@@ -364,7 +364,7 @@
                </widget>
               </item>
               <item row="2" column="2" colspan="2">
-               <widget class="QLabel" name="label_list_total">
+               <widget class="QLabel" name="label_list_totalgrass">
                 <property name="font">
                  <font>
                   <pointsize>12</pointsize>
@@ -375,19 +375,7 @@
                 </property>
                </widget>
               </item>
-              <item row="2" column="4">
-               <widget class="QLabel" name="label_list_totalcapacity">
-                <property name="font">
-                 <font>
-                  <pointsize>12</pointsize>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>Total Capacity: </string>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="0">
+              <item row="2" column="0" colspan="2">
                <widget class="QLabel" name="label_list_totalroofs">
                 <property name="font">
                  <font>
@@ -396,6 +384,18 @@
                 </property>
                 <property name="text">
                  <string>Total Open Roof Stadiums: </string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="4" colspan="2">
+               <widget class="QLabel" name="label_list_totalcapacity">
+                <property name="font">
+                 <font>
+                  <pointsize>12</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>Total Capacity: </string>
                 </property>
                </widget>
               </item>
