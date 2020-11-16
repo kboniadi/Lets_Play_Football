@@ -101,10 +101,8 @@ private:
     /*----END NAVIGATION ENUMS----*/
 
     /*----DIRECTORY COMBO BOXES----*/
-    QStringList sortTeams = { "Team Name", "Conference Name" };
-    QStringList filterTeams = { "All", "AFC", "NFC", "NFC North", "Bermuda Grass" };
-    QStringList sortStadiums = { "Stadium Name", "Date Opened", "Capacity" };
-    QStringList filterStadiums = { "All", "Open Roof" };
+    QStringList sortTable = { "Team Name","Stadium Name", "Conference Name", "Date Opened", "Capacity" };
+    QStringList filterTable = { "All", "AFC", "NFC", "NFC North", "Bermuda Grass", "Open Roof" };
     /*----END DIRECTORY COMBO BOXES----*/
 
 	Ui::MainWindow *ui;
