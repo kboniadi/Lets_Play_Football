@@ -95,6 +95,7 @@ void MainWindow::on_pushButton_pages_view_clicked()
         ui->stackedWidget_view_pages->setCurrentIndex(SEARCH);
         ui->pushButton_view_search->setDisabled(true);
         ui->pushButton_view_list->setDisabled(false);
+        populateSouvenirs("");
         populateTeams();
     }
 
