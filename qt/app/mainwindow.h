@@ -27,8 +27,6 @@ private slots:
 
         void on_pushButton_view_list_clicked();
 
-        void on_comboBox_list_type_activated(int index);
-
     void on_pushButton_pages_plan_clicked();
 
         void on_pushButton_plan_continue_clicked();
@@ -54,6 +52,8 @@ private slots:
     void initializeLayout();
 
     void clearButtons();
+
+    void clearViewLabels();
 
     void on_pushButton_edit_add_clicked();
 
@@ -101,8 +101,10 @@ private:
     /*----END NAVIGATION ENUMS----*/
 
     /*----DIRECTORY COMBO BOXES----*/
-    QStringList sortTable = { "Team Name","Stadium Name", "Conference Name", "Date Opened", "Capacity" };
-    QStringList filterTable = { "All", "AFC", "NFC", "NFC North", "Bermuda Grass", "Open Roof" };
+    QStringList sortTeams = { "None", "Team Name", "Conference Name" };
+    QStringList sortStadiums = { "None", "Stadium Name", "Date Opened", "Capacity" };
+    QStringList filterTeams = { "All", "AFC", "NFC", "NFC North", "Bermuda Grass" };
+    QStringList filterStadiums = { "All", "Open Roof" };
     /*----END DIRECTORY COMBO BOXES----*/
 
 	Ui::MainWindow *ui;
