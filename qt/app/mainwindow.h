@@ -11,11 +11,11 @@ class DBManager;
 
 class MainWindow : public QMainWindow
 {
-    Q_OBJECT
+	Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr);
-    ~MainWindow();
+	MainWindow(QWidget *parent = nullptr);
+	~MainWindow();
 
 private slots:
     /*----NAVIGATION----*/
@@ -26,8 +26,6 @@ private slots:
         void on_pushButton_view_search_clicked();
 
         void on_pushButton_view_list_clicked();
-
-        void on_comboBox_list_type_activated(int index);
 
     void on_pushButton_pages_plan_clicked();
 
@@ -51,11 +49,11 @@ private slots:
     /*----END NAVIGATION----*/
 
     /*----HELPER FUNCTIONS----*/
-
-
     void initializeLayout();
 
     void clearButtons();
+
+    void clearViewLabels();
 
     void on_pushButton_edit_add_clicked();
 
@@ -76,17 +74,8 @@ private slots:
     void on_pushButton_plan_MST_clicked();
     /*----END HELPER FUNCTIONS----*/
 
-    //Change between stadium & team view
-    void on_comboBox_list_type_currentIndexChanged(int index);
-
-    //Change sort type
-    void on_comboBox_list_sort_currentIndexChanged(int index);
-
-    //Change filter type
-    void on_comboBox_list_filter_currentIndexChanged(int index);
-
     //Populate table for stadium view
-    void populateStadiumInfo(int sortIndex, int filterIndex);
+    void populateStadiumInfo(int teamSortIndex, int teamFilterIndex, int stadiumSortIndex, int stadiumFilterIndex);
 
     //Populate table for team search view
     void populateTeams();
@@ -96,6 +85,14 @@ private slots:
 
     //Populate souvenir table for selected team search
     void populateSouvenirs(QString team);
+
+    void on_comboBox_list_sortteams_currentIndexChanged(int index);
+
+    void on_comboBox_list_sortstadiums_currentIndexChanged(int index);
+
+    void on_comboBox_list_filterteams_currentIndexChanged(int index);
+
+    void on_comboBox_list_filterstadiums_currentIndexChanged(int index);
 
 private:
     /*----NAVIGATION ENUMS----*/
@@ -122,31 +119,45 @@ private:
         EDIT
     };
 
-    enum sortStadiums
+    enum SortTeams
     {
-        StadiumName,
-        DateOpened,
-        Capacity
+        NOTEAMSORT,
+        TEAMNAME,
+        CONFERENCENAME
     };
 
-    enum filterStadiums
+    enum SortStadiums
     {
-        All,
-        OpenRoof
+        NOSTADIUMSORT,
+        STADIUMNAME,
+        DATEOPENED,
+        CAPACITY
+    };
+
+    enum FilterTeams
+    {
+        ALLTEAMS,
+        AFC,
+        NFC,
+        NFCNORTH,
+        BERMUDAGRASS
+    };
+
+    enum FilterStadiums
+    {
+        ALLSTADIUMS,
+        OPENROOF
     };
 
     /*----END NAVIGATION ENUMS----*/
 
     /*----DIRECTORY COMBO BOXES----*/
-    QStringList sortTeams = { "Team Name", "Conference Name" };
+    QStringList sortTeams = { "None", "Team Name", "Conference Name" };
+    QStringList sortStadiums = { "None", "Stadium Name", "Date Opened", "Capacity" };
     QStringList filterTeams = { "All", "AFC", "NFC", "NFC North", "Bermuda Grass" };
-    QStringList sortStadiums = { "Stadium Name", "Date Opened", "Capacity" };
     QStringList filterStadiums = { "All", "Open Roof" };
     /*----END DIRECTORY COMBO BOXES----*/
 
-    Ui::MainWindow *ui;
+	Ui::MainWindow *ui;
 };
-
-
-
 #endif // MAINWINDOW_H
