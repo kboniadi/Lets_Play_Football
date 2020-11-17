@@ -44,23 +44,6 @@ void MainWindow::on_pushButton_pages_view_clicked()
         ui->stackedWidget_view_pages->setCurrentIndex(LIST);
         ui->pushButton_view_search->setDisabled(false);
         ui->pushButton_view_list->setDisabled(true);
-        on_comboBox_list_type_activated(0);
-    }
-
-    void MainWindow::on_comboBox_list_type_activated(int index)
-    {
-        clearButtons();
-        if (index == 0)
-        {
-            ui->comboBox_list_sort->addItems(sortTeams);
-            ui->comboBox_list_filter->addItems(filterTeams);
-        }
-        else
-        {
-            ui->comboBox_list_sort->addItems(sortStadiums);
-            ui->comboBox_list_filter->addItems(filterStadiums);
-        }
-
     }
 
 void MainWindow::on_pushButton_pages_plan_clicked()
@@ -139,6 +122,10 @@ void MainWindow::initializeLayout() // sets default pages on program restart
     on_pushButton_pages_home_clicked();
     on_comboBox_edit_activated(0);
     ui->pushButton_pages_home->setDisabled(true);
+    ui->comboBox_list_sortteams->addItems(sortTeams); // directory page
+    ui->comboBox_list_filterteams->addItems(filterTeams);
+    ui->comboBox_list_sortstadiums->addItems(sortStadiums);
+    ui->comboBox_list_filterstadiums->addItems(filterStadiums);
 }
 void MainWindow::clearButtons() // resets most program states
 {
@@ -148,9 +135,13 @@ void MainWindow::clearButtons() // resets most program states
     ui->pushButton_pages_plan->setDisabled(false);
     ui->pushButton_pages_admin->setDisabled(false);
 
-    // view combo boxes
-    ui->comboBox_list_sort->clear();
-    ui->comboBox_list_filter->clear();
+    // view page
+    ui->comboBox_list_sortteams->setCurrentIndex(NOTEAMSORT);
+    ui->comboBox_list_filterteams->setCurrentIndex(ALLTEAMS);
+    ui->comboBox_list_sortstadiums->setCurrentIndex(NOSTADIUMSORT);
+    ui->comboBox_list_filterstadiums->setCurrentIndex(ALLSTADIUMS);
+    clearViewLabels();
+
 
     // trip planning buttons
     ui->pushButton_plan_sort->setVisible(false);
@@ -163,7 +154,6 @@ void MainWindow::clearButtons() // resets most program states
     ui->pushButton_plan_vikings->setDisabled(false);
     ui->pushButton_plan_custom->setDisabled(false);
     ui->pushButton_plan_MST->setDisabled(false);
-
 
     // admin buttons
     ui->formWidget_edit_souvenir->setDisabled(true);
@@ -185,6 +175,13 @@ void MainWindow::clearButtons() // resets most program states
     ui->LineEdit_edit_stadium_name->clear();
     ui->LineEdit_edit_stadium_roof->clear();
     ui->LineEdit_edit_stadium_surface->clear();
+}
+
+void MainWindow::clearViewLabels()
+{
+    ui->label_list_totalcapacity->hide();
+    ui->label_list_totalgrass->hide();
+    ui->label_list_totalroofs->hide();
 }
 
 void MainWindow::on_pushButton_edit_add_clicked() // admin add button

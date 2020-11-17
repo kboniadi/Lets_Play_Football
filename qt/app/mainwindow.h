@@ -27,8 +27,6 @@ private slots:
 
         void on_pushButton_view_list_clicked();
 
-        void on_comboBox_list_type_activated(int index);
-
     void on_pushButton_pages_plan_clicked();
 
         void on_pushButton_plan_continue_clicked();
@@ -54,6 +52,8 @@ private slots:
     void initializeLayout();
 
     void clearButtons();
+
+    void clearViewLabels();
 
     void on_pushButton_edit_add_clicked();
 
@@ -98,12 +98,43 @@ private:
         IMPORT,
         EDIT
     };
+
+    enum SortTeams
+    {
+        NOTEAMSORT,
+        TEAMNAME,
+        CONFERENCENAME
+    };
+
+    enum SortStadiums
+    {
+        NOSTADIUMSORT,
+        STADIUMNAME,
+        DATEOPENED,
+        CAPACITY
+    };
+
+    enum FilterTeams
+    {
+        ALLTEAMS,
+        AFC,
+        NFC,
+        NFCNORTH,
+        BERMUDAGRASS
+    };
+
+    enum FilterStadiums
+    {
+        ALLSTADIUMS,
+        OPENROOF
+    };
+
     /*----END NAVIGATION ENUMS----*/
 
     /*----DIRECTORY COMBO BOXES----*/
-    QStringList sortTeams = { "Team Name", "Conference Name" };
+    QStringList sortTeams = { "None", "Team Name", "Conference Name" };
+    QStringList sortStadiums = { "None", "Stadium Name", "Date Opened", "Capacity" };
     QStringList filterTeams = { "All", "AFC", "NFC", "NFC North", "Bermuda Grass" };
-    QStringList sortStadiums = { "Stadium Name", "Date Opened", "Capacity" };
     QStringList filterStadiums = { "All", "Open Roof" };
     /*----END DIRECTORY COMBO BOXES----*/
 
