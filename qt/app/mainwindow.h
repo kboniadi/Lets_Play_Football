@@ -13,11 +13,11 @@ class Layout;
 
 class MainWindow : public QMainWindow
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	MainWindow(QWidget *parent = nullptr);
-	~MainWindow();
+    MainWindow(QWidget *parent = nullptr);
+    ~MainWindow();
 
 private slots:
     /*----NAVIGATION----*/
@@ -80,6 +80,27 @@ private slots:
     void on_pushButton_plan_MST_clicked();
     /*----END HELPER FUNCTIONS----*/
 
+    //Populate table for stadium view
+    void populateStadiumInfo(int sortIndex, int teamFilterIndex, int stadiumFilterIndex);
+
+    //Populate table for team search view
+    void populateTeams();
+
+    //Handle double click on team search view
+    void on_tableView_search_teams_doubleClicked(const QModelIndex &index);
+
+    //Populate souvenir table for selected team search
+    void populateSouvenirs(QString team);
+
+    //Control sort combobox
+    void on_comboBox_list_sort_currentIndexChanged(int index);
+
+    //Control team filter combobox
+    void on_comboBox_list_filterteams_currentIndexChanged(int index);
+
+    //Control stadium filter combobox
+    void on_comboBox_list_filterstadiums_currentIndexChanged(int index);
+	
 	void on_pushButton_import_clicked();
 
 private:
@@ -107,16 +128,11 @@ private:
 		EDIT,
     };
 
-    enum SortTeams
+    enum Sort
     {
-        NOTEAMSORT,
+        NOSORT,
         TEAMNAME,
-        CONFERENCENAME
-    };
-
-    enum SortStadiums
-    {
-        NOSTADIUMSORT,
+        CONFERENCENAME,
         STADIUMNAME,
         DATEOPENED,
         CAPACITY
@@ -144,8 +160,7 @@ private:
     /*----END NAVIGATION ENUMS----*/
 
     /*----DIRECTORY COMBO BOXES----*/
-    QStringList sortTeams = { "None", "Team Name", "Conference Name" };
-    QStringList sortStadiums = { "None", "Stadium Name", "Date Opened", "Capacity" };
+    QStringList sort = { "None", "Team Name", "Conference Name", "Stadium Name", "Date Opened", "Capacity" };
     QStringList filterTeams = { "All", "AFC", "NFC", "NFC North", "Bermuda Grass" };
     QStringList filterStadiums = { "All", "Open Roof" };
     /*----END DIRECTORY COMBO BOXES----*/
