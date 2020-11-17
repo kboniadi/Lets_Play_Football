@@ -9,6 +9,7 @@ QT_END_NAMESPACE
 
 class DBManager;
 class TableManager;
+class Layout;
 
 class MainWindow : public QMainWindow
 {
@@ -53,6 +54,8 @@ private slots:
 
     /*----HELPER FUNCTIONS----*/
     void initializeLayout();
+
+    void setResources();
 
     void clearButtons();
 
