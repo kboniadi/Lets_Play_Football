@@ -4,18 +4,18 @@
 #include <QStringListModel>
 
 MainWindow::MainWindow(QWidget *parent)
-	: QMainWindow(parent)
-	, ui(new Ui::MainWindow)
+    : QMainWindow(parent)
+    , ui(new Ui::MainWindow)
 {
-	ui->setupUi(this);
-	DBManager::instance();
+    ui->setupUi(this);
+    DBManager::instance();
 
     initializeLayout();
 }
 
 MainWindow::~MainWindow()
 {
-	delete ui;
+    delete ui;
 }
 
 /*----NAVIGATION----*/
@@ -49,7 +49,7 @@ void MainWindow::on_pushButton_pages_view_clicked()
         ui->pushButton_view_search->setDisabled(false);
         ui->pushButton_view_list->setDisabled(true);
 
-        populateStadiumInfo(0,0,0,0);
+        populateStadiumInfo(0,0,0);
     }
 
 void MainWindow::on_pushButton_pages_plan_clicked()
@@ -273,10 +273,10 @@ void MainWindow::on_pushButton_plan_MST_clicked()
 
 /*----END HELPER FUNCTIONS----*/
 
-void MainWindow::populateStadiumInfo(int teamSortIndex, int teamFilterIndex, int stadiumsSortIndex, int stadiumsFilterIndex)
+void MainWindow::populateStadiumInfo(int sortIndex, int teamFilterIndex, int stadiumsFilterIndex)
 {
 
-    if (teamSortIndex < 0 || teamFilterIndex < 0 || stadiumsSortIndex < 0 || stadiumsFilterIndex < 0)
+    if (sortIndex < 0 || teamFilterIndex < 0 || stadiumsFilterIndex < 0)
         return;
 
     clearViewLabels();
@@ -284,8 +284,7 @@ void MainWindow::populateStadiumInfo(int teamSortIndex, int teamFilterIndex, int
     int capacity = 0;
     int openRoofCount = 0;
 
-    QString stadiumSort[] = {"None","stadiumName", "seatCap", "dateOpen"};
-    QString teamSort[] = {"None","teamNames", "conference"};
+    QString sort[] = {"None","teamNames", "conference","stadiumName", "dateOpen", "seatCap"};
 
     QSqlQuery query;
     QString queryString = "SELECT (SELECT teams.teamNames FROM teams WHERE teams.id = information.id) as teamNames, stadiumName,seatCap,conference,division,surfaceType,roofType,dateOpen FROM information";
@@ -315,12 +314,9 @@ void MainWindow::populateStadiumInfo(int teamSortIndex, int teamFilterIndex, int
      }
 
      QString queryStringWithoutOrder = queryString;
-     if (teamSortIndex != 0 && stadiumsSortIndex != 0)
-        queryString += " ORDER BY " + teamSort[teamSortIndex] + " ASC, " + stadiumSort[stadiumsSortIndex] + " ASC";
-     else if (teamSortIndex == 0 && stadiumsSortIndex != 0)
-         queryString += " ORDER BY " + stadiumSort[stadiumsSortIndex] + " ASC";
-     else if ( teamSortIndex != 0 && stadiumsSortIndex == 0)
-         queryString += " ORDER BY " + teamSort[teamSortIndex] + " ASC";
+     if (sortIndex != 0)
+        queryString += " ORDER BY " + sort[sortIndex] + " ASC";
+
 
     query.exec(queryString);
 
@@ -404,6 +400,17 @@ void MainWindow::populateSouvenirs(QString team)
     ui->tableView_search_souvenirs->setModel(model);
 }
 
+void MainWindow::on_comboBox_list_sort_currentIndexChanged(int index)
+{
+    populateStadiumInfo(index, ui->comboBox_list_filterteams->currentIndex(), ui->comboBox_list_filterstadiums->currentIndex());
+}
 
+void MainWindow::on_comboBox_list_filterteams_currentIndexChanged(int index)
+{
+    populateStadiumInfo(ui->comboBox_list_sort->currentIndex(), index, ui->comboBox_list_filterstadiums->currentIndex());
+}
 
-
+void MainWindow::on_comboBox_list_filterstadiums_currentIndexChanged(int index)
+{
+    populateStadiumInfo(ui->comboBox_list_sort->currentIndex(), ui->comboBox_list_filterteams->currentIndex(), index);
+}

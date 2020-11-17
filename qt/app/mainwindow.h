@@ -11,11 +11,11 @@ class DBManager;
 
 class MainWindow : public QMainWindow
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	MainWindow(QWidget *parent = nullptr);
-	~MainWindow();
+    MainWindow(QWidget *parent = nullptr);
+    ~MainWindow();
 
 private slots:
     /*----NAVIGATION----*/
@@ -75,7 +75,7 @@ private slots:
     /*----END HELPER FUNCTIONS----*/
 
     //Populate table for stadium view
-    void populateStadiumInfo(int teamSortIndex, int teamFilterIndex, int stadiumSortIndex, int stadiumFilterIndex);
+    void populateStadiumInfo(int sortIndex, int teamFilterIndex, int stadiumFilterIndex);
 
     //Populate table for team search view
     void populateTeams();
@@ -85,6 +85,15 @@ private slots:
 
     //Populate souvenir table for selected team search
     void populateSouvenirs(QString team);
+
+    //Control sort combobox
+    void on_comboBox_list_sort_currentIndexChanged(int index);
+
+    //Control team filter combobox
+    void on_comboBox_list_filterteams_currentIndexChanged(int index);
+
+    //Control stadium filter combobox
+    void on_comboBox_list_filterstadiums_currentIndexChanged(int index);
 
 private:
     /*----NAVIGATION ENUMS----*/
@@ -144,6 +153,6 @@ private:
     QStringList filterStadiums = { "All", "Open Roof" };
     /*----END DIRECTORY COMBO BOXES----*/
 
-	Ui::MainWindow *ui;
+    Ui::MainWindow *ui;
 };
 #endif // MAINWINDOW_H
