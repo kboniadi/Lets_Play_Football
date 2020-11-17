@@ -267,3 +267,37 @@ QString DBManager::SouvenirNameToPrice(QString team, QString souvenir)
 	}
 	return QString("Error");
 }
+
+void DBManager::AddInfo(QString teamName, QString stadiumName, QString seatCap,
+						QString location, QString conference, QString division,
+						QString surfaceType, QString roofType, QString dateOpen)
+{
+	// Finds and stores the id associated with the city name
+	query.prepare("SELECT id FROM teams WHERE teamNames = :teamName");
+	query.bindValue(":teamName", teamName);
+	if (!query.exec()) {
+		qDebug() << "DBManager::AddInfo(QString... ) : query failed{1}";
+		return;
+	}
+	query.first();
+	int id = query.value(0).toInt();
+
+	// Using the obtained id, a new food item and price is INSERTED
+	query.prepare("INSERT INTO information(id, stadiumName, seatCap, location, "
+				  "conference, division, surfaceType, roofType, dateOpen) "
+				  "VALUES(:id, :stadiumName, :seatCap, :location, :conference, "
+				  ":division, :surfaceType, :roofType, :dateOpen)");
+	query.bindValue(":id", id);
+	query.bindValue(":stadiumName", stadiumName);
+	query.bindValue(":seatCap", seatCap);
+	query.bindValue(":location", location);
+	query.bindValue(":conference", conference);
+	query.bindValue(":division", division);
+	query.bindValue(":surfaceType", surfaceType);
+	query.bindValue(":roofType", roofType);
+	query.bindValue(":dateOpen", dateOpen);
+
+	if (!query.exec())
+		qDebug() << "DBManager::AddInfo(QString... ) : query failed{2}";
+	query.finish();
+}

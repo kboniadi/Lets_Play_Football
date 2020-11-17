@@ -71,90 +71,90 @@ public:
 
 	// *********************** Team Search Table Methods ****************************
 
-	/*!
-	 * @brief Initializes cities table to blank
-	 * @param citiesTable; Table to be initialized
-	 * @param cityTablecols; Number of columns in table
-	 * @param cityTableHeaders; Table's column header names
-	 */
-	void InitializeSearchTable(QTableWidget* teamsTable, const int &teamTablecols, const QStringList &teamTableHeaders);
+//	/*!
+//	 * @brief Initializes cities table to blank
+//	 * @param citiesTable; Table to be initialized
+//	 * @param cityTablecols; Number of columns in table
+//	 * @param cityTableHeaders; Table's column header names
+//	 */
+//	void InitializeSearchTable(QTableWidget* teamsTable, const int &teamTablecols, const QStringList &teamTableHeaders);
 
-	/*!
-	 * @brief Populates cities table with relevant information
-	 * @param cityTable; Table to be initialized
-	 * @param cityNames; Number of columns in table
-	 * @param distancesFromBerlin; List of distances of each city to Berlin
-	 */
-	void PopulateSearchTable(QTableWidget* teamsTable, QStringList *teamsNames, QVector<int> *distancesFromBerlin);
+//	/*!
+//	 * @brief Populates cities table with relevant information
+//	 * @param cityTable; Table to be initialized
+//	 * @param cityNames; Number of columns in table
+//	 * @param distancesFromBerlin; List of distances of each city to Berlin
+//	 */
+//	void PopulateSearchTable(QTableWidget* teamsTable, QStringList *teamsNames, QVector<int> *distancesFromBerlin);
 
-	// ************************* Food Table Methods ****************************
+//	// ************************* Food Table Methods ****************************
 
-	/*!
-	 * @brief Initializes foods table to blank
-	 * @param table; Table to be initialized
-	 * @param cols; Number of columns in table
-	 * @param headers; Table's column header names
-	 */
-	void InitializeFoodTable(QTableWidget* table, const int &cols, const QStringList &headers);
+//	/*!
+//	 * @brief Initializes foods table to blank
+//	 * @param table; Table to be initialized
+//	 * @param cols; Number of columns in table
+//	 * @param headers; Table's column header names
+//	 */
+//	void InitializeFoodTable(QTableWidget* table, const int &cols, const QStringList &headers);
 
-	/*!
-	 * @brief Populates foods table with relevant information
-	 * @param foodTable; Table to be initialized
-	 * @param cities; City objects with which to populate table
-	 */
-	void PopulateFoodTable(QTableWidget* foodTable, QVector<int> *cities);
+//	/*!
+//	 * @brief Populates foods table with relevant information
+//	 * @param foodTable; Table to be initialized
+//	 * @param cities; City objects with which to populate table
+//	 */
+//	void PopulateFoodTable(QTableWidget* foodTable, QVector<int> *cities);
 
-	// **************** Trip Planning Table Methods ****************************
+//	// **************** Trip Planning Table Methods ****************************
 
-	/*!
-	 * @brief Populates trip planning table with relevant information
-	 * @param table; Table to be initialized
-	 * @param cities; City objects with which to populate table
-	 */
-	void PopulateTripTable(QTableView* table, const QStringList& cities);
+//	/*!
+//	 * @brief Populates trip planning table with relevant information
+//	 * @param table; Table to be initialized
+//	 * @param cities; City objects with which to populate table
+//	 */
+//	void PopulateTripTable(QTableView* table, const QStringList& cities);
 
-	// ************** Food Purchasing Table Methods ****************************
+//	// ************** Food Purchasing Table Methods ****************************
 
-	/*!
-	 * @brief Initializes purchases table to blank
-	 * @param table; Table to be initialized
-	 * @param cols; Number of columns in table
-	 * @param headers; Table's column header names
-	 */
-	void InitializePurchaseTable(QTableWidget* table, const int &cols, const QStringList &headers);
+//	/*!
+//	 * @brief Initializes purchases table to blank
+//	 * @param table; Table to be initialized
+//	 * @param cols; Number of columns in table
+//	 * @param headers; Table's column header names
+//	 */
+//	void InitializePurchaseTable(QTableWidget* table, const int &cols, const QStringList &headers);
 
-	/*!
-	 * @brief Populates purchase table with relevant information
-	 * @param purchaseTable; Table to be initialized
-	 * @param cities; City objects with which to populate table
-	 */
-	void PopulatePurchaseTable(QTableWidget* purchaseTable, QVector<int>* cities);
+//	/*!
+//	 * @brief Populates purchase table with relevant information
+//	 * @param purchaseTable; Table to be initialized
+//	 * @param cities; City objects with which to populate table
+//	 */
+//	void PopulatePurchaseTable(QTableWidget* purchaseTable, QVector<int>* cities);
 
-	/*!
-	 * @brief Inserts a dynamic spinbox in table at specific column
-	 * @param table; Table in which to insert spinbox column
-	 * @param min; Minimum value allowed in spinbox
-	 * @param max; Maximum value allowed in spinbox
-	 * @param col; Column location to insert spinbox column
-	 */
-	void InsertSpinBoxCol(QTableWidget* table, const int min, const int max, const int col);
+//	/*!
+//	 * @brief Inserts a dynamic spinbox in table at specific column
+//	 * @param table; Table in which to insert spinbox column
+//	 * @param min; Minimum value allowed in spinbox
+//	 * @param max; Maximum value allowed in spinbox
+//	 * @param col; Column location to insert spinbox column
+//	 */
+//	void InsertSpinBoxCol(QTableWidget* table, const int min, const int max, const int col);
 
-	// ********************** Receipt Table Methods ****************************
+//	// ********************** Receipt Table Methods ****************************
 
-	/*!
-	 * @brief Initializes receipt table to blank
-	 * @param receiptTable; Table to be initialized
-	 * @param cols; Number of columns in table
-	 * @param headers; Table's column header names
-	 */
-	void InitializeReceiptTable(QTableWidget* receiptTable, const int &cols, const QStringList &headers);
+//	/*!
+//	 * @brief Initializes receipt table to blank
+//	 * @param receiptTable; Table to be initialized
+//	 * @param cols; Number of columns in table
+//	 * @param headers; Table's column header names
+//	 */
+//	void InitializeReceiptTable(QTableWidget* receiptTable, const int &cols, const QStringList &headers);
 
-	/*!
-	 * @brief Populates receipt table with relevant information
-	 * @param receiptTable; Table to be initialized
-	 * @param cities; City objects with which to populate table
-	 */
-	void PopulateReceiptTable(QTableWidget* receiptTable, QVector<int>* cities);
+//	/*!
+//	 * @brief Populates receipt table with relevant information
+//	 * @param receiptTable; Table to be initialized
+//	 * @param cities; City objects with which to populate table
+//	 */
+//	void PopulateReceiptTable(QTableWidget* receiptTable, QVector<int>* cities);
 
 	// ****************** Admin Table Table Methods ****************************
 	/*!

@@ -41,6 +41,9 @@ public:
 	int GetNumSouvenir(QString teamName);
 	int GetNumTeams();
 	QString SouvenirNameToPrice(QString team, QString souvenir);
+	void AddInfo(QString teamName, QString stadiumName, QString seatCap,
+				 QString location, QString conference, QString division,
+				 QString surfaceType, QString roofType, QString dateOpen);
 private:
     QSqlQuery query;
 	/*!

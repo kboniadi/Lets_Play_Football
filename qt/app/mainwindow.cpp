@@ -146,6 +146,7 @@ void MainWindow::on_pushButton_pages_admin_clicked()
 			ui->stackedWidget_edit->setCurrentIndex(EDITSTAD);
             ui->formWidget_edit_souvenir->setVisible(false);
             ui->formWidget_edit_stadium->setVisible(true);
+			ui->tableView_edit->verticalHeader()->hide();
 			table->AdminInfoTable(ui->tableView_edit);
         }
     }
@@ -210,11 +211,11 @@ void MainWindow::clearButtons() // resets most program states
     ui->lineEdit_edit_souvenir_team->clear();
     ui->lineEdit_login_password->clear();
     ui->lineEdit_login_username->clear();
-    ui->LineEdit_edit_stadium_capacity->clear();
-    ui->LineEdit_edit_stadium_location->clear();
-    ui->LineEdit_edit_stadium_name->clear();
-    ui->LineEdit_edit_stadium_roof->clear();
-    ui->LineEdit_edit_stadium_surface->clear();
+	ui->lineEdit_edit_stadium_capacity->clear();
+	ui->lineEdit_edit_stadium_location->clear();
+	ui->lineEdit_edit_stadium_name->clear();
+	ui->lineEdit_edit_stadium_roof->clear();
+	ui->lineEdit_edit_stadium_surface->clear();
 }
 
 void MainWindow::clearViewLabels()
@@ -231,6 +232,12 @@ void MainWindow::on_pushButton_edit_add_clicked() // admin add button
     ui->pushButton_edit_add->setDisabled(true);
     ui->pushButton_edit_cancel->setDisabled(false);
 
+	ui->lineEdit_edit_team->setValidator(new QRegExpValidator(QRegExp("[A-Za-z_ ]{0,255}"), this));
+	ui->lineEdit_edit_stadium_name->setValidator(new QRegExpValidator(QRegExp("[A-Za-z_ ]{0,255}"), this));
+	ui->lineEdit_edit_stadium_capacity->setValidator(new QRegExpValidator(QRegExp("[0-9.]{0,255}"), this));
+	ui->lineEdit_edit_stadium_location->setValidator(new QRegExpValidator(QRegExp("[A-Za-z_ ]{0,255}"), this));
+	ui->lineEdit_edit_stadium_surface->setValidator(new QRegExpValidator(QRegExp("[A-Za-z_ ]{0,255}"), this));
+	ui->lineEdit_edit_stadium_roof->setValidator(new QRegExpValidator(QRegExp("[A-Za-z_ ]{0,255}"), this));
     // code + error checking
 
     ui->pushButton_edit_confirm->setDisabled(false);
@@ -240,6 +247,7 @@ void MainWindow::on_pushButton_edit_add_clicked() // admin add button
 void MainWindow::on_pushButton_edit_confirm_clicked()
 {
     clearButtons();
+
 }
 
 void MainWindow::on_pushButton_edit_cancel_clicked()
