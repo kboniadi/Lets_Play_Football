@@ -25,6 +25,7 @@ void TableManager::AdminInfoTable(QTableView *table)
 
 	table->setEditTriggers(QAbstractItemView::NoEditTriggers);
 	table->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+	table->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 	table->setModel(model);
 }
 
@@ -46,6 +47,7 @@ void TableManager::AdminDistTable(QTableView *table)
 
 	table->setEditTriggers(QAbstractItemView::NoEditTriggers);
 	table->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+	table->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 	table->setModel(model);
 }
 
@@ -65,6 +67,7 @@ void TableManager::AdminSouvTable(QTableView *table)
 
 	table->setEditTriggers(QAbstractItemView::NoEditTriggers);
 	table->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+	table->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 	table->setModel(model);
 }
 
@@ -122,11 +125,11 @@ void TableManager::PopulateAdminEditTable(QTableWidget *table)
 				if(!match)
 				{
 					// Insert city name into city name column
-					table->setItem(table->rowCount() - 1, A_TEAMNAME3, new QTableWidgetItem(teams[i]));
+					table->setItem(table->rowCount() - 1, A_TEAMNAME_SOUVENIR, new QTableWidgetItem(teams[i]));
 				}
 				else // Else, insert blank name
 				{
-					table->setItem(table->rowCount() - 1, A_TEAMNAME3, new QTableWidgetItem(""));
+					table->setItem(table->rowCount() - 1, A_TEAMNAME_SOUVENIR, new QTableWidgetItem(""));
 				}
 			} // END if purchase table not empty
 			else // if purchase table empty
@@ -135,7 +138,7 @@ void TableManager::PopulateAdminEditTable(QTableWidget *table)
 				table->insertRow(table->rowCount());
 
 				// Insert city name into city name column
-				table->setItem(table->rowCount() - 1, A_TEAMNAME3, new QTableWidgetItem(teams[i]));
+				table->setItem(table->rowCount() - 1, A_TEAMNAME_SOUVENIR, new QTableWidgetItem(teams[i]));
 			}
 
 			// Insert city name into key column

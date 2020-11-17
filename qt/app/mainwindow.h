@@ -104,7 +104,6 @@ private:
 		EDIT,
     };
 
-<<<<<<< HEAD
     enum SortTeams
     {
         NOTEAMSORT,
@@ -134,12 +133,10 @@ private:
         ALLSTADIUMS,
         OPENROOF
     };
-=======
 	enum AdminEdit {
 		EDITSOUV,
 		EDITSTAD
 	};
->>>>>>> tables displayed for admin ui
 
     /*----END NAVIGATION ENUMS----*/
 

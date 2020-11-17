@@ -91,6 +91,9 @@ void MainWindow::on_pushButton_pages_admin_clicked()
         {
             // Change index to admin section
             ui->stackedWidget_pages->setCurrentIndex(ADMIN);
+			table->AdminInfoTable(ui->tableView_import);
+			table->AdminDistTable(ui->tableView_import_2);
+			table->AdminSouvTable(ui->tableView_import_3);
         }
         else
         {
