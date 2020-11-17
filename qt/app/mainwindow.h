@@ -98,6 +98,37 @@ private:
         IMPORT,
         EDIT
     };
+
+    enum SortTeams
+    {
+        NOTEAMSORT,
+        TEAMNAME,
+        CONFERENCENAME
+    };
+
+    enum SortStadiums
+    {
+        NOSTADIUMSORT,
+        STADIUMNAME,
+        DATEOPENED,
+        CAPACITY
+    };
+
+    enum FilterTeams
+    {
+        ALLTEAMS,
+        AFC,
+        NFC,
+        NFCNORTH,
+        BERMUDAGRASS
+    };
+
+    enum FilterStadiums
+    {
+        ALLSTADIUMS,
+        OPENROOF
+    };
+
     /*----END NAVIGATION ENUMS----*/
 
     /*----DIRECTORY COMBO BOXES----*/

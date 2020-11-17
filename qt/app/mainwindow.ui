@@ -327,8 +327,44 @@
            <layout class="QGridLayout" name="gridLayout_list_2">
             <item row="0" column="0">
              <layout class="QGridLayout" name="gridLayout_list">
-              <item row="0" column="5">
+              <item row="0" column="2">
+               <widget class="QComboBox" name="comboBox_list_sortstadiums">
+                <property name="font">
+                 <font>
+                  <pointsize>12</pointsize>
+                 </font>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0" alignment="Qt::AlignRight">
+               <widget class="QLabel" name="label_list_sort">
+                <property name="font">
+                 <font>
+                  <pointsize>12</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>Sort:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="6">
                <widget class="QComboBox" name="comboBox_list_filterstadiums">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="font">
+                 <font>
+                  <pointsize>12</pointsize>
+                 </font>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="5">
+               <widget class="QComboBox" name="comboBox_list_filterteams">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                   <horstretch>0</horstretch>
@@ -357,7 +393,16 @@
                 </property>
                </widget>
               </item>
-              <item row="2" column="4" colspan="2">
+              <item row="0" column="1">
+               <widget class="QComboBox" name="comboBox_list_sortteams">
+                <property name="font">
+                 <font>
+                  <pointsize>12</pointsize>
+                 </font>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="5" colspan="2">
                <widget class="QLabel" name="label_list_totalcapacity">
                 <property name="font">
                  <font>
@@ -381,51 +426,6 @@
                 </property>
                </widget>
               </item>
-              <item row="0" column="4">
-               <widget class="QComboBox" name="comboBox_list_filterteams">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="font">
-                 <font>
-                  <pointsize>12</pointsize>
-                 </font>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="1">
-               <widget class="QComboBox" name="comboBox_list_sortteams">
-                <property name="font">
-                 <font>
-                  <pointsize>12</pointsize>
-                 </font>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="2">
-               <widget class="QComboBox" name="comboBox_list_sortstadiums">
-                <property name="font">
-                 <font>
-                  <pointsize>12</pointsize>
-                 </font>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="0" alignment="Qt::AlignRight">
-               <widget class="QLabel" name="label_list_sort">
-                <property name="font">
-                 <font>
-                  <pointsize>12</pointsize>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>Sort:</string>
-                </property>
-               </widget>
-              </item>
               <item row="0" column="3" alignment="Qt::AlignRight">
                <widget class="QLabel" name="label_list_filter">
                 <property name="font">
@@ -438,7 +438,20 @@
                 </property>
                </widget>
               </item>
-              <item row="1" column="0" colspan="6">
+              <item row="2" column="4">
+               <widget class="QLabel" name="label_list_invisiblespacer">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0" colspan="7">
                <widget class="QTableView" name="tableView_list"/>
               </item>
              </layout>

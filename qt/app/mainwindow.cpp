@@ -136,10 +136,12 @@ void MainWindow::clearButtons() // resets most program states
     ui->pushButton_pages_admin->setDisabled(false);
 
     // view page
-    ui->comboBox_list_sortteams->setCurrentIndex(0);
-    ui->comboBox_list_filterteams->setCurrentIndex(0);
-    ui->comboBox_list_sortstadiums->setCurrentIndex(0);
-    ui->comboBox_list_filterstadiums->setCurrentIndex(0);
+    ui->comboBox_list_sortteams->setCurrentIndex(NOTEAMSORT);
+    ui->comboBox_list_filterteams->setCurrentIndex(ALLTEAMS);
+    ui->comboBox_list_sortstadiums->setCurrentIndex(NOSTADIUMSORT);
+    ui->comboBox_list_filterstadiums->setCurrentIndex(ALLSTADIUMS);
+    clearViewLabels();
+
 
     // trip planning buttons
     ui->pushButton_plan_sort->setVisible(false);
