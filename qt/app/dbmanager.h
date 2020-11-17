@@ -9,7 +9,6 @@
 #include <QString>
 #include <QDebug>
 #include <QMessageBox>
-#include <QTime>
 
 class DBManager: public QWidget, public QSqlDatabase {
 	Q_OBJECT
@@ -36,6 +35,21 @@ public:
      */
     bool checkLogin(const QString &username, const QString &password);
 
+	void ImportTeams();
+
+	void GetTeams(QStringList &teams);
+
+	void GetSouvenirs(QString teamName, QStringList &list);
+
+	int GetNumSouvenir(QString teamName);
+
+	int GetNumTeams();
+
+	QString SouvenirNameToPrice(QString team, QString souvenir);
+
+	void AddInfo(QString teamName, QString stadiumName, QString seatCap,
+				 QString location, QString conference, QString division,
+				 QString surfaceType, QString roofType, QString dateOpen);
 private:
     QSqlQuery query;
 	/*!
@@ -48,5 +62,6 @@ private:
 	 * @brief Destructor
 	 */
 	~DBManager();
+	QStringList parser(QString &line, const char delim);
 };
 #endif // DBMANAGER_H
