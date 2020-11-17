@@ -231,13 +231,6 @@ void MainWindow::clearViewLabels()
     ui->label_list_totalroofs->hide();
 }
 
-void MainWindow::clearViewLabels()
-{
-    ui->label_list_totalcapacity->hide();
-    ui->label_list_totalgrass->hide();
-    ui->label_list_totalroofs->hide();
-}
-
 void MainWindow::on_pushButton_edit_add_clicked() // admin add button
 {
     ui->formWidget_edit_souvenir->setDisabled(false);
@@ -426,7 +419,7 @@ void MainWindow::populateStadiumInfo(int sortIndex, int teamFilterIndex, int sta
 void MainWindow::populateTeams()
 {
     QStringList teamList;
-    DBManager::instance()->getTeams(teamList);
+    DBManager::instance()->GetTeams(teamList);
 
     QStringListModel* model = new QStringListModel;
     model->setStringList(teamList);
