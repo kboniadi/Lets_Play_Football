@@ -196,7 +196,7 @@
         <property name="spacing">
          <number>0</number>
         </property>
-        <item row="2" column="0" colspan="2">
+        <item row="2" column="0" colspan="2" alignment="Qt::AlignHCenter">
          <widget class="QLabel" name="label_home_splash">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -216,7 +216,7 @@
            </font>
           </property>
           <property name="text">
-           <string>placeholder :)</string>
+           <string>LET'S PLAY NFL</string>
           </property>
          </widget>
         </item>

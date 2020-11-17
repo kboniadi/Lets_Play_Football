@@ -9,6 +9,7 @@ QT_END_NAMESPACE
 
 class DBManager;
 class TableManager;
+class Layout;
 
 class MainWindow : public QMainWindow
 {

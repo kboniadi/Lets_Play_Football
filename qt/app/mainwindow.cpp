@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include "dbmanager.h"
 #include "tablemanager.h"
+#include "layout.h"
 
 MainWindow::MainWindow(QWidget *parent)
 	: QMainWindow(parent)
@@ -10,6 +11,7 @@ MainWindow::MainWindow(QWidget *parent)
 	ui->setupUi(this);
 	DBManager::instance();
 	table = new TableManager;
+    Layout::instance();
 
     initializeLayout();
 }
@@ -166,10 +168,9 @@ void MainWindow::initializeLayout() // sets default pages on program restart
     on_pushButton_pages_home_clicked();
     on_comboBox_edit_activated(0);
     ui->pushButton_pages_home->setDisabled(true);
-    ui->comboBox_list_sortteams->addItems(sortTeams); // directory page
-    ui->comboBox_list_filterteams->addItems(filterTeams);
-    ui->comboBox_list_sortstadiums->addItems(sortStadiums);
-    ui->comboBox_list_filterstadiums->addItems(filterStadiums);
+    Layout::instance()->importFonts();
+    QFont splash = QFont("Freshman", 42, QFont::Bold);
+    ui->label_home_splash->setFont(splash);
 }
 void MainWindow::clearButtons() // resets most program states
 {
