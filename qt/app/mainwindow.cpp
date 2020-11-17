@@ -397,9 +397,11 @@ void MainWindow::populateStadiumInfo(int sortIndex, int teamFilterIndex, int sta
             openRoofCount++;
     }
 
-
-    ui->label_list_totalcapacity->setText("Total Capacity: " + QString("%L1").arg(capacity));
-    ui->label_list_totalcapacity->show();
+    if (sortIndex == CAPACITY)
+    {
+        ui->label_list_totalcapacity->setText("Total Capacity: " + QString("%L1").arg(capacity));
+        ui->label_list_totalcapacity->show();
+    }
 
     if (teamFilterIndex == BERMUDAGRASS)
     {
