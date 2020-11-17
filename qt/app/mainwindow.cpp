@@ -51,6 +51,7 @@ void MainWindow::on_pushButton_pages_plan_clicked()
     ui->stackedWidget_pages->setCurrentIndex(PLAN);
     clearButtons();
     ui->pushButton_pages_plan->setDisabled(true);
+    on_pushButton_plan_MST_clicked();
 }
 
     void MainWindow::on_pushButton_plan_continue_clicked()
@@ -83,7 +84,22 @@ void MainWindow::on_pushButton_pages_admin_clicked()
 
     void MainWindow::on_pushButton_login_clicked()
     {
-        ui->stackedWidget_pages->setCurrentIndex(ADMIN);
+        // Check login credentials
+        if(DBManager::instance()->checkLogin(ui->lineEdit_login_username->text(), ui->lineEdit_login_password->text()))
+        {
+            // Change index to admin section
+            ui->stackedWidget_pages->setCurrentIndex(ADMIN);
+        }
+        else
+        {
+            // Notify user if username and password are incorrect
+            QMessageBox::warning(this, tr("Warning"),
+                                 tr("Username and/or password is incorrect."));
+        }
+
+        // Clear username and password fields
+        ui->lineEdit_login_username->clear();
+        ui->lineEdit_login_password->clear();
     }
 
     void MainWindow::on_pushButton_admin_import_clicked()
@@ -113,6 +129,11 @@ void MainWindow::on_pushButton_pages_admin_clicked()
             ui->formWidget_edit_souvenir->setVisible(false);
             ui->formWidget_edit_stadium->setVisible(true);
         }
+    }
+
+    void MainWindow::on_pushButton_pages_exit_clicked()
+    {
+        QApplication::quit();
     }
 /*----END NAVIGATION----*/
 
