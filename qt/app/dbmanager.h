@@ -10,8 +10,17 @@
 #include <QDebug>
 #include <QMessageBox>
 
+struct Souvenir
+{
+    QString name;
+    double price;
+    Souvenir(QString name,double price):name(name),price(price){}
+};
+
+
+
 class DBManager: public QWidget, public QSqlDatabase {
-	Q_OBJECT
+    Q_OBJECT
 public:
 	/*!
 	 * @brief Creates one instance of the database
@@ -64,4 +73,6 @@ private:
 	~DBManager();
 	QStringList parser(QString &line, const char delim);
 };
+
+
 #endif // DBMANAGER_H
