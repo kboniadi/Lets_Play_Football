@@ -20,5 +20,6 @@ Layout* Layout::instance()
 
 void Layout::importResources()
 {
-    QFontDatabase::addApplicationFont(":/resource/fonts/Freshman.ttf");
+    QFontDatabase::addApplicationFont(":/resource/fonts/OldSport2.ttf");
+    QFontDatabase::addApplicationFont(":/resource/fonts/Quicksand_Bold_Oblique.otf");
 }

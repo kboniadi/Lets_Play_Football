@@ -202,14 +202,36 @@ void MainWindow::setResources() // imports and assigns layout elements
 {
     /*----Fonts----*/
     Layout::instance()->importResources();
-    QFont splash = QFont("Freshman", 42, QFont::Bold);
-    QFont homeButtons = QFont("Freshman", 12);
-    ui->label_home_splash->setFont(splash);
+    QFont homeButtons = QFont("OLD SPORT 02 ATHLETIC NCV", 32);
     ui->pushButton_pages_home->setFont(homeButtons);
     ui->pushButton_pages_view->setFont(homeButtons);
     ui->pushButton_pages_plan->setFont(homeButtons);
     ui->pushButton_pages_admin->setFont(homeButtons);
     ui->pushButton_pages_exit->setFont(homeButtons);
+
+    QFont tables = QFont("Quicksand Bold Oblique", 16);
+//    ui->label_search_info->setFont(label1);
+//    ui->label_search_souvenirs->setFont(label2);
+//    ui->label_search_teams->setFont(label2);
+
+    ui->tableView_search_teams->setFont(tables);
+    ui->tableView_search_info->setFont(tables);
+    ui->tableView_search_souvenirs->setFont(tables);
+    ui->tableView_search_teams->setFont(tables);
+    ui->tableView_list->setFont(tables);
+    ui->tableView_plan_custom->setFont(tables);
+    ui->tableView_plan_route->setFont(tables);
+    ui->tableView_pos_cart->setFont(tables);
+    ui->tableView_pos_trip->setFont(tables);
+    ui->tableWidget_pos_purchase->setFont(tables);
+    ui->tableView_receipt->setFont(tables);
+    ui->tableView_import->setFont(tables);
+    ui->tableView_import_2->setFont(tables);
+    ui->tableView_import_3->setFont(tables);
+    ui->tableView_edit->setFont(tables);
+    ui->tableWidget_edit->setFont(tables);
+
+
     /*----End Fonts----*/
 }
 void MainWindow::clearButtons() // resets most program states
