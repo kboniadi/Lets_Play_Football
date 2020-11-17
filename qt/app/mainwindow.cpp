@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "dbmanager.h"
+#include "layout.h"
 
 MainWindow::MainWindow(QWidget *parent)
 	: QMainWindow(parent)
@@ -8,6 +9,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
 	ui->setupUi(this);
 	DBManager::instance();
+    Layout::instance();
 
     initializeLayout();
 }
@@ -139,6 +141,9 @@ void MainWindow::initializeLayout() // sets default pages on program restart
     on_pushButton_pages_home_clicked();
     on_comboBox_edit_activated(0);
     ui->pushButton_pages_home->setDisabled(true);
+    Layout::instance()->importFonts();
+    QFont splash = QFont("Freshman", 42, QFont::Bold);
+    ui->label_home_splash->setFont(splash);
 }
 void MainWindow::clearButtons() // resets most program states
 {

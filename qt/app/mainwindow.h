@@ -8,6 +8,7 @@ namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
 class DBManager;
+class Layout;
 
 class MainWindow : public QMainWindow
 {

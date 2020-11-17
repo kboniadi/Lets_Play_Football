@@ -153,7 +153,7 @@
     <item row="1" column="0">
      <widget class="QStackedWidget" name="stackedWidget_pages">
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="page_HOME">
        <layout class="QGridLayout" name="gridLayout_home">
@@ -172,7 +172,7 @@
         <property name="spacing">
          <number>0</number>
         </property>
-        <item row="2" column="0" colspan="2">
+        <item row="2" column="0" colspan="2" alignment="Qt::AlignHCenter">
          <widget class="QLabel" name="label_home_splash">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -192,7 +192,7 @@
            </font>
           </property>
           <property name="text">
-           <string>placeholder :)</string>
+           <string>LET'S PLAY NFL</string>
           </property>
          </widget>
         </item>
