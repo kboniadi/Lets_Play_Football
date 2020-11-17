@@ -86,14 +86,6 @@ private slots:
     //Populate souvenir table for selected team search
     void populateSouvenirs(QString team);
 
-    void on_comboBox_list_sortteams_currentIndexChanged(int index);
-
-    void on_comboBox_list_sortstadiums_currentIndexChanged(int index);
-
-    void on_comboBox_list_filterteams_currentIndexChanged(int index);
-
-    void on_comboBox_list_filterstadiums_currentIndexChanged(int index);
-
 private:
     /*----NAVIGATION ENUMS----*/
     enum Pages
@@ -119,16 +111,11 @@ private:
         EDIT
     };
 
-    enum SortTeams
+    enum Sort
     {
-        NOTEAMSORT,
+        NOSORT,
         TEAMNAME,
-        CONFERENCENAME
-    };
-
-    enum SortStadiums
-    {
-        NOSTADIUMSORT,
+        CONFERENCENAME,
         STADIUMNAME,
         DATEOPENED,
         CAPACITY
@@ -152,8 +139,7 @@ private:
     /*----END NAVIGATION ENUMS----*/
 
     /*----DIRECTORY COMBO BOXES----*/
-    QStringList sortTeams = { "None", "Team Name", "Conference Name" };
-    QStringList sortStadiums = { "None", "Stadium Name", "Date Opened", "Capacity" };
+    QStringList sort = { "None", "Team Name", "Conference Name", "Stadium Name", "Date Opened", "Capacity" };
     QStringList filterTeams = { "All", "AFC", "NFC", "NFC North", "Bermuda Grass" };
     QStringList filterStadiums = { "All", "Open Roof" };
     /*----END DIRECTORY COMBO BOXES----*/

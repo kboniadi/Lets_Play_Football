@@ -128,9 +128,8 @@ void MainWindow::initializeLayout() // sets default pages on program restart
     on_pushButton_pages_home_clicked();
     on_comboBox_edit_activated(0);
     ui->pushButton_pages_home->setDisabled(true);
-    ui->comboBox_list_sortteams->addItems(sortTeams); // directory page
+    ui->comboBox_list_sort->addItems(sort); // directory page
     ui->comboBox_list_filterteams->addItems(filterTeams);
-    ui->comboBox_list_sortstadiums->addItems(sortStadiums);
     ui->comboBox_list_filterstadiums->addItems(filterStadiums);
 }
 void MainWindow::clearButtons() // resets most program states
@@ -142,9 +141,8 @@ void MainWindow::clearButtons() // resets most program states
     ui->pushButton_pages_admin->setDisabled(false);
 
     // view page
-    ui->comboBox_list_sortteams->setCurrentIndex(NOTEAMSORT);
+    ui->comboBox_list_sort->setCurrentIndex(NOSORT);
     ui->comboBox_list_filterteams->setCurrentIndex(ALLTEAMS);
-    ui->comboBox_list_sortstadiums->setCurrentIndex(NOSTADIUMSORT);
     ui->comboBox_list_filterstadiums->setCurrentIndex(ALLSTADIUMS);
     clearViewLabels();
 
@@ -406,27 +404,6 @@ void MainWindow::populateSouvenirs(QString team)
     ui->tableView_search_souvenirs->setModel(model);
 }
 
-void MainWindow::on_comboBox_list_sortteams_currentIndexChanged(int index)
-{
-    populateStadiumInfo(index, ui->comboBox_list_filterteams->currentIndex(), ui->comboBox_list_sortstadiums->currentIndex(), ui->comboBox_list_filterstadiums->currentIndex());
-}
 
 
 
-void MainWindow::on_comboBox_list_sortstadiums_currentIndexChanged(int index)
-{
-    populateStadiumInfo(ui->comboBox_list_sortteams->currentIndex(), ui->comboBox_list_filterteams->currentIndex(), index, ui->comboBox_list_filterstadiums->currentIndex());
-}
-
-
-void MainWindow::on_comboBox_list_filterteams_currentIndexChanged(int index)
-{
-    populateStadiumInfo(ui->comboBox_list_sortteams->currentIndex(), index, ui->comboBox_list_sortstadiums->currentIndex(), ui->comboBox_list_filterstadiums->currentIndex());
-}
-
-
-
-void MainWindow::on_comboBox_list_filterstadiums_currentIndexChanged(int index)
-{
-    populateStadiumInfo(ui->comboBox_list_sortteams->currentIndex(), ui->comboBox_list_filterteams->currentIndex(), ui->comboBox_list_sortstadiums->currentIndex(), index);
-}
