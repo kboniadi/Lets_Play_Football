@@ -82,6 +82,7 @@ void MainWindow::on_pushButton_pages_admin_clicked()
     clearButtons();
 	on_pushButton_admin_import_clicked();
     ui->pushButton_pages_admin->setDisabled(true);
+	connect(ui->lineEdit_login_password, SIGNAL(returnPressed()), ui->pushButton_login, SLOT(click()));
 }
 
     void MainWindow::on_pushButton_login_clicked()
