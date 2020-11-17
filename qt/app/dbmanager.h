@@ -9,7 +9,6 @@
 #include <QString>
 #include <QDebug>
 #include <QMessageBox>
-#include <QTime>
 
 struct Souvenir
 {
@@ -23,36 +22,56 @@ struct Souvenir
 class DBManager: public QWidget, public QSqlDatabase {
     Q_OBJECT
 public:
-    /*!
-     * @brief Creates one instance of the database
-     * @return Pointer the the instance of the database class
-     */
-    static DBManager* instance();
+	/*!
+	 * @brief Creates one instance of the database
+	 * @return Pointer the the instance of the database class
+	 */
+	static DBManager* instance();
+
+	/*!
+	 * @brief Deleted copy constructor
+	 */
+	DBManager(const DBManager&) = delete;
+
+	/*!
+	 * @brief Deleted copy assignment
+	 */
+	DBManager& operator=(const DBManager&) = delete;
 
     /*!
-     * @brief Deleted copy constructor
+     * @brief Compares user login to values in the database
+     * @return bool representing successful login
      */
-    DBManager(const DBManager&) = delete;
+    bool checkLogin(const QString &username, const QString &password);
 
-    /*!
-     * @brief Deleted copy assignment
-     */
-    DBManager& operator=(const DBManager&) = delete;
+	void ImportTeams();
 
-    void getTeams(QStringList& teams);
+	void GetTeams(QStringList &teams);
 
+	void GetSouvenirs(QString teamName, QStringList &list);
+
+	int GetNumSouvenir(QString teamName);
+
+	int GetNumTeams();
+
+	QString SouvenirNameToPrice(QString team, QString souvenir);
+
+	void AddInfo(QString teamName, QString stadiumName, QString seatCap,
+				 QString location, QString conference, QString division,
+				 QString surfaceType, QString roofType, QString dateOpen);
 private:
     QSqlQuery query;
-    /*!
-     * @brief DBManager (private)
-     * @param parent; Linked to QWidget class
-     */
-    explicit DBManager(QWidget *parent = nullptr);
+	/*!
+	 * @brief DBManager (private)
+	 * @param parent; Linked to QWidget class
+	 */
+	explicit DBManager(QWidget *parent = nullptr);
 
-    /*!
-     * @brief Destructor
-     */
-    ~DBManager();
+	/*!
+	 * @brief Destructor
+	 */
+	~DBManager();
+	QStringList parser(QString &line, const char delim);
 };
 
 

@@ -148,6 +148,30 @@
         </property>
        </widget>
       </item>
+      <item>
+       <widget class="QPushButton" name="pushButton_pages_exit">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>100</width>
+          <height>50</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>12</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Exit</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </item>
     <item row="1" column="0">
@@ -329,6 +353,25 @@
              <layout class="QGridLayout" name="gridLayout_list">
               <item row="0" column="2">
                <widget class="QComboBox" name="comboBox_list_sort">
+                <property name="font">
+                 <font>
+                  <pointsize>12</pointsize>
+                 </font>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="6">
+               <widget class="QComboBox" name="comboBox_list_filterstadiums">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0" alignment="Qt::AlignRight">
+               <widget class="QLabel" name="label_list_sort">
                 <property name="font">
                  <font>
                   <pointsize>12</pointsize>
@@ -1043,7 +1086,43 @@
           <property name="verticalSpacing">
            <number>0</number>
           </property>
-          <item row="1" column="0" rowspan="2" colspan="3">
+          <item row="0" column="1">
+           <widget class="QPushButton" name="pushButton_admin_edit">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>12</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>Edit Info</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QPushButton" name="pushButton_admin_import">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>12</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>Import Teams</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0" colspan="3">
            <widget class="QStackedWidget" name="stackedWidget_admin_pages">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -1055,61 +1134,95 @@
              <number>1</number>
             </property>
             <widget class="QWidget" name="page_IMPORT">
-             <layout class="QGridLayout" name="gridLayout_import_2">
+             <layout class="QGridLayout" name="gridLayout">
+              <item row="0" column="1">
+               <widget class="QSplitter" name="splitter">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <widget class="QPushButton" name="pushButton_import">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <pointsize>12</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>Import From File</string>
+                 </property>
+                </widget>
+                <widget class="QPushButton" name="pushButton_import_revert">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <pointsize>12</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>Revert (if time permits)</string>
+                 </property>
+                </widget>
+               </widget>
+              </item>
+              <item row="1" column="0" colspan="2">
+               <widget class="QTabWidget" name="tabWidget_IMPORT">
+                <property name="currentIndex">
+                 <number>0</number>
+                </property>
+                <widget class="QWidget" name="tab_INFO">
+                 <attribute name="title">
+                  <string>Information Data</string>
+                 </attribute>
+                 <layout class="QVBoxLayout" name="verticalLayout">
+                  <item>
+                   <widget class="QTableView" name="tableView_import"/>
+                  </item>
+                 </layout>
+                </widget>
+                <widget class="QWidget" name="tab_DISTANCE">
+                 <attribute name="title">
+                  <string>Distance Data</string>
+                 </attribute>
+                 <layout class="QGridLayout" name="gridLayout_2">
+                  <item row="0" column="0">
+                   <widget class="QTableView" name="tableView_import_2"/>
+                  </item>
+                 </layout>
+                </widget>
+                <widget class="QWidget" name="tab_SOUVENIR">
+                 <attribute name="title">
+                  <string>Souvenir Data</string>
+                 </attribute>
+                 <layout class="QGridLayout" name="gridLayout_3">
+                  <item row="0" column="0">
+                   <widget class="QTableView" name="tableView_import_3"/>
+                  </item>
+                 </layout>
+                </widget>
+               </widget>
+              </item>
               <item row="0" column="0">
-               <layout class="QGridLayout" name="gridLayout_import">
-                <property name="leftMargin">
-                 <number>20</number>
+               <spacer name="horizontalSpacer">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
                 </property>
-                <property name="topMargin">
-                 <number>20</number>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
                 </property>
-                <property name="rightMargin">
-                 <number>20</number>
-                </property>
-                <property name="bottomMargin">
-                 <number>20</number>
-                </property>
-                <item row="0" column="0">
-                 <widget class="QPushButton" name="pushButton_import">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="font">
-                   <font>
-                    <pointsize>12</pointsize>
-                   </font>
-                  </property>
-                  <property name="text">
-                   <string>Import From File</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="1">
-                 <widget class="QPushButton" name="pushButton_import_revert">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="font">
-                   <font>
-                    <pointsize>12</pointsize>
-                   </font>
-                  </property>
-                  <property name="text">
-                   <string>Revert (if time permits)</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="0" rowspan="2" colspan="3">
-                 <widget class="QTableView" name="tableView_import"/>
-                </item>
-               </layout>
+               </spacer>
               </item>
              </layout>
             </widget>
@@ -1117,6 +1230,62 @@
              <layout class="QGridLayout" name="gridLayout_edit_3">
               <item row="0" column="0">
                <layout class="QGridLayout" name="gridLayout_edit">
+                <item row="1" column="5" rowspan="4">
+                 <layout class="QGridLayout" name="gridLayout_edit_2">
+                  <item row="1" column="1" alignment="Qt::AlignRight">
+                   <widget class="QComboBox" name="comboBox_edit">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>149</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>12</pointsize>
+                     </font>
+                    </property>
+                    <item>
+                     <property name="text">
+                      <string>Souvenirs</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>Stadiums</string>
+                     </property>
+                    </item>
+                   </widget>
+                  </item>
+                  <item row="2" column="1">
+                   <widget class="QStackedWidget" name="stackedWidget_edit">
+                    <property name="currentIndex">
+                     <number>1</number>
+                    </property>
+                    <widget class="QWidget" name="page_souvenir">
+                     <layout class="QVBoxLayout" name="verticalLayout_2">
+                      <item>
+                       <widget class="QTableWidget" name="tableWidget_edit"/>
+                      </item>
+                     </layout>
+                    </widget>
+                    <widget class="QWidget" name="page_stadium">
+                     <layout class="QVBoxLayout" name="verticalLayout_3">
+                      <item>
+                       <widget class="QTableView" name="tableView_edit"/>
+                      </item>
+                     </layout>
+                    </widget>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
                 <item row="0" column="1">
                  <widget class="QPushButton" name="pushButton_edit_edit">
                   <property name="font">
@@ -1126,30 +1295,6 @@
                   </property>
                   <property name="text">
                    <string>Edit</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="2">
-                 <widget class="QPushButton" name="pushButton_edit_delete">
-                  <property name="font">
-                   <font>
-                    <pointsize>12</pointsize>
-                   </font>
-                  </property>
-                  <property name="text">
-                   <string>Delete</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="0">
-                 <widget class="QPushButton" name="pushButton_edit_add">
-                  <property name="font">
-                   <font>
-                    <pointsize>12</pointsize>
-                   </font>
-                  </property>
-                  <property name="text">
-                   <string>Add</string>
                   </property>
                  </widget>
                 </item>
@@ -1258,79 +1403,10 @@
                   </layout>
                  </widget>
                 </item>
-                <item row="1" column="3" rowspan="3">
-                 <layout class="QGridLayout" name="gridLayout_edit_2">
-                  <item row="3" column="0">
-                   <widget class="QPushButton" name="pushButton_edit_cancel">
-                    <property name="font">
-                     <font>
-                      <pointsize>12</pointsize>
-                     </font>
-                    </property>
-                    <property name="text">
-                     <string>Cancel</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="2" column="0" alignment="Qt::AlignBottom">
-                   <widget class="QPushButton" name="pushButton_edit_confirm">
-                    <property name="font">
-                     <font>
-                      <pointsize>12</pointsize>
-                     </font>
-                    </property>
-                    <property name="text">
-                     <string>Confirm</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="1" column="1" alignment="Qt::AlignRight">
-                   <widget class="QComboBox" name="comboBox_edit">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <property name="minimumSize">
-                     <size>
-                      <width>149</width>
-                      <height>0</height>
-                     </size>
-                    </property>
-                    <property name="font">
-                     <font>
-                      <pointsize>12</pointsize>
-                     </font>
-                    </property>
-                    <item>
-                     <property name="text">
-                      <string>Souvenirs</string>
-                     </property>
-                    </item>
-                    <item>
-                     <property name="text">
-                      <string>Stadiums</string>
-                     </property>
-                    </item>
-                   </widget>
-                  </item>
-                  <item row="2" column="1" rowspan="3">
-                   <widget class="QTableView" name="tableView_edit">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                   </widget>
-                  </item>
-                 </layout>
-                </item>
-                <item row="2" column="0" rowspan="2" colspan="3">
+                <item row="3" column="0" rowspan="2" colspan="3">
                  <widget class="QWidget" name="formWidget_edit_stadium" native="true">
                   <layout class="QFormLayout" name="formLayout_5">
-                   <item row="0" column="0">
+                   <item row="1" column="0">
                     <widget class="QLabel" name="label_edit_stadium_name">
                      <property name="font">
                       <font>
@@ -1342,8 +1418,8 @@
                      </property>
                     </widget>
                    </item>
-                   <item row="0" column="1">
-                    <widget class="QLineEdit" name="LineEdit_edit_stadium_name">
+                   <item row="1" column="1">
+                    <widget class="QLineEdit" name="lineEdit_edit_stadium_name">
                      <property name="font">
                       <font>
                        <pointsize>12</pointsize>
@@ -1351,7 +1427,7 @@
                      </property>
                     </widget>
                    </item>
-                   <item row="1" column="0">
+                   <item row="2" column="0">
                     <widget class="QLabel" name="label_edit_stadium_capacity">
                      <property name="font">
                       <font>
@@ -1363,8 +1439,8 @@
                      </property>
                     </widget>
                    </item>
-                   <item row="1" column="1">
-                    <widget class="QLineEdit" name="LineEdit_edit_stadium_capacity">
+                   <item row="2" column="1">
+                    <widget class="QLineEdit" name="lineEdit_edit_stadium_capacity">
                      <property name="font">
                       <font>
                        <pointsize>12</pointsize>
@@ -1372,7 +1448,7 @@
                      </property>
                     </widget>
                    </item>
-                   <item row="2" column="0">
+                   <item row="3" column="0">
                     <widget class="QLabel" name="label_edit_stadium_location">
                      <property name="font">
                       <font>
@@ -1384,8 +1460,8 @@
                      </property>
                     </widget>
                    </item>
-                   <item row="2" column="1">
-                    <widget class="QLineEdit" name="LineEdit_edit_stadium_location">
+                   <item row="3" column="1">
+                    <widget class="QLineEdit" name="lineEdit_edit_stadium_location">
                      <property name="font">
                       <font>
                        <pointsize>12</pointsize>
@@ -1393,7 +1469,7 @@
                      </property>
                     </widget>
                    </item>
-                   <item row="3" column="0">
+                   <item row="4" column="0">
                     <widget class="QLabel" name="label_edit_stadium_surface">
                      <property name="font">
                       <font>
@@ -1405,8 +1481,8 @@
                      </property>
                     </widget>
                    </item>
-                   <item row="3" column="1">
-                    <widget class="QLineEdit" name="LineEdit_edit_stadium_surface">
+                   <item row="4" column="1">
+                    <widget class="QLineEdit" name="lineEdit_edit_stadium_surface">
                      <property name="font">
                       <font>
                        <pointsize>12</pointsize>
@@ -1414,7 +1490,7 @@
                      </property>
                     </widget>
                    </item>
-                   <item row="4" column="0">
+                   <item row="5" column="0">
                     <widget class="QLabel" name="label_edit_stadium_roof">
                      <property name="font">
                       <font>
@@ -1426,8 +1502,8 @@
                      </property>
                     </widget>
                    </item>
-                   <item row="4" column="1">
-                    <widget class="QLineEdit" name="LineEdit_edit_stadium_roof">
+                   <item row="5" column="1">
+                    <widget class="QLineEdit" name="lineEdit_edit_stadium_roof">
                      <property name="font">
                       <font>
                        <pointsize>12</pointsize>
@@ -1435,49 +1511,76 @@
                      </property>
                     </widget>
                    </item>
+                   <item row="0" column="0">
+                    <widget class="QLabel" name="label_edit_team">
+                     <property name="font">
+                      <font>
+                       <pointsize>11</pointsize>
+                      </font>
+                     </property>
+                     <property name="text">
+                      <string>Team Name: </string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="0" column="1">
+                    <widget class="QLineEdit" name="lineEdit_edit_team"/>
+                   </item>
                   </layout>
+                 </widget>
+                </item>
+                <item row="0" column="2">
+                 <widget class="QPushButton" name="pushButton_edit_delete">
+                  <property name="font">
+                   <font>
+                    <pointsize>12</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>Delete</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="0">
+                 <widget class="QPushButton" name="pushButton_edit_add">
+                  <property name="font">
+                   <font>
+                    <pointsize>12</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>Add</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="3">
+                 <widget class="QPushButton" name="pushButton_edit_confirm">
+                  <property name="font">
+                   <font>
+                    <pointsize>12</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>Confirm</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="3" column="3">
+                 <widget class="QPushButton" name="pushButton_edit_cancel">
+                  <property name="font">
+                   <font>
+                    <pointsize>12</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>Cancel</string>
+                  </property>
                  </widget>
                 </item>
                </layout>
               </item>
              </layout>
             </widget>
-           </widget>
-          </item>
-          <item row="0" column="0">
-           <widget class="QPushButton" name="pushButton_admin_import">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="font">
-             <font>
-              <pointsize>12</pointsize>
-             </font>
-            </property>
-            <property name="text">
-             <string>Import Teams</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QPushButton" name="pushButton_admin_edit">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="font">
-             <font>
-              <pointsize>12</pointsize>
-             </font>
-            </property>
-            <property name="text">
-             <string>Edit Info</string>
-            </property>
            </widget>
           </item>
          </layout>
@@ -1494,7 +1597,7 @@
      <x>0</x>
      <y>0</y>
      <width>1450</width>
-     <height>22</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>

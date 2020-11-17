@@ -8,6 +8,7 @@ namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
 class DBManager;
+class TableManager;
 
 class MainWindow : public QMainWindow
 {
@@ -46,6 +47,8 @@ private slots:
         void on_pushButton_admin_edit_clicked();
 
         void on_comboBox_edit_activated(int index);
+
+    void on_pushButton_pages_exit_clicked();
     /*----END NAVIGATION----*/
 
     /*----HELPER FUNCTIONS----*/
@@ -94,6 +97,8 @@ private slots:
 
     //Control stadium filter combobox
     void on_comboBox_list_filterstadiums_currentIndexChanged(int index);
+	
+	void on_pushButton_import_clicked();
 
 private:
     /*----NAVIGATION ENUMS----*/
@@ -117,7 +122,7 @@ private:
     enum AdminPages
     {
         IMPORT,
-        EDIT
+		EDIT,
     };
 
     enum Sort
@@ -144,6 +149,10 @@ private:
         ALLSTADIUMS,
         OPENROOF
     };
+	enum AdminEdit {
+		EDITSOUV,
+		EDITSTAD
+	};
 
     /*----END NAVIGATION ENUMS----*/
 
@@ -153,6 +162,7 @@ private:
     QStringList filterStadiums = { "All", "Open Roof" };
     /*----END DIRECTORY COMBO BOXES----*/
 
-    Ui::MainWindow *ui;
+	Ui::MainWindow *ui;
+	TableManager *table;
 };
 #endif // MAINWINDOW_H
