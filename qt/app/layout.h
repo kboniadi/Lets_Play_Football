@@ -17,9 +17,9 @@ public:
     Layout(); // constructor
 
     /*!
-     * @brief imports application fonts to current system
+     * @brief imports application resources to current system
      */
-    void importFonts();
+    void importResources();
 
     /*!
      * @brief Destructor

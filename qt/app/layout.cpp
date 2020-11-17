@@ -18,7 +18,7 @@ Layout* Layout::instance()
     return &instance;
 }
 
-void Layout::importFonts()
+void Layout::importResources()
 {
     QFontDatabase::addApplicationFont(":/resource/fonts/Freshman.ttf");
 }

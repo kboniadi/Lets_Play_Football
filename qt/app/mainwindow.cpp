@@ -168,9 +168,22 @@ void MainWindow::initializeLayout() // sets default pages on program restart
     on_pushButton_pages_home_clicked();
     on_comboBox_edit_activated(0);
     ui->pushButton_pages_home->setDisabled(true);
-    Layout::instance()->importFonts();
+    setResources();
+}
+
+void MainWindow::setResources() // imports and assigns layout elements
+{
+    /*----Fonts----*/
+    Layout::instance()->importResources();
     QFont splash = QFont("Freshman", 42, QFont::Bold);
+    QFont homeButtons = QFont("Freshman", 12);
     ui->label_home_splash->setFont(splash);
+    ui->pushButton_pages_home->setFont(homeButtons);
+    ui->pushButton_pages_view->setFont(homeButtons);
+    ui->pushButton_pages_plan->setFont(homeButtons);
+    ui->pushButton_pages_admin->setFont(homeButtons);
+    ui->pushButton_pages_exit->setFont(homeButtons);
+    /*----End Fonts----*/
 }
 void MainWindow::clearButtons() // resets most program states
 {

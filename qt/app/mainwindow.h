@@ -55,6 +55,8 @@ private slots:
     /*----HELPER FUNCTIONS----*/
     void initializeLayout();
 
+    void setResources();
+
     void clearButtons();
 
     void clearViewLabels();

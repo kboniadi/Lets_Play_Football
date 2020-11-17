@@ -18,6 +18,7 @@ SOURCES += \
 
 HEADERS += \
     dbmanager.h \
+    layout.h \
     mainwindow.h \
     tablemanager.h
     layout.h \
