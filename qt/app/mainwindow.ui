@@ -266,7 +266,7 @@
              <widget class="QTableView" name="tableView_search_souvenirs">
               <property name="font">
                <font>
-                <pointsize>16</pointsize>
+                <pointsize>12</pointsize>
                </font>
               </property>
              </widget>
@@ -275,7 +275,7 @@
              <widget class="QTableView" name="tableView_search_teams">
               <property name="font">
                <font>
-                <pointsize>16</pointsize>
+                <pointsize>12</pointsize>
                </font>
               </property>
              </widget>
@@ -284,7 +284,7 @@
              <widget class="QTableView" name="tableView_search_info">
               <property name="font">
                <font>
-                <pointsize>16</pointsize>
+                <pointsize>12</pointsize>
                </font>
               </property>
              </widget>
@@ -439,7 +439,7 @@
                <widget class="QTableView" name="tableView_list">
                 <property name="font">
                  <font>
-                  <pointsize>16</pointsize>
+                  <pointsize>12</pointsize>
                  </font>
                 </property>
                </widget>
@@ -643,7 +643,13 @@
              </widget>
             </item>
             <item row="0" column="0" colspan="2">
-             <widget class="QTableView" name="tableView_plan_route"/>
+             <widget class="QTableView" name="tableView_plan_route">
+              <property name="font">
+               <font>
+                <pointsize>12</pointsize>
+               </font>
+              </property>
+             </widget>
             </item>
            </layout>
           </item>
@@ -716,6 +722,11 @@
                  <verstretch>0</verstretch>
                 </sizepolicy>
                </property>
+               <property name="font">
+                <font>
+                 <pointsize>12</pointsize>
+                </font>
+               </property>
               </widget>
              </item>
             </layout>
@@ -742,7 +753,13 @@
            </widget>
           </item>
           <item row="1" column="0" rowspan="3">
-           <widget class="QTableView" name="tableView_pos_trip"/>
+           <widget class="QTableView" name="tableView_pos_trip">
+            <property name="font">
+             <font>
+              <pointsize>12</pointsize>
+             </font>
+            </property>
+           </widget>
           </item>
           <item row="2" column="4">
            <spacer name="horizontalSpacer_pos">
@@ -782,10 +799,22 @@
            </widget>
           </item>
           <item row="1" column="1" colspan="5">
-           <widget class="QTableWidget" name="tableWidget_pos_purchase"/>
+           <widget class="QTableWidget" name="tableWidget_pos_purchase">
+            <property name="font">
+             <font>
+              <pointsize>12</pointsize>
+             </font>
+            </property>
+           </widget>
           </item>
           <item row="3" column="1" colspan="5">
-           <widget class="QTableView" name="tableView_pos_cart"/>
+           <widget class="QTableView" name="tableView_pos_cart">
+            <property name="font">
+             <font>
+              <pointsize>12</pointsize>
+             </font>
+            </property>
+           </widget>
           </item>
           <item row="4" column="3">
            <widget class="QPushButton" name="pushButton_pos_cancel">
@@ -850,7 +879,13 @@
         <item row="0" column="0">
          <layout class="QGridLayout" name="gridLayout_receipt">
           <item row="0" column="0">
-           <widget class="QTableView" name="tableView_receipt"/>
+           <widget class="QTableView" name="tableView_receipt">
+            <property name="font">
+             <font>
+              <pointsize>12</pointsize>
+             </font>
+            </property>
+           </widget>
           </item>
           <item row="1" column="0" alignment="Qt::AlignHCenter">
            <widget class="QPushButton" name="pushButton_receipt_continue">
@@ -1191,7 +1226,7 @@
                  </palette>
                 </property>
                 <property name="currentIndex">
-                 <number>0</number>
+                 <number>2</number>
                 </property>
                 <widget class="QWidget" name="tab_INFO">
                  <attribute name="title">
@@ -1199,7 +1234,13 @@
                  </attribute>
                  <layout class="QVBoxLayout" name="verticalLayout">
                   <item>
-                   <widget class="QTableView" name="tableView_import"/>
+                   <widget class="QTableView" name="tableView_import">
+                    <property name="font">
+                     <font>
+                      <pointsize>12</pointsize>
+                     </font>
+                    </property>
+                   </widget>
                   </item>
                  </layout>
                 </widget>
@@ -1209,7 +1250,13 @@
                  </attribute>
                  <layout class="QGridLayout" name="gridLayout_2">
                   <item row="0" column="0">
-                   <widget class="QTableView" name="tableView_import_2"/>
+                   <widget class="QTableView" name="tableView_import_2">
+                    <property name="font">
+                     <font>
+                      <pointsize>12</pointsize>
+                     </font>
+                    </property>
+                   </widget>
                   </item>
                  </layout>
                 </widget>
@@ -1219,7 +1266,13 @@
                  </attribute>
                  <layout class="QGridLayout" name="gridLayout_3">
                   <item row="0" column="0">
-                   <widget class="QTableView" name="tableView_import_3"/>
+                   <widget class="QTableView" name="tableView_import_3">
+                    <property name="font">
+                     <font>
+                      <pointsize>12</pointsize>
+                     </font>
+                    </property>
+                   </widget>
                   </item>
                  </layout>
                 </widget>
@@ -1285,14 +1338,26 @@
                     <widget class="QWidget" name="page_souvenir">
                      <layout class="QVBoxLayout" name="verticalLayout_2">
                       <item>
-                       <widget class="QTableWidget" name="tableWidget_edit"/>
+                       <widget class="QTableWidget" name="tableWidget_edit">
+                        <property name="font">
+                         <font>
+                          <pointsize>12</pointsize>
+                         </font>
+                        </property>
+                       </widget>
                       </item>
                      </layout>
                     </widget>
                     <widget class="QWidget" name="page_stadium">
                      <layout class="QVBoxLayout" name="verticalLayout_3">
                       <item>
-                       <widget class="QTableView" name="tableView_edit"/>
+                       <widget class="QTableView" name="tableView_edit">
+                        <property name="font">
+                         <font>
+                          <pointsize>12</pointsize>
+                         </font>
+                        </property>
+                       </widget>
                       </item>
                      </layout>
                     </widget>
