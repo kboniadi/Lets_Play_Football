@@ -474,6 +474,7 @@ void MainWindow::populateSouvenirs(QString team)
     ui->tableView_search_souvenirs->setModel(model);
 }
 
+
 void MainWindow::on_comboBox_list_sort_currentIndexChanged(int index)
 {
     populateStadiumInfo(index, ui->comboBox_list_filterteams->currentIndex(), ui->comboBox_list_filterstadiums->currentIndex());

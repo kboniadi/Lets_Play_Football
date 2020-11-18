@@ -162,6 +162,7 @@ void TableManager::DeleteAllTableRows(QTableWidget *table)
 		table->removeRow(0);
 	}
 }
+
 void TableManager::showTeamInfo(QTableView *table, QString teamName)
 {
     QSqlQueryModel *model = new QSqlQueryModel;
