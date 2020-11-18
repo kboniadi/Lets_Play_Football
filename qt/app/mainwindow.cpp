@@ -328,6 +328,8 @@ void MainWindow::on_pushButton_plan_custom_clicked()
     ui->tableView_plan_custom->setVisible(true);
     ui->pushButton_plan_custom->setDisabled(true);
 
+    table->showTeamNames(ui->tableView_plan_custom);
+
     // planning logic
 
     ui->pushButton_plan_continue->setDisabled(false);
@@ -455,6 +457,8 @@ void MainWindow::populateTeams()
 void MainWindow::on_tableView_search_teams_doubleClicked(const QModelIndex &index)
 {
     populateSouvenirs(index.data().toString());
+    table->showTeamInfo(ui->tableView_search_info, index.data().toString());
+
 }
 
 void MainWindow::populateSouvenirs(QString team)
@@ -469,6 +473,7 @@ void MainWindow::populateSouvenirs(QString team)
     ui->tableView_search_souvenirs->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     ui->tableView_search_souvenirs->setModel(model);
 }
+
 
 void MainWindow::on_comboBox_list_sort_currentIndexChanged(int index)
 {

@@ -100,6 +100,17 @@ public:
 	 * @param table; Table to be deleted
 	 */
 	void DeleteAllTableRows(QTableWidget *table);
+    /*!
+     * @brief Shows team info on team search [age
+     * @param table; Table to be displayed
+     * @param teamName; name of teams whos info will be displayed
+     */
+    void showTeamInfo(QTableView * table, QString teamName);
+    /*!
+     * @brief shows list of teams user can visit
+     * @param table; Table to be displayed
+     */
+    void showTeamNames(QTableView * table);
 };
 
 #endif // TABLEMANAGER_H
