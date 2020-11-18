@@ -162,3 +162,26 @@ void TableManager::DeleteAllTableRows(QTableWidget *table)
 		table->removeRow(0);
 	}
 }
+
+void TableManager::showTeamInfo(QTableView *table, QString teamName)
+{
+    QSqlQueryModel *model = new QSqlQueryModel;
+    QString query = "SELECT * FROM information WHERE id = (SELECT teams.id FROM teams WHERE teams.teamNames = '" + teamName + "')";
+    model->setQuery(query);
+
+    table->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+    table->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    table->hideColumn(0);
+    table->setModel(model);
+}
+void TableManager::showTeamNames(QTableView *table)
+{
+    QSqlQueryModel * model = new QSqlQueryModel;
+    QString query = "SELECT teamNames FROM teams";
+    model->setQuery(query);
+    model->setHeaderData(0,Qt::Horizontal,QObject::tr("Teams"));
+
+    table->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    table->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    table->setModel(model);
+}

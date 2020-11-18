@@ -3,32 +3,32 @@
 #include <QElapsedTimer>
 
 DBManager::DBManager(QWidget *parent)
-	: QWidget{parent}, QSqlDatabase(QSqlDatabase::addDatabase("QSQLITE"))
+    : QWidget{parent}, QSqlDatabase(QSqlDatabase::addDatabase("QSQLITE"))
 {
-	setDatabaseName(QDir::currentPath() + "/Data.db");
+    setDatabaseName(QDir::currentPath() + "/Data.db");
 
-	// Print error if database does not open
-	if (!open()) {
-		qDebug() << "Connection to database failed";
-	} else {
-		qDebug() << "Connection to database succeeded";
-	}
+    // Print error if database does not open
+    if (!open()) {
+        qDebug() << "Connection to database failed";
+    } else {
+        qDebug() << "Connection to database succeeded";
+    }
 }
 
 DBManager::~DBManager()
 {
-	// Output when database closes
-	if (open()) {
-		qDebug() << "Connection to database has been closed";
-		QSqlDatabase::close();
-	}
+    // Output when database closes
+    if (open()) {
+        qDebug() << "Connection to database has been closed";
+        QSqlDatabase::close();
+    }
 }
 
 DBManager* DBManager::instance()
 {
-	// Create one and only one instance of the database
-	static DBManager instance;
-	return &instance;
+    // Create one and only one instance of the database
+    static DBManager instance;
+    return &instance;
 }
 
 bool DBManager::checkLogin(const QString &username, const QString &password)
