@@ -183,5 +183,6 @@ private:
 	QLabel status;
 
 	bool isValid(QString cur, QString prev);
+	QString toUpperCase(const QString &str);
 };
 #endif // MAINWINDOW_H

@@ -405,13 +405,14 @@ void MainWindow::on_pushButton_edit_confirm_clicked()
 	} else if (ui->stackedWidget_edit->currentIndex() == EDITSTAD) {
 		bool ok;
 		ui->pushButton_edit_add->setDisabled(true);
-		QString stadiumName = ui->lineEdit_edit_stadium_name->text().toUpper();
+
+		QString stadiumName = toUpperCase(ui->lineEdit_edit_stadium_name->text());
 		int cap = ui->lineEdit_edit_stadium_capacity->text().replace(",", "").toInt(&ok);
-		QString loc = ui->lineEdit_edit_stadium_location->text().toUpper();
-		QString surface = ui->lineEdit_edit_stadium_surface->text().toUpper();
-		QString roofType = ui->lineEdit_edit_stadium_roof->text().toUpper();
+		QString loc = toUpperCase(ui->lineEdit_edit_stadium_location->text());
+		QString surface = toUpperCase(ui->lineEdit_edit_stadium_surface->text());
+		QString roofType = toUpperCase(ui->lineEdit_edit_stadium_roof->text());
 		QModelIndexList selection = ui->tableView_edit->selectionModel()->selectedRows();
-		int id = selection[0].row();
+		int id = selection[0].row() + 1;
 
 		QString capacity = QLocale(QLocale::English).toString(cap);
 
@@ -428,6 +429,15 @@ void MainWindow::on_pushButton_edit_confirm_clicked()
 	ui->pushButton_pages_admin->setDisabled(true);
 }
 
+QString MainWindow::toUpperCase(const QString &str)
+{
+	QStringList parts = str.split(" ", Qt::SkipEmptyParts);
+	for (int i = 0; i < parts.size(); i++)
+		parts[i].replace(0, 1, parts[i][0].toUpper());
+
+	return parts.join(" ");
+}
+
 void MainWindow::on_pushButton_edit_cancel_clicked()
 {
     clearButtons();
@@ -436,7 +446,7 @@ void MainWindow::on_pushButton_edit_cancel_clicked()
 
 void MainWindow::on_tableView_edit_doubleClicked(const QModelIndex &index)
 {
-	SetStatusBar("Modify these entires and confirm changes", 5000);
+	SetStatusBar("Modify these entires then confirm your changes", 5000);
 	ui->lineEdit_edit_stadium_name->setValidator(new QRegExpValidator(QRegExp("[A-Za-z_ '&]{0,255}"), this));
 	// ^(?=.)(\d{1,3}(,\d{3})*)?(\.\d+)?$ (commas required)[0-9]{0,255}
 	// ^(\\d+|\\d{1,3}(,\\d{3})*)(\\.\\d+)?$ (commas not required)
