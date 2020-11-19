@@ -1306,7 +1306,7 @@
                   <item row="2" column="1">
                    <widget class="QStackedWidget" name="stackedWidget_edit">
                     <property name="currentIndex">
-                     <number>0</number>
+                     <number>1</number>
                     </property>
                     <widget class="QWidget" name="page_souvenir">
                      <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -1341,7 +1341,7 @@
                 <item row="3" column="0" rowspan="2" colspan="2">
                  <widget class="QWidget" name="formWidget_edit_stadium" native="true">
                   <layout class="QFormLayout" name="formLayout_5">
-                   <item row="1" column="0">
+                   <item row="0" column="0">
                     <widget class="QLabel" name="label_edit_stadium_name">
                      <property name="font">
                       <font>
@@ -1353,7 +1353,7 @@
                      </property>
                     </widget>
                    </item>
-                   <item row="1" column="1">
+                   <item row="0" column="1">
                     <widget class="QLineEdit" name="lineEdit_edit_stadium_name">
                      <property name="font">
                       <font>
@@ -1362,7 +1362,7 @@
                      </property>
                     </widget>
                    </item>
-                   <item row="2" column="0">
+                   <item row="1" column="0">
                     <widget class="QLabel" name="label_edit_stadium_capacity">
                      <property name="font">
                       <font>
@@ -1374,7 +1374,7 @@
                      </property>
                     </widget>
                    </item>
-                   <item row="2" column="1">
+                   <item row="1" column="1">
                     <widget class="QLineEdit" name="lineEdit_edit_stadium_capacity">
                      <property name="font">
                       <font>
@@ -1383,7 +1383,7 @@
                      </property>
                     </widget>
                    </item>
-                   <item row="3" column="0">
+                   <item row="2" column="0">
                     <widget class="QLabel" name="label_edit_stadium_location">
                      <property name="font">
                       <font>
@@ -1395,7 +1395,7 @@
                      </property>
                     </widget>
                    </item>
-                   <item row="3" column="1">
+                   <item row="2" column="1">
                     <widget class="QLineEdit" name="lineEdit_edit_stadium_location">
                      <property name="font">
                       <font>
@@ -1404,7 +1404,7 @@
                      </property>
                     </widget>
                    </item>
-                   <item row="4" column="0">
+                   <item row="3" column="0">
                     <widget class="QLabel" name="label_edit_stadium_surface">
                      <property name="font">
                       <font>
@@ -1416,7 +1416,7 @@
                      </property>
                     </widget>
                    </item>
-                   <item row="4" column="1">
+                   <item row="3" column="1">
                     <widget class="QLineEdit" name="lineEdit_edit_stadium_surface">
                      <property name="font">
                       <font>
@@ -1425,7 +1425,7 @@
                      </property>
                     </widget>
                    </item>
-                   <item row="5" column="0">
+                   <item row="4" column="0">
                     <widget class="QLabel" name="label_edit_stadium_roof">
                      <property name="font">
                       <font>
@@ -1437,7 +1437,7 @@
                      </property>
                     </widget>
                    </item>
-                   <item row="5" column="1">
+                   <item row="4" column="1">
                     <widget class="QLineEdit" name="lineEdit_edit_stadium_roof">
                      <property name="font">
                       <font>
@@ -1445,21 +1445,6 @@
                       </font>
                      </property>
                     </widget>
-                   </item>
-                   <item row="0" column="0">
-                    <widget class="QLabel" name="label_edit_team">
-                     <property name="font">
-                      <font>
-                       <pointsize>11</pointsize>
-                      </font>
-                     </property>
-                     <property name="text">
-                      <string>Team Name: </string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item row="0" column="1">
-                    <widget class="QLineEdit" name="lineEdit_edit_stadium_team"/>
                    </item>
                   </layout>
                  </widget>

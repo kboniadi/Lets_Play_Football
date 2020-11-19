@@ -143,7 +143,7 @@ void MainWindow::on_pushButton_pages_admin_clicked()
 
     void MainWindow::on_comboBox_edit_activated(int index)
     {
-        clearButtons();
+//        clearButtons();
 
         if (index == 0)
         {
@@ -160,6 +160,7 @@ void MainWindow::on_pushButton_pages_admin_clicked()
             ui->formWidget_edit_stadium->setVisible(true);
 			ui->tableView_edit->verticalHeader()->hide();
 			table->AdminInfoTable(ui->tableView_edit);
+			ui->pushButton_edit_add->setDisabled(true);
         }
     }
 
@@ -257,14 +258,7 @@ void MainWindow::on_pushButton_edit_add_clicked() // admin add button
     ui->pushButton_edit_add->setDisabled(true);
     ui->pushButton_edit_cancel->setDisabled(false);
 
-	if (ui->stackedWidget_edit->currentIndex() == EDITSTAD) {
-		ui->lineEdit_edit_stadium_team->setValidator(new QRegExpValidator(QRegExp("[A-Za-z_ ]{0,255}"), this));
-		ui->lineEdit_edit_stadium_name->setValidator(new QRegExpValidator(QRegExp("[A-Za-z_ ]{0,255}"), this));
-		ui->lineEdit_edit_stadium_capacity->setValidator(new QRegExpValidator(QRegExp("[0-9]{0,255}"), this));
-		ui->lineEdit_edit_stadium_location->setValidator(new QRegExpValidator(QRegExp("[A-Za-z_ ]{0,255}"), this));
-		ui->lineEdit_edit_stadium_surface->setValidator(new QRegExpValidator(QRegExp("[A-Za-z_ ]{0,255}"), this));
-		ui->lineEdit_edit_stadium_roof->setValidator(new QRegExpValidator(QRegExp("[A-Za-z_ ]{0,255}"), this));
-	} else if (ui->stackedWidget_edit->currentIndex() == EDITSOUV) {
+	if (ui->stackedWidget_edit->currentIndex() == EDITSOUV) {
 		ui->lineEdit_edit_souvenir_team->setValidator(new QRegExpValidator(QRegExp("[A-Za-z_ ]{0,255}"), this));
 		ui->lineEdit_edit_souvenir_name->setValidator(new QRegExpValidator(QRegExp("[A-Za-z_ ]{0,255}"), this));
 		ui->lineEdit_edit_souvenir_price->setValidator(new QRegExpValidator(QRegExp("[0-9]{0,255}[.]{1}[0-9]{0,2}"), this));
@@ -369,7 +363,7 @@ bool MainWindow::isValid(QString cur, QString prev)
 //			return false;
 //		}
 	}
-	qDebug() << "Something went wrong: MainWindow::isValid(QString cur, QString prev)";
+	qDebug() << "Something went wrong: MainWindow::isValid(QString, QString)";
 	assert(false);
 }
 
@@ -392,13 +386,65 @@ void MainWindow::on_pushButton_edit_confirm_clicked()
 			table->InitializeAdminEditTable(ui->tableWidget_edit);
 			table->PopulateAdminEditTable(ui->tableWidget_edit);
 		}
+	} else if (ui->stackedWidget_edit->currentIndex() == EDITSTAD) {
+		bool ok;
+		ui->pushButton_edit_add->setDisabled(true);
+		QString stadiumName = ui->lineEdit_edit_stadium_name->text().toUpper();
+		int cap = ui->lineEdit_edit_stadium_capacity->text().toInt(&ok);
+		QString loc = ui->lineEdit_edit_stadium_location->text().toUpper();
+		QString surface = ui->lineEdit_edit_stadium_surface->text().toUpper();
+		QString roofType = ui->lineEdit_edit_stadium_roof->text().toUpper();
+		QModelIndexList selection = ui->tableView_edit->selectionModel()->selectedRows();
+		int id = selection[0].row();
+
+		QString capacity = QLocale(QLocale::English).toString(cap);
+
+		if (stadiumName.isEmpty() || loc.isEmpty() ||
+				surface.isEmpty() || roofType.isEmpty() || !ok) {
+			QMessageBox::warning(this, tr("Notice"),
+					tr("There was an error with your query.\nPlease try again."));
+		} else {
+			DBManager::instance()->UpdateInformation(id, stadiumName, capacity, loc, surface, roofType);
+			table->AdminInfoTable(ui->tableView_edit);
+		}
 	}
 	clearButtons();
+	ui->pushButton_pages_admin->setDisabled(true);
 }
 
 void MainWindow::on_pushButton_edit_cancel_clicked()
 {
     clearButtons();
+	ui->pushButton_pages_admin->setDisabled(true);
+}
+
+void MainWindow::on_tableView_edit_doubleClicked(const QModelIndex &index)
+{
+	ui->lineEdit_edit_stadium_name->setValidator(new QRegExpValidator(QRegExp("[A-Za-z_ ]{0,255}"), this));
+	// ^(?=.)(\d{1,3}(,\d{3})*)?(\.\d+)?$ (commas required)[0-9]{0,255}
+	// ^(\\d+|\\d{1,3}(,\\d{3})*)(\\.\\d+)?$ (commas not required)
+	ui->lineEdit_edit_stadium_capacity->setValidator(new QRegExpValidator(QRegExp("[0-9]{0,255}"), this));
+	ui->lineEdit_edit_stadium_location->setValidator(new QRegExpValidator(QRegExp("[A-Za-z_ ]{0,255}[,]{1}[A-Za-z_ ]{0,255}"), this));
+	ui->lineEdit_edit_stadium_surface->setValidator(new QRegExpValidator(QRegExp("[A-Za-z0-9_ -]{0,255}"), this));
+	ui->lineEdit_edit_stadium_roof->setValidator(new QRegExpValidator(QRegExp("[A-Za-z_ ]{0,255}"), this));
+	ui->formWidget_edit_stadium->setDisabled(false);
+	ui->pushButton_edit_confirm->setDisabled(false);
+	ui->pushButton_edit_cancel->setDisabled(false);
+	ui->pushButton_edit_delete->setDisabled(true);
+	QSqlQuery query;
+	query.prepare("SELECT stadiumName, seatCap, location, surfaceType, roofType FROM information WHERE information.id = :id");
+	query.bindValue(":id", index.row() + 1);
+
+	if (query.exec()) {
+		query.first();
+		ui->lineEdit_edit_stadium_name->setText(query.value(0).toString());
+		ui->lineEdit_edit_stadium_capacity->setText(query.value(1).toString());
+		ui->lineEdit_edit_stadium_location->setText(query.value(2).toString());
+		ui->lineEdit_edit_stadium_surface->setText(query.value(3).toString());
+		ui->lineEdit_edit_stadium_roof->setText(query.value(4).toString());
+	} else {
+		qDebug() << "MainWindow::on_tableView_edit_doubleClicked(const QModelIndex&) : query failed";
+	}
 }
 
 void MainWindow::on_pushButton_plan_packers_clicked()

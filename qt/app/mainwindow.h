@@ -109,6 +109,8 @@ private slots:
 	void on_tableWidget_edit_cellClicked(int row, int column);
 	void ProcessDelete(int row, int col);
 
+	void on_tableView_edit_doubleClicked(const QModelIndex &index);
+
 signals:
 	void EmittedSignal(int row, int col, QString prev);
 	void EmittedDelSignal(int row, int col);

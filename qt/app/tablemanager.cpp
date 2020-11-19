@@ -26,8 +26,11 @@ void TableManager::AdminInfoTable(QTableView *table)
 	table->setEditTriggers(QAbstractItemView::NoEditTriggers);
 	table->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 	table->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+	table->setSelectionBehavior(QAbstractItemView::SelectRows);
 	table->setModel(model);
 }
+
+
 
 void TableManager::AdminDistTable(QTableView *table)
 {
@@ -48,6 +51,7 @@ void TableManager::AdminDistTable(QTableView *table)
 	table->setEditTriggers(QAbstractItemView::NoEditTriggers);
 	table->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 	table->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+	table->setSelectionBehavior(QAbstractItemView::SelectRows);
 	table->setModel(model);
 }
 
@@ -68,6 +72,7 @@ void TableManager::AdminSouvTable(QTableView *table)
 	table->setEditTriggers(QAbstractItemView::NoEditTriggers);
 	table->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 	table->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+	table->setSelectionBehavior(QAbstractItemView::SelectRows);
 	table->setModel(model);
 }
 

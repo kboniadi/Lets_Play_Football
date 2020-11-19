@@ -356,3 +356,22 @@ void DBManager::DeleteSouvenir(QString teamName, QString item)
 			qDebug() << "DBManager::DeleteSouvenir(QString, QString) : query failed";
 		query.finish();
 }
+
+void DBManager::UpdateInformation(int id, QString stadiumName, QString cap, QString loc, QString surfaceType, QString roofType)
+{
+	// Prep query
+	query.prepare("UPDATE information SET stadiumName = :stadiumName, seatCap = :cap, location = :loc, surfaceType = :surfaceType, roofType = :roofType WHERE information.id = :id");
+
+	// Bind values safely
+	query.bindValue(":stadiumName", stadiumName);
+	query.bindValue(":cap", cap);
+	query.bindValue(":loc", loc);
+	query.bindValue(":surfaceType", surfaceType);
+	query.bindValue(":roofType", roofType);
+	query.bindValue(":id", id);
+
+	// If query does not execute, print error
+	if (!query.exec())
+		qDebug() << "DBManager::UpdateInformation(int, QString, QString, QString, QString, QString) : query failed";
+	query.finish();
+}
