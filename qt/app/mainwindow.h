@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QTableWidgetItem>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -103,6 +104,14 @@ private slots:
 	
 	void on_pushButton_import_clicked();
 
+	void on_tableWidget_edit_doubleClicked(const QModelIndex &index);
+	void UpdateTable(int row, int col, QString prev);
+	void on_tableWidget_edit_cellClicked(int row, int column);
+	void ProcessDelete(int row, int col);
+
+signals:
+	void EmittedSignal(int row, int col, QString prev);
+	void EmittedDelSignal(int row, int col);
 private:
     /*----NAVIGATION ENUMS----*/
     enum Pages
@@ -167,5 +176,7 @@ private:
 
 	Ui::MainWindow *ui;
 	TableManager *table;
+
+	bool isValid(QString cur, QString prev);
 };
 #endif // MAINWINDOW_H

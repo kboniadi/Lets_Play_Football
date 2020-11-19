@@ -78,7 +78,8 @@ void TableManager::InitializeAdminEditTable(QTableWidget *table)
 	table->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 	table->setHorizontalHeaderLabels(adminTableSouvColNames);
 	// TODO - Might be a good idea to set column widths here
-	table->setEditTriggers(QTableView::NoEditTriggers);
+	table->setEditTriggers(QTableView::DoubleClicked);
+	table->setSelectionBehavior(QTableView::SelectRows);
 	table->hideColumn(AS_KEY);
 	table->verticalHeader()->hide();
 
@@ -89,6 +90,7 @@ void TableManager::InitializeAdminEditTable(QTableWidget *table)
 void TableManager::PopulateAdminEditTable(QTableWidget *table)
 {
 	QTableWidgetItem* priceItem;
+	QTableWidgetItem *item;
 	QString currentName;
 	QString previousName;
 	QStringList teams;
@@ -106,8 +108,9 @@ void TableManager::PopulateAdminEditTable(QTableWidget *table)
 		// Iterate through each city's food list
 		for(int j = 0; j < numSouvenir; j++)
 		{
+			item = new QTableWidgetItem(db->SouvenirNameToPrice(teams[i], souvenirs[j]));
 			// Generate item price tablewidget item
-			priceItem = new QTableWidgetItem(db->SouvenirNameToPrice(teams[i], souvenirs[j]));
+			priceItem = item;
 
 			// If list is not empty
 			if(table->rowCount() != 0)
@@ -124,12 +127,16 @@ void TableManager::PopulateAdminEditTable(QTableWidget *table)
 				// If the row names do not match, insert the city name into the name column
 				if(!match)
 				{
+					item = new QTableWidgetItem(teams[i]);
+					item->setFlags(item->flags() & ~Qt::ItemIsEditable);
 					// Insert city name into city name column
-					table->setItem(table->rowCount() - 1, A_TEAMNAME_SOUVENIR, new QTableWidgetItem(teams[i]));
+					table->setItem(table->rowCount() - 1, A_TEAMNAME_SOUVENIR, item);
 				}
 				else // Else, insert blank name
 				{
-					table->setItem(table->rowCount() - 1, A_TEAMNAME_SOUVENIR, new QTableWidgetItem(""));
+					item = new QTableWidgetItem("");
+					item->setFlags(item->flags() & ~Qt::ItemIsEditable);
+					table->setItem(table->rowCount() - 1, A_TEAMNAME_SOUVENIR, item);
 				}
 			} // END if purchase table not empty
 			else // if purchase table empty
@@ -137,14 +144,21 @@ void TableManager::PopulateAdminEditTable(QTableWidget *table)
 				// Add new row
 				table->insertRow(table->rowCount());
 
+				item = new QTableWidgetItem(teams[i]);
+				item->setFlags(item->flags() & ~Qt::ItemIsEditable);
 				// Insert city name into city name column
-				table->setItem(table->rowCount() - 1, A_TEAMNAME_SOUVENIR, new QTableWidgetItem(teams[i]));
+				table->setItem(table->rowCount() - 1, A_TEAMNAME_SOUVENIR, item);
 			}
 
+			item = new QTableWidgetItem(teams[i]);
+			item->setFlags(item->flags() & ~Qt::ItemIsEditable);
 			// Insert city name into key column
-			table->setItem(table->rowCount() - 1, AS_KEY, new QTableWidgetItem(teams[i]));
+			table->setItem(table->rowCount() - 1, AS_KEY, item);
+
+			item = new QTableWidgetItem(souvenirs[j]);
+			item->setFlags(item->flags() & ~Qt::ItemIsEditable);
 			// Add food name
-			table->setItem(table->rowCount() - 1, A_ITEM, new QTableWidgetItem(souvenirs[j]));
+			table->setItem(table->rowCount() - 1, A_ITEM, item);
 			// Add food price
 			table->setItem(table->rowCount() - 1, A_PRICE, priceItem);
 

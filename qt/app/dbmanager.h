@@ -59,6 +59,10 @@ public:
 	void AddInfo(QString teamName, QString stadiumName, QString seatCap,
 				 QString location, QString conference, QString division,
 				 QString surfaceType, QString roofType, QString dateOpen);
+
+	void AddSouvenir(QString teamName, QString item, QString price);
+	void UpdateSouvenirPrice(QString teamName, QString item, QString price);
+	void DeleteSouvenir(QString teamName, QString item);
 private:
     QSqlQuery query;
 	/*!
