@@ -357,10 +357,13 @@ void DBManager::DeleteSouvenir(QString teamName, QString item)
 		query.finish();
 }
 
-void DBManager::UpdateInformation(int id, QString stadiumName, QString cap, QString loc, QString surfaceType, QString roofType)
+void DBManager::UpdateInformation(int id, QString stadiumName, QString cap, QString loc, QString surfaceType, QString roofType, QString dateOpen)
 {
 	// Prep query
-	query.prepare("UPDATE information SET stadiumName = :stadiumName, seatCap = :cap, location = :loc, surfaceType = :surfaceType, roofType = :roofType WHERE information.id = :id");
+	query.prepare("UPDATE information SET stadiumName = :stadiumName, "
+				  "seatCap = :cap, location = :loc, surfaceType = "
+				  ":surfaceType, roofType = :roofType, dateOpen = :dateOpen "
+				  "WHERE information.id = :id");
 
 	// Bind values safely
 	query.bindValue(":stadiumName", stadiumName);
@@ -368,6 +371,7 @@ void DBManager::UpdateInformation(int id, QString stadiumName, QString cap, QStr
 	query.bindValue(":loc", loc);
 	query.bindValue(":surfaceType", surfaceType);
 	query.bindValue(":roofType", roofType);
+	query.bindValue(":dateOpen", dateOpen);
 	query.bindValue(":id", id);
 
 	// If query does not execute, print error

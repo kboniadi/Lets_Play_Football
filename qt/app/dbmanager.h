@@ -63,7 +63,7 @@ public:
 	void AddSouvenir(QString teamName, QString item, QString price);
 	void UpdateSouvenirPrice(QString teamName, QString item, QString price);
 	void DeleteSouvenir(QString teamName, QString item);
-	void UpdateInformation(int id, QString stadiumName, QString cap, QString loc, QString surfaceType, QString roofType);
+	void UpdateInformation(int id, QString stadiumName, QString cap, QString loc, QString surfaceType, QString roofType, QString dateOpen);
 	QSqlQuery* getQuery() { return &query; }
 private:
     QSqlQuery query;

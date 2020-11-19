@@ -387,17 +387,18 @@ void MainWindow::on_pushButton_edit_confirm_clicked()
 		QString loc = toUpperCase(ui->lineEdit_edit_stadium_location->text());
 		QString surface = toUpperCase(ui->lineEdit_edit_stadium_surface->text());
 		QString roofType = toUpperCase(ui->lineEdit_edit_stadium_roof->text());
+		QString dateOpen = ui->lineEdit_edit_stadium_dateopen->text();
 		QModelIndexList selection = ui->tableView_edit->selectionModel()->selectedRows();
 		int id = selection[0].row() + 1;
 
 		QString capacity = QLocale(QLocale::English).toString(cap);
 
 		if (stadiumName.isEmpty() || loc.isEmpty() ||
-				surface.isEmpty() || roofType.isEmpty() || !ok) {
+				surface.isEmpty() || roofType.isEmpty() || dateOpen.isEmpty() || !ok) {
 			QMessageBox::warning(this, tr("Notice"),
 					tr("There was an error with your query.\nPlease try again."));
 		} else {
-			DBManager::instance()->UpdateInformation(id, stadiumName, capacity, loc, surface, roofType);
+			DBManager::instance()->UpdateInformation(id, stadiumName, capacity, loc, surface, roofType, dateOpen);
 			table->AdminInfoTable(ui->tableView_edit);
 		}
 	}
@@ -421,12 +422,13 @@ void MainWindow::on_tableView_edit_doubleClicked(const QModelIndex &index)
 	ui->lineEdit_edit_stadium_location->setValidator(new QRegExpValidator(QRegExp("[A-Za-z_ ]{0,255}[,]{1}[A-Za-z_ ]{0,255}"), this));
 	ui->lineEdit_edit_stadium_surface->setValidator(new QRegExpValidator(QRegExp("[A-Za-z0-9_ -]{0,255}"), this));
 	ui->lineEdit_edit_stadium_roof->setValidator(new QRegExpValidator(QRegExp("[A-Za-z_ ]{0,255}"), this));
+	ui->lineEdit_edit_stadium_dateopen->setValidator(new QRegExpValidator(QRegExp("[0-9]{0,4}"), this));
 	ui->formWidget_edit_stadium->setDisabled(false);
 	ui->pushButton_edit_confirm->setDisabled(false);
 	ui->pushButton_edit_cancel->setDisabled(false);
 	ui->pushButton_edit_delete->setDisabled(true);
 	QSqlQuery query;
-	query.prepare("SELECT stadiumName, seatCap, location, surfaceType, roofType FROM information WHERE information.id = :id");
+	query.prepare("SELECT stadiumName, seatCap, location, surfaceType, roofType, dateOpen FROM information WHERE information.id = :id");
 	query.bindValue(":id", index.row() + 1);
 
 	if (query.exec()) {
@@ -436,6 +438,7 @@ void MainWindow::on_tableView_edit_doubleClicked(const QModelIndex &index)
 		ui->lineEdit_edit_stadium_location->setText(query.value(2).toString());
 		ui->lineEdit_edit_stadium_surface->setText(query.value(3).toString());
 		ui->lineEdit_edit_stadium_roof->setText(query.value(4).toString());
+		ui->lineEdit_edit_stadium_dateopen->setText(query.value(5).toString());
 	} else {
 		qDebug() << "MainWindow::on_tableView_edit_doubleClicked(const QModelIndex&) : query failed";
 	}
