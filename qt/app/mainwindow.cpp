@@ -415,7 +415,7 @@ void MainWindow::on_tableView_edit_doubleClicked(const QModelIndex &index)
 {
 	SetStatusBar("Modify these entires then confirm your changes", 5000);
 	ui->lineEdit_edit_stadium_name->setValidator(new QRegExpValidator(QRegExp("[A-Za-z_ '&]{0,255}"), this));
-	// ^(?=.)(\d{1,3}(,\d{3})*)?(\.\d+)?$ (commas required)[0-9]{0,255}
+	// ^(?=.)(\d{1,3}(,\d{3})*)?(\.\d+)?$ (commas required)
 	// ^(\\d+|\\d{1,3}(,\\d{3})*)(\\.\\d+)?$ (commas not required)
 	ui->lineEdit_edit_stadium_capacity->setValidator(new QRegExpValidator(QRegExp("[0-9]{0,255}"), this));
 	ui->lineEdit_edit_stadium_location->setValidator(new QRegExpValidator(QRegExp("[A-Za-z_ ]{0,255}[,]{1}[A-Za-z_ ]{0,255}"), this));
