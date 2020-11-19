@@ -359,30 +359,6 @@ void MainWindow::UpdateTable(int row, int column, QString prev)
 }
 #undef table
 
-bool MainWindow::isValid(QString cur, QString prev)
-{
-	bool isNum;
-	cur.toDouble(&isNum);
-	QRegExp regNum("[0-9]{0,255}[.]{1}[0-9]{0,2}");
-	QRegExp regStr("[A-Za-z_ ]{0,255}");
-	if (regNum.exactMatch(prev)) {
-		if (regNum.exactMatch(cur)) {
-			return true;
-		} else {
-			return false;
-		}
-	} else if (regStr.exactMatch(prev)) {
-		return false;
-//		if (regStr.exactMatch(cur)) {
-//			return true;
-//		} else {
-//			return false;
-//		}
-	}
-	qDebug() << "Something went wrong: MainWindow::isValid(QString, QString)";
-	assert(false);
-}
-
 void MainWindow::on_pushButton_edit_confirm_clicked()
 {
 	if (ui->stackedWidget_edit->currentIndex() == EDITSOUV) {
@@ -427,15 +403,6 @@ void MainWindow::on_pushButton_edit_confirm_clicked()
 	}
 	clearButtons();
 	ui->pushButton_pages_admin->setDisabled(true);
-}
-
-QString MainWindow::toUpperCase(const QString &str)
-{
-	QStringList parts = str.split(" ", Qt::SkipEmptyParts);
-	for (int i = 0; i < parts.size(); i++)
-		parts[i].replace(0, 1, parts[i][0].toUpper());
-
-	return parts.join(" ");
 }
 
 void MainWindow::on_pushButton_edit_cancel_clicked()
@@ -683,4 +650,37 @@ void MainWindow::on_comboBox_list_filterteams_currentIndexChanged(int index)
 void MainWindow::on_comboBox_list_filterstadiums_currentIndexChanged(int index)
 {
     populateStadiumInfo(ui->comboBox_list_sort->currentIndex(), ui->comboBox_list_filterteams->currentIndex(), index);
+}
+
+bool MainWindow::isValid(QString cur, QString prev)
+{
+	bool isNum;
+	cur.toDouble(&isNum);
+	QRegExp regNum("[0-9]{0,255}[.]{1}[0-9]{0,2}");
+	QRegExp regStr("[A-Za-z_ ]{0,255}");
+	if (regNum.exactMatch(prev)) {
+		if (regNum.exactMatch(cur)) {
+			return true;
+		} else {
+			return false;
+		}
+	} else if (regStr.exactMatch(prev)) {
+		return false;
+//		if (regStr.exactMatch(cur)) {
+//			return true;
+//		} else {
+//			return false;
+//		}
+	}
+	qDebug() << "Something went wrong: MainWindow::isValid(QString, QString)";
+	assert(false);
+}
+
+QString MainWindow::toUpperCase(const QString &str)
+{
+	QStringList parts = str.split(" ", Qt::SkipEmptyParts);
+	for (int i = 0; i < parts.size(); i++)
+		parts[i].replace(0, 1, parts[i][0].toUpper());
+
+	return parts.join(" ");
 }
