@@ -227,7 +227,6 @@ void MainWindow::clearButtons() // resets most program states
     ui->formWidget_edit_stadium->setDisabled(true);
     ui->pushButton_edit_confirm->setDisabled(true);
     ui->pushButton_edit_cancel->setDisabled(true);
-    ui->pushButton_edit_edit->setDisabled(true);
     ui->pushButton_edit_delete->setDisabled(true);
     ui->pushButton_edit_add->setDisabled(false);
 
