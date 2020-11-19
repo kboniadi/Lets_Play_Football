@@ -10,6 +10,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
 	ui->setupUi(this);
+	ui->statusbar->addWidget(&status);
 	DBManager::instance();
 	table = new TableManager;
     Layout::instance();
@@ -19,7 +20,21 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {
-    delete ui;
+	delete ui;
+}
+
+void MainWindow::SetStatusBar(const QString &messg, int timeout)
+{
+	if (timeout == 0) {
+		ui->statusbar->clearMessage();
+		status.setText(messg);
+		if (messg.isEmpty())
+			status.hide();
+		else
+			status.show();
+	} else {
+		ui->statusbar->showMessage(messg, timeout);
+	}
 }
 
 /*----NAVIGATION----*/
@@ -305,6 +320,7 @@ void MainWindow::ProcessDelete(int row, int /*col*/)
 
 void MainWindow::on_tableWidget_edit_doubleClicked(const QModelIndex &index)
 {
+	SetStatusBar("Double click the price to modify it or hit the delete button to remove the entry all together", 5000);
 	static QString temp;
 	temp = index.data().toString();
 
@@ -390,7 +406,7 @@ void MainWindow::on_pushButton_edit_confirm_clicked()
 		bool ok;
 		ui->pushButton_edit_add->setDisabled(true);
 		QString stadiumName = ui->lineEdit_edit_stadium_name->text().toUpper();
-		int cap = ui->lineEdit_edit_stadium_capacity->text().toInt(&ok);
+		int cap = ui->lineEdit_edit_stadium_capacity->text().replace(",", "").toInt(&ok);
 		QString loc = ui->lineEdit_edit_stadium_location->text().toUpper();
 		QString surface = ui->lineEdit_edit_stadium_surface->text().toUpper();
 		QString roofType = ui->lineEdit_edit_stadium_roof->text().toUpper();
@@ -420,7 +436,8 @@ void MainWindow::on_pushButton_edit_cancel_clicked()
 
 void MainWindow::on_tableView_edit_doubleClicked(const QModelIndex &index)
 {
-	ui->lineEdit_edit_stadium_name->setValidator(new QRegExpValidator(QRegExp("[A-Za-z_ ]{0,255}"), this));
+	SetStatusBar("Modify these entires and confirm changes", 5000);
+	ui->lineEdit_edit_stadium_name->setValidator(new QRegExpValidator(QRegExp("[A-Za-z_ '&]{0,255}"), this));
 	// ^(?=.)(\d{1,3}(,\d{3})*)?(\.\d+)?$ (commas required)[0-9]{0,255}
 	// ^(\\d+|\\d{1,3}(,\\d{3})*)(\\.\\d+)?$ (commas not required)
 	ui->lineEdit_edit_stadium_capacity->setValidator(new QRegExpValidator(QRegExp("[0-9]{0,255}"), this));

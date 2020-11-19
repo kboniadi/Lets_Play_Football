@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QTableWidgetItem>
+#include <QLabel>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -19,6 +20,7 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+	void SetStatusBar(const QString & messg, int timeout = 0);
 
 private slots:
     /*----NAVIGATION----*/
@@ -178,6 +180,7 @@ private:
 
 	Ui::MainWindow *ui;
 	TableManager *table;
+	QLabel status;
 
 	bool isValid(QString cur, QString prev);
 };
