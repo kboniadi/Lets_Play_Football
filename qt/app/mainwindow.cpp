@@ -682,7 +682,7 @@ bool MainWindow::isValid(QString cur, QString prev)
 
 QString MainWindow::toUpperCase(const QString &str)
 {
-	QStringList parts = str.split(" ", Qt::SkipEmptyParts);
+	QStringList parts = str.split(" ", QString::SkipEmptyParts);
 	for (int i = 0; i < parts.size(); i++)
 		parts[i].replace(0, 1, parts[i][0].toUpper());
 
