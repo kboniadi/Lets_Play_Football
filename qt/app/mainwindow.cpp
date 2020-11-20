@@ -276,9 +276,9 @@ void MainWindow::on_pushButton_edit_add_clicked() // admin add button
     ui->pushButton_edit_cancel->setDisabled(false);
 
 	if (ui->stackedWidget_edit->currentIndex() == EDITSOUV) {
-		ui->lineEdit_edit_souvenir_team->setValidator(new QRegExpValidator(QRegExp("[A-Za-z_ ]{0,25}"), this));
-		ui->lineEdit_edit_souvenir_name->setValidator(new QRegExpValidator(QRegExp("[A-Za-z_ ]{0,25}"), this));
-		ui->lineEdit_edit_souvenir_price->setValidator(new QRegExpValidator(QRegExp("[0-9]{0,25}[.]{1}[0-9]{0,2}"), this));
+		ui->lineEdit_edit_souvenir_team->setValidator(new QRegExpValidator(QRegExp("[A-Za-z_ ]{0,60}"), this));
+		ui->lineEdit_edit_souvenir_name->setValidator(new QRegExpValidator(QRegExp("[A-Za-z_ ]{0,60}"), this));
+		ui->lineEdit_edit_souvenir_price->setValidator(new QRegExpValidator(QRegExp("[0-9]{0,60}[.]{1}[0-9]{0,2}"), this));
 	}
     // code + error checking
 
@@ -378,7 +378,6 @@ void MainWindow::on_pushButton_edit_confirm_clicked()
 		else if (temp == 0)
 			price += "00";
 
-		qDebug() << price;
 #define db() DBManager::instance()
 		if (!db()->isTeamExist(teamName) ||
 			db()->isSouvenirExist(teamName, item) || item.isEmpty() ||
@@ -427,13 +426,13 @@ void MainWindow::on_pushButton_edit_cancel_clicked()
 void MainWindow::on_tableView_edit_doubleClicked(const QModelIndex &index)
 {
 	SetStatusBar("Modify these entires then confirm your changes", 5000);
-	ui->lineEdit_edit_stadium_name->setValidator(new QRegExpValidator(QRegExp("[A-Za-z_ '&]{0,255}"), this));
+	ui->lineEdit_edit_stadium_name->setValidator(new QRegExpValidator(QRegExp("[A-Za-z_ '&]{0,60}"), this));
 	// ^(?=.)(\d{1,3}(,\d{3})*)?(\.\d+)?$ (commas required)
 	// ^(\\d+|\\d{1,3}(,\\d{3})*)(\\.\\d+)?$ (commas not required)
-	ui->lineEdit_edit_stadium_capacity->setValidator(new QRegExpValidator(QRegExp("[0-9]{0,255}"), this));
-	ui->lineEdit_edit_stadium_location->setValidator(new QRegExpValidator(QRegExp("[A-Za-z_ ]{0,255}[,]{1}[A-Za-z_ ]{0,255}"), this));
-	ui->lineEdit_edit_stadium_surface->setValidator(new QRegExpValidator(QRegExp("[A-Za-z0-9_ -]{0,255}"), this));
-	ui->lineEdit_edit_stadium_roof->setValidator(new QRegExpValidator(QRegExp("[A-Za-z_ ]{0,255}"), this));
+	ui->lineEdit_edit_stadium_capacity->setValidator(new QRegExpValidator(QRegExp("[0-9]{0,60}"), this));
+	ui->lineEdit_edit_stadium_location->setValidator(new QRegExpValidator(QRegExp("[A-Za-z_ ]{0,60}[,]{1}[A-Za-z_ ]{0,60}"), this));
+	ui->lineEdit_edit_stadium_surface->setValidator(new QRegExpValidator(QRegExp("[A-Za-z0-9_ -]{0,60}"), this));
+	ui->lineEdit_edit_stadium_roof->setValidator(new QRegExpValidator(QRegExp("[A-Za-z_ ]{0,60}"), this));
 	ui->lineEdit_edit_stadium_dateopen->setValidator(new QRegExpValidator(QRegExp("[0-9]{0,4}"), this));
 	ui->formWidget_edit_stadium->setDisabled(false);
 	ui->pushButton_edit_confirm->setDisabled(false);
