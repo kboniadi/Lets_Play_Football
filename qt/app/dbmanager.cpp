@@ -379,3 +379,20 @@ void DBManager::UpdateInformation(int id, QString stadiumName, QString cap, QStr
 		qDebug() << "DBManager::UpdateInformation(int, QString, QString, QString, QString, QString) : query failed";
 	query.finish();
 }
+
+bool DBManager::isTeamExist(QString teamName)
+{
+	query.prepare("SELECT 1 FROM teams WHERE teams.teamNames = :teamName");
+	query.bindValue(":teamNames", teamName);
+
+	return query.exec();
+}
+
+bool DBManager::isSouvenirExist(QString teamName, QString item)
+{
+	query.prepare("SELECT 1 FROM souvenir, teams WHERE teams.teamNames = :teamName AND souvenir.items = :item");
+	query.bindValue(":teamName", teamName);
+	query.bindValue(":item", item);
+
+	return query.exec();
+}

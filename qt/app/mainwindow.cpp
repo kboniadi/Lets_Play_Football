@@ -258,6 +258,7 @@ void MainWindow::clearButtons() // resets most program states
 	ui->lineEdit_edit_stadium_name->clear();
 	ui->lineEdit_edit_stadium_roof->clear();
 	ui->lineEdit_edit_stadium_surface->clear();
+	ui->lineEdit_edit_stadium_dateopen->clear();
 }
 
 void MainWindow::clearViewLabels()
@@ -275,9 +276,9 @@ void MainWindow::on_pushButton_edit_add_clicked() // admin add button
     ui->pushButton_edit_cancel->setDisabled(false);
 
 	if (ui->stackedWidget_edit->currentIndex() == EDITSOUV) {
-		ui->lineEdit_edit_souvenir_team->setValidator(new QRegExpValidator(QRegExp("[A-Za-z_ ]{0,255}"), this));
-		ui->lineEdit_edit_souvenir_name->setValidator(new QRegExpValidator(QRegExp("[A-Za-z_ ]{0,255}"), this));
-		ui->lineEdit_edit_souvenir_price->setValidator(new QRegExpValidator(QRegExp("[0-9]{0,255}[.]{1}[0-9]{0,2}"), this));
+		ui->lineEdit_edit_souvenir_team->setValidator(new QRegExpValidator(QRegExp("[A-Za-z_ ]{0,25}"), this));
+		ui->lineEdit_edit_souvenir_name->setValidator(new QRegExpValidator(QRegExp("[A-Za-z_ ]{0,25}"), this));
+		ui->lineEdit_edit_souvenir_price->setValidator(new QRegExpValidator(QRegExp("[0-9]{0,25}[.]{1}[0-9]{0,2}"), this));
 	}
     // code + error checking
 
@@ -362,25 +363,35 @@ void MainWindow::UpdateTable(int row, int column, QString prev)
 
 void MainWindow::on_pushButton_edit_confirm_clicked()
 {
+	bool ok = false;
 	if (ui->stackedWidget_edit->currentIndex() == EDITSOUV) {
 		QString teamName = ui->lineEdit_edit_souvenir_team->text();
 		QString item = ui->lineEdit_edit_souvenir_name->text();
 		QString price = ui->lineEdit_edit_souvenir_price->text();
 
-		QStringList list;
+		int temp = (price.size() - 1) - price.indexOf('.');
 
-		DBManager::instance()->GetTeams(list);
+		if (!price.contains("."))
+			price += ".00";
+		else if (temp == 1)
+			price += "0";
+		else if (temp == 0)
+			price += "00";
 
-		if (!list.contains(teamName) || item.isEmpty() || price.isEmpty()) {
+		qDebug() << price;
+#define db() DBManager::instance()
+		if (!db()->isTeamExist(teamName) ||
+			db()->isSouvenirExist(teamName, item) || item.isEmpty() ||
+				price.isEmpty()) {
 			QMessageBox::warning(this, tr("Notice"),
 					tr("There was an error with your query.\nPlease try again."));
 		} else {
-			DBManager::instance()->AddSouvenir(teamName, item, price);
+			db()->AddSouvenir(teamName, item, price);
 			table->InitializeAdminEditTable(ui->tableWidget_edit);
 			table->PopulateAdminEditTable(ui->tableWidget_edit);
 		}
+#undef db
 	} else if (ui->stackedWidget_edit->currentIndex() == EDITSTAD) {
-		bool ok;
 		ui->pushButton_edit_add->setDisabled(true);
 
 		QString stadiumName = toUpperCase(ui->lineEdit_edit_stadium_name->text());
