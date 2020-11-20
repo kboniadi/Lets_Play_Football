@@ -303,6 +303,8 @@ void MainWindow::on_tableWidget_edit_cellClicked(int row, int col)
 #define table(row, column) ui->tableWidget_edit->item(row, column)->text()
 void MainWindow::ProcessDelete(int row, int /*col*/)
 {
+	disconnect(this, &MainWindow::EmittedSignal, this, &MainWindow::UpdateTable);
+	disconnect(ui->tableWidget_edit, &QTableWidget::cellChanged, nullptr, nullptr);
 	disconnect(ui->pushButton_edit_delete, &QPushButton::clicked, nullptr, nullptr);
 	disconnect(this, &MainWindow::EmittedDelSignal, this, &MainWindow::ProcessDelete);
 
@@ -363,6 +365,9 @@ void MainWindow::UpdateTable(int row, int column, QString prev)
 
 void MainWindow::on_pushButton_edit_confirm_clicked()
 {
+	disconnect(this, &MainWindow::EmittedSignal, this, &MainWindow::UpdateTable);
+	disconnect(ui->tableWidget_edit, &QTableWidget::cellChanged, nullptr, nullptr);
+
 	bool ok = false;
 	if (ui->stackedWidget_edit->currentIndex() == EDITSOUV) {
 		QString teamName = ui->lineEdit_edit_souvenir_team->text();
@@ -371,11 +376,11 @@ void MainWindow::on_pushButton_edit_confirm_clicked()
 
 		int temp = (price.size() - 1) - price.indexOf('.');
 
-		if (!price.contains("."))
+		if (!price.contains(".") && !price.isEmpty())
 			price += ".00";
 		else if (temp == 1)
 			price += "0";
-		else if (temp == 0)
+		else if (temp == 0 && !price.isEmpty())
 			price += "00";
 
 #define db() DBManager::instance()
@@ -400,6 +405,7 @@ void MainWindow::on_pushButton_edit_confirm_clicked()
 		QString roofType = toUpperCase(ui->lineEdit_edit_stadium_roof->text());
 		QString dateOpen = ui->lineEdit_edit_stadium_dateopen->text();
 		QModelIndexList selection = ui->tableView_edit->selectionModel()->selectedRows();
+
 		int id = selection[0].row() + 1;
 
 		QString capacity = QLocale(QLocale::English).toString(cap);

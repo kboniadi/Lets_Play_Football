@@ -382,17 +382,20 @@ void DBManager::UpdateInformation(int id, QString stadiumName, QString cap, QStr
 
 bool DBManager::isTeamExist(QString teamName)
 {
-	query.prepare("SELECT 1 FROM teams WHERE teams.teamNames = :teamName");
-	query.bindValue(":teamNames", teamName);
-
-	return query.exec();
+	query.prepare("SELECT EXISTS (SELECT 1 FROM teams WHERE teamNames = :teamName)");
+	query.bindValue(":teamName", teamName);
+	query.exec();
+	query.first();
+	return (bool) query.value(0).toInt();
 }
 
 bool DBManager::isSouvenirExist(QString teamName, QString item)
 {
-	query.prepare("SELECT 1 FROM souvenir, teams WHERE teams.teamNames = :teamName AND souvenir.items = :item");
+//	query.prepare("SELECT id FROM souvenir, teams WHERE souvenir.items = :item AND teams.teamNames = :teamName");
+	query.prepare("SELECT EXISTS (SELECT 1 FROM souvenir, teams WHERE items = :item AND teamNames = :teamName)");
 	query.bindValue(":teamName", teamName);
 	query.bindValue(":item", item);
-
-	return query.exec();
+	query.exec();
+	query.first();
+	return (bool) query.value(0).toInt();
 }
