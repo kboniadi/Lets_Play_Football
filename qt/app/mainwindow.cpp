@@ -4,6 +4,7 @@
 #include "tablemanager.h"
 #include "layout.h"
 #include <functional>
+#include <qnamespace.h>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
