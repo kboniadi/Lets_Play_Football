@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QTableWidgetItem>
+#include <QLabel>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -18,6 +20,7 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+	void SetStatusBar(const QString & messg, int timeout = 0);
 
 private slots:
     /*----NAVIGATION----*/
@@ -103,6 +106,16 @@ private slots:
 	
 	void on_pushButton_import_clicked();
 
+	void on_tableWidget_edit_doubleClicked(const QModelIndex &index);
+	void UpdateTable(int row, int col, QString prev);
+	void on_tableWidget_edit_cellClicked(int row, int column);
+	void ProcessDelete(int row, int col);
+
+	void on_tableView_edit_doubleClicked(const QModelIndex &index);
+
+signals:
+	void EmittedSignal(int row, int col, QString prev);
+	void EmittedDelSignal(int row, int col);
 private:
     /*----NAVIGATION ENUMS----*/
     enum Pages
@@ -167,5 +180,9 @@ private:
 
 	Ui::MainWindow *ui;
 	TableManager *table;
+	QLabel status;
+
+	bool isValid(QString cur, QString prev);
+	QString toUpperCase(const QString &str);
 };
 #endif // MAINWINDOW_H

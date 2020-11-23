@@ -59,6 +59,16 @@ public:
 	void AddInfo(QString teamName, QString stadiumName, QString seatCap,
 				 QString location, QString conference, QString division,
 				 QString surfaceType, QString roofType, QString dateOpen);
+
+	void AddSouvenir(QString teamName, QString item, QString price);
+	void UpdateSouvenirPrice(QString teamName, QString item, QString price);
+	void DeleteSouvenir(QString teamName, QString item);
+	void UpdateInformation(int id, QString stadiumName, QString cap,
+						   QString loc, QString surfaceType, QString roofType,
+						   QString dateOpen);
+	bool isTeamExist(QString teamName);
+	bool isSouvenirExist(QString teamName, QString item);
+	QSqlQuery* getQuery() { return &query; }
 private:
     QSqlQuery query;
 	/*!

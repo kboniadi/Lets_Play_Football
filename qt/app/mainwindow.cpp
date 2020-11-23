@@ -3,12 +3,15 @@
 #include "dbmanager.h"
 #include "tablemanager.h"
 #include "layout.h"
+#include <functional>
+#include <qnamespace.h>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
 	ui->setupUi(this);
+	ui->statusbar->addWidget(&status);
 	DBManager::instance();
 	table = new TableManager;
     Layout::instance();
@@ -18,7 +21,21 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {
-    delete ui;
+	delete ui;
+}
+
+void MainWindow::SetStatusBar(const QString &messg, int timeout)
+{
+	if (timeout == 0) {
+		ui->statusbar->clearMessage();
+		status.setText(messg);
+		if (messg.isEmpty())
+			status.hide();
+		else
+			status.show();
+	} else {
+		ui->statusbar->showMessage(messg, timeout);
+	}
 }
 
 /*----NAVIGATION----*/
@@ -89,6 +106,7 @@ void MainWindow::on_pushButton_pages_admin_clicked()
     clearButtons();
 	on_pushButton_admin_import_clicked();
     ui->pushButton_pages_admin->setDisabled(true);
+	connect(ui->lineEdit_login_password, SIGNAL(returnPressed()), ui->pushButton_login, SLOT(click()));
 }
 
     void MainWindow::on_pushButton_login_clicked()
@@ -141,7 +159,7 @@ void MainWindow::on_pushButton_pages_admin_clicked()
 
     void MainWindow::on_comboBox_edit_activated(int index)
     {
-        clearButtons();
+//        clearButtons();
 
         if (index == 0)
         {
@@ -158,6 +176,7 @@ void MainWindow::on_pushButton_pages_admin_clicked()
             ui->formWidget_edit_stadium->setVisible(true);
 			ui->tableView_edit->verticalHeader()->hide();
 			table->AdminInfoTable(ui->tableView_edit);
+			ui->pushButton_edit_add->setDisabled(true);
         }
     }
 
@@ -225,7 +244,6 @@ void MainWindow::clearButtons() // resets most program states
     ui->formWidget_edit_stadium->setDisabled(true);
     ui->pushButton_edit_confirm->setDisabled(true);
     ui->pushButton_edit_cancel->setDisabled(true);
-    ui->pushButton_edit_edit->setDisabled(true);
     ui->pushButton_edit_delete->setDisabled(true);
     ui->pushButton_edit_add->setDisabled(false);
 
@@ -240,6 +258,7 @@ void MainWindow::clearButtons() // resets most program states
 	ui->lineEdit_edit_stadium_name->clear();
 	ui->lineEdit_edit_stadium_roof->clear();
 	ui->lineEdit_edit_stadium_surface->clear();
+	ui->lineEdit_edit_stadium_dateopen->clear();
 }
 
 void MainWindow::clearViewLabels()
@@ -256,27 +275,190 @@ void MainWindow::on_pushButton_edit_add_clicked() // admin add button
     ui->pushButton_edit_add->setDisabled(true);
     ui->pushButton_edit_cancel->setDisabled(false);
 
-	ui->lineEdit_edit_team->setValidator(new QRegExpValidator(QRegExp("[A-Za-z_ ]{0,255}"), this));
-	ui->lineEdit_edit_stadium_name->setValidator(new QRegExpValidator(QRegExp("[A-Za-z_ ]{0,255}"), this));
-	ui->lineEdit_edit_stadium_capacity->setValidator(new QRegExpValidator(QRegExp("[0-9.]{0,255}"), this));
-	ui->lineEdit_edit_stadium_location->setValidator(new QRegExpValidator(QRegExp("[A-Za-z_ ]{0,255}"), this));
-	ui->lineEdit_edit_stadium_surface->setValidator(new QRegExpValidator(QRegExp("[A-Za-z_ ]{0,255}"), this));
-	ui->lineEdit_edit_stadium_roof->setValidator(new QRegExpValidator(QRegExp("[A-Za-z_ ]{0,255}"), this));
+	if (ui->stackedWidget_edit->currentIndex() == EDITSOUV) {
+		ui->lineEdit_edit_souvenir_team->setValidator(new QRegExpValidator(QRegExp("[A-Za-z_ ]{0,60}"), this));
+		ui->lineEdit_edit_souvenir_name->setValidator(new QRegExpValidator(QRegExp("[A-Za-z_ ]{0,60}"), this));
+		ui->lineEdit_edit_souvenir_price->setValidator(new QRegExpValidator(QRegExp("[0-9]{0,60}[.]{1}[0-9]{0,2}"), this));
+	}
     // code + error checking
 
     ui->pushButton_edit_confirm->setDisabled(false);
 
 }
 
+void MainWindow::on_tableWidget_edit_cellClicked(int row, int col)
+{
+	static int rowStat;
+	static int colStat;
+	rowStat = row;
+	colStat = col;
+
+	ui->pushButton_edit_delete->setDisabled(false);
+	connect(ui->pushButton_edit_delete, &QPushButton::clicked, [this]() {
+		emit this->EmittedDelSignal(rowStat, colStat);
+	});
+	connect(this, &MainWindow::EmittedDelSignal, this, &MainWindow::ProcessDelete);
+}
+
+#define table(row, column) ui->tableWidget_edit->item(row, column)->text()
+void MainWindow::ProcessDelete(int row, int /*col*/)
+{
+	disconnect(this, &MainWindow::EmittedSignal, this, &MainWindow::UpdateTable);
+	disconnect(ui->tableWidget_edit, &QTableWidget::cellChanged, nullptr, nullptr);
+	disconnect(ui->pushButton_edit_delete, &QPushButton::clicked, nullptr, nullptr);
+	disconnect(this, &MainWindow::EmittedDelSignal, this, &MainWindow::ProcessDelete);
+
+	QString teamName;
+	QString item = table(row, table->A_ITEM);
+	for (int i = row; i >= 0; i--) {
+		if (table(i, table->A_TEAMNAME_SOUVENIR) != QString{}) {
+			teamName = table(i, table->A_TEAMNAME_SOUVENIR);
+			break;
+		}
+	}
+
+	DBManager::instance()->DeleteSouvenir(teamName, item);
+	table->InitializeAdminEditTable(ui->tableWidget_edit);
+	table->PopulateAdminEditTable(ui->tableWidget_edit);
+}
+
+void MainWindow::on_tableWidget_edit_doubleClicked(const QModelIndex &index)
+{
+	SetStatusBar("Double click the price to modify it or hit the delete button to remove the entry all together", 5000);
+	static QString temp;
+	temp = index.data().toString();
+
+	connect(ui->tableWidget_edit, &QTableWidget::cellChanged, [this](int row, int column) {
+		emit this->EmittedSignal(row, column, temp);
+	});
+
+	connect(this, &MainWindow::EmittedSignal, this, &MainWindow::UpdateTable);
+}
+
+#define table(row, column) ui->tableWidget_edit->item(row, column)->text()
+void MainWindow::UpdateTable(int row, int column, QString prev)
+{
+	disconnect(this, &MainWindow::EmittedSignal, this, &MainWindow::UpdateTable);
+	disconnect(ui->tableWidget_edit, &QTableWidget::cellChanged, nullptr, nullptr);
+
+	QString entry = table(row, column);
+
+	if (!isValid(entry, prev)) {
+		ui->tableWidget_edit->item(row, column)->setText(prev);
+		QMessageBox::warning(this, tr("Warning"),
+							 tr("That query was not valid, please try again"));
+	} else {
+		QString teamName;
+		QString item = table(row, column - 1);
+		for (int i = row; i >= 0; i--) {
+			if (table(i, 1) != QString{}) {
+				teamName = table(i, 1);
+				break;
+			}
+		}
+
+		DBManager::instance()->UpdateSouvenirPrice(teamName,
+						   table(row, column - 1), table(row, column));
+	}
+}
+#undef table
+
 void MainWindow::on_pushButton_edit_confirm_clicked()
 {
-    clearButtons();
+	disconnect(this, &MainWindow::EmittedSignal, this, &MainWindow::UpdateTable);
+	disconnect(ui->tableWidget_edit, &QTableWidget::cellChanged, nullptr, nullptr);
 
+	bool ok = false;
+	if (ui->stackedWidget_edit->currentIndex() == EDITSOUV) {
+		QString teamName = ui->lineEdit_edit_souvenir_team->text();
+		QString item = ui->lineEdit_edit_souvenir_name->text();
+		QString price = ui->lineEdit_edit_souvenir_price->text();
+
+		int temp = (price.size() - 1) - price.indexOf('.');
+
+		if (!price.contains(".") && !price.isEmpty())
+			price += ".00";
+		else if (temp == 1)
+			price += "0";
+		else if (temp == 0 && !price.isEmpty())
+			price += "00";
+
+#define db() DBManager::instance()
+		if (!db()->isTeamExist(teamName) ||
+			db()->isSouvenirExist(teamName, item) || item.isEmpty() ||
+				price.isEmpty()) {
+			QMessageBox::warning(this, tr("Notice"),
+					tr("There was an error with your query.\nPlease try again."));
+		} else {
+			db()->AddSouvenir(teamName, item, price);
+			table->InitializeAdminEditTable(ui->tableWidget_edit);
+			table->PopulateAdminEditTable(ui->tableWidget_edit);
+		}
+#undef db
+	} else if (ui->stackedWidget_edit->currentIndex() == EDITSTAD) {
+		ui->pushButton_edit_add->setDisabled(true);
+
+		QString stadiumName = toUpperCase(ui->lineEdit_edit_stadium_name->text());
+		int cap = ui->lineEdit_edit_stadium_capacity->text().replace(",", "").toInt(&ok);
+		QString loc = toUpperCase(ui->lineEdit_edit_stadium_location->text());
+		QString surface = toUpperCase(ui->lineEdit_edit_stadium_surface->text());
+		QString roofType = toUpperCase(ui->lineEdit_edit_stadium_roof->text());
+		QString dateOpen = ui->lineEdit_edit_stadium_dateopen->text();
+		QModelIndexList selection = ui->tableView_edit->selectionModel()->selectedRows();
+
+		int id = selection[0].row() + 1;
+
+		QString capacity = QLocale(QLocale::English).toString(cap);
+
+		if (stadiumName.isEmpty() || loc.isEmpty() ||
+				surface.isEmpty() || roofType.isEmpty() || dateOpen.isEmpty() || !ok) {
+			QMessageBox::warning(this, tr("Notice"),
+					tr("There was an error with your query.\nPlease try again."));
+		} else {
+			DBManager::instance()->UpdateInformation(id, stadiumName, capacity, loc, surface, roofType, dateOpen);
+			table->AdminInfoTable(ui->tableView_edit);
+		}
+	}
+	clearButtons();
+	ui->pushButton_pages_admin->setDisabled(true);
 }
 
 void MainWindow::on_pushButton_edit_cancel_clicked()
 {
     clearButtons();
+	ui->pushButton_pages_admin->setDisabled(true);
+}
+
+void MainWindow::on_tableView_edit_doubleClicked(const QModelIndex &index)
+{
+	SetStatusBar("Modify these entires then confirm your changes", 5000);
+	ui->lineEdit_edit_stadium_name->setValidator(new QRegExpValidator(QRegExp("[A-Za-z_ '&]{0,60}"), this));
+	// ^(?=.)(\d{1,3}(,\d{3})*)?(\.\d+)?$ (commas required)
+	// ^(\\d+|\\d{1,3}(,\\d{3})*)(\\.\\d+)?$ (commas not required)
+	ui->lineEdit_edit_stadium_capacity->setValidator(new QRegExpValidator(QRegExp("[0-9]{0,60}"), this));
+	ui->lineEdit_edit_stadium_location->setValidator(new QRegExpValidator(QRegExp("[A-Za-z_ ]{0,60}[,]{1}[A-Za-z_ ]{0,60}"), this));
+	ui->lineEdit_edit_stadium_surface->setValidator(new QRegExpValidator(QRegExp("[A-Za-z0-9_ -]{0,60}"), this));
+	ui->lineEdit_edit_stadium_roof->setValidator(new QRegExpValidator(QRegExp("[A-Za-z_ ]{0,60}"), this));
+	ui->lineEdit_edit_stadium_dateopen->setValidator(new QRegExpValidator(QRegExp("[0-9]{0,4}"), this));
+	ui->formWidget_edit_stadium->setDisabled(false);
+	ui->pushButton_edit_confirm->setDisabled(false);
+	ui->pushButton_edit_cancel->setDisabled(false);
+	ui->pushButton_edit_delete->setDisabled(true);
+	QSqlQuery query;
+	query.prepare("SELECT stadiumName, seatCap, location, surfaceType, roofType, dateOpen FROM information WHERE information.id = :id");
+	query.bindValue(":id", index.row() + 1);
+
+	if (query.exec()) {
+		query.first();
+		ui->lineEdit_edit_stadium_name->setText(query.value(0).toString());
+		ui->lineEdit_edit_stadium_capacity->setText(query.value(1).toString());
+		ui->lineEdit_edit_stadium_location->setText(query.value(2).toString());
+		ui->lineEdit_edit_stadium_surface->setText(query.value(3).toString());
+		ui->lineEdit_edit_stadium_roof->setText(query.value(4).toString());
+		ui->lineEdit_edit_stadium_dateopen->setText(query.value(5).toString());
+	} else {
+		qDebug() << "MainWindow::on_tableView_edit_doubleClicked(const QModelIndex&) : query failed";
+	}
 }
 
 void MainWindow::on_pushButton_plan_packers_clicked()
@@ -488,4 +670,37 @@ void MainWindow::on_comboBox_list_filterteams_currentIndexChanged(int index)
 void MainWindow::on_comboBox_list_filterstadiums_currentIndexChanged(int index)
 {
     populateStadiumInfo(ui->comboBox_list_sort->currentIndex(), ui->comboBox_list_filterteams->currentIndex(), index);
+}
+
+bool MainWindow::isValid(QString cur, QString prev)
+{
+	bool isNum;
+	cur.toDouble(&isNum);
+	QRegExp regNum("[0-9]{0,255}[.]{1}[0-9]{0,2}");
+	QRegExp regStr("[A-Za-z_ ]{0,255}");
+	if (regNum.exactMatch(prev)) {
+		if (regNum.exactMatch(cur)) {
+			return true;
+		} else {
+			return false;
+		}
+	} else if (regStr.exactMatch(prev)) {
+		return false;
+//		if (regStr.exactMatch(cur)) {
+//			return true;
+//		} else {
+//			return false;
+//		}
+	}
+	qDebug() << "Something went wrong: MainWindow::isValid(QString, QString)";
+	assert(false);
+}
+
+QString MainWindow::toUpperCase(const QString &str)
+{
+	QStringList parts = str.split(" ", QString::SkipEmptyParts);
+	for (int i = 0; i < parts.size(); i++)
+		parts[i].replace(0, 1, parts[i][0].toUpper());
+
+	return parts.join(" ");
 }

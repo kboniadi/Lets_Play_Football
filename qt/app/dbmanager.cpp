@@ -207,7 +207,7 @@ void DBManager::GetTeams(QStringList &teams)
 			teams.push_back(query.value(0).toString());
 		query.finish();
 	} else {
-		qDebug() << "DBManager::GetTeams(QStringList &teams) : query failed";
+		qDebug() << "DBManager::GetTeams(QStringList&) : query failed";
 	}
 }
 
@@ -221,7 +221,7 @@ void DBManager::GetSouvenirs(QString teamName, QStringList &list)
 			list.push_back(query.value(0).toString());
 		query.finish();
 	} else {
-		qDebug() << "DBManager::GetSouvenirs(QString teamName, QStringList &list) : query failed";
+		qDebug() << "DBManager::GetSouvenirs(QString, QStringList&) : query failed";
 	}
 }
 
@@ -236,7 +236,7 @@ int DBManager::GetNumSouvenir(QString teamName)
 		query.first();
 		return query.value(0).toInt();
 	}
-	qDebug() << "DBManager::GetNumSouvenir(QString teamName) : query failed";
+	qDebug() << "DBManager::GetNumSouvenir(QString) : query failed";
 	return -1;
 }
 
@@ -263,7 +263,7 @@ QString DBManager::SouvenirNameToPrice(QString team, QString souvenir)
 		query.first();
 		return query.value(0).toString();
 	} else { // If query does not execute, print error
-		qDebug() << "DBManager::SouvenirNameToPrice(QString team, QString souvenir) : query failed";
+		qDebug() << "DBManager::SouvenirNameToPrice(QString, QString) : query failed";
 	}
 	return QString("Error");
 }
@@ -300,4 +300,102 @@ void DBManager::AddInfo(QString teamName, QString stadiumName, QString seatCap,
 	if (!query.exec())
 		qDebug() << "DBManager::AddInfo(QString... ) : query failed{2}";
 	query.finish();
+}
+
+void DBManager::AddSouvenir(QString teamName, QString item, QString price)
+{
+	// Finds and stores the id associated with the city name
+	query.prepare("SELECT id FROM teams WHERE teamNames = :teamName");
+	query.bindValue(":teamName", teamName);
+	if (!query.exec()) {
+		qDebug() << "DBManager::AddSouvenir(QString, QString, QString) : query failed{1}";
+		return;
+	}
+	query.first();
+	int id = query.value(0).toInt();
+
+	query.prepare("INSERT INTO souvenir(id, items, price) VALUES(:id, :items, :price)");
+	query.bindValue(":id", id);
+	query.bindValue(":items", item);
+	query.bindValue(":price", price);
+
+	if (!query.exec())
+		qDebug() << "DBManager::AddSouvenir(QString, QString, QString) : query failed{2}";
+	query.finish();
+}
+
+void DBManager::UpdateSouvenirPrice(QString teamName, QString item, QString price)
+{
+	// Prep query
+	query.prepare("UPDATE souvenir SET price = :price WHERE souvenir.items = "
+				  ":item AND souvenir.id = (SELECT id FROM teams WHERE "
+				  "teams.teamNames = :teamName)");
+
+	// Bind values safely
+	query.bindValue(":price", price);
+	query.bindValue(":item", item);
+	query.bindValue(":teamName", teamName);
+
+	// If query does not execute, print error
+	if (!query.exec())
+		qDebug() << "UpdateSouvenirPrice(QString, QString, QString) : query failed{2}";
+	query.finish();
+}
+
+void DBManager::DeleteSouvenir(QString teamName, QString item)
+{
+	// Prep query
+		query.prepare("DELETE FROM souvenir WHERE souvenir.id = (SELECT id FROM teams WHERE teams.teamNames = :teamName) AND souvenir.items = :item");
+
+		// Bind values safely
+		query.bindValue(":teamName", teamName);
+		query.bindValue(":item", item);
+
+		// If query does not execute, print error
+		if (!query.exec())
+			qDebug() << "DBManager::DeleteSouvenir(QString, QString) : query failed";
+		query.finish();
+}
+
+void DBManager::UpdateInformation(int id, QString stadiumName, QString cap, QString loc, QString surfaceType, QString roofType, QString dateOpen)
+{
+	// Prep query
+	query.prepare("UPDATE information SET stadiumName = :stadiumName, "
+				  "seatCap = :cap, location = :loc, surfaceType = "
+				  ":surfaceType, roofType = :roofType, dateOpen = :dateOpen "
+				  "WHERE information.id = :id");
+
+	// Bind values safely
+	query.bindValue(":stadiumName", stadiumName);
+	query.bindValue(":cap", cap);
+	query.bindValue(":loc", loc);
+	query.bindValue(":surfaceType", surfaceType);
+	query.bindValue(":roofType", roofType);
+	query.bindValue(":dateOpen", dateOpen);
+	query.bindValue(":id", id);
+
+	// If query does not execute, print error
+	if (!query.exec())
+		qDebug() << "DBManager::UpdateInformation(int, QString, QString, QString, QString, QString) : query failed";
+	query.finish();
+}
+
+bool DBManager::isTeamExist(QString teamName)
+{
+	query.prepare("SELECT EXISTS (SELECT 1 FROM teams WHERE teamNames = :teamName)");
+	query.bindValue(":teamName", teamName);
+	query.exec();
+	query.first();
+	return (bool) query.value(0).toInt();
+}
+
+bool DBManager::isSouvenirExist(QString teamName, QString item)
+{
+//	query.prepare("SELECT id FROM souvenir, teams WHERE souvenir.items = :item AND teams.teamNames = :teamName");
+	query.prepare("SELECT EXISTS (SELECT 1 FROM souvenir, teams WHERE items = :item AND teamNames = :teamName)");
+	query.bindValue(":teamName", teamName);
+	query.bindValue(":item", item);
+	query.exec();
+	query.first();
+	return (bool) query.value(0).toInt();
 }

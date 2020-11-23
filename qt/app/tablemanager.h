@@ -76,6 +76,9 @@ public:
 	 */
 	void AdminInfoTable(QTableView* table);
 
+	void InitializeAdminInfoEditTable(QTableWidget* table);
+	void PopulatedAdminInfoEditTable(QTableWidget* table);
+
 	void AdminDistTable(QTableView *table);
 
 	void AdminSouvTable(QTableView *table);
