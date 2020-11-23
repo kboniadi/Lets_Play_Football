@@ -1,10 +1,13 @@
+#define Debug 1
+
+#if Debug == 1
+
 #include "mainwindow.h"
-
 #include <QApplication>
+#include "unordered_map.h"
+#include <QDebug>
 
-#define Debug 0
-
-#if Debug == 0
+#define print qDebug()
 
 int main(int argc, char *argv[])
 {
@@ -18,6 +21,7 @@ int main(int argc, char *argv[])
 
 #include "unordered_map.h"
 #include <QDebug>
+#include <QString>
 
 #define print qDebug()
 
