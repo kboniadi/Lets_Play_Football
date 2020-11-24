@@ -9,6 +9,7 @@
 #include <QString>
 #include <QDebug>
 #include <QMessageBox>
+#include <bfsNamespace.h> // used to access node struct which is used in bfs class
 
 struct Souvenir
 {
@@ -69,6 +70,23 @@ public:
 	bool isTeamExist(QString teamName);
 	bool isSouvenirExist(QString teamName, QString item);
 	QSqlQuery* getQuery() { return &query; }
+
+    /*!
+     * @brief function gets all adjacent cities and distances based on the vertex input and
+     * returns it all as a vector of type node
+     *
+     * @param vertex; reperesents team id
+     * @return vector<node>; which contains all the adj teams and their weights
+     */
+    std::vector<generalContainer::node> getAdjList(int vertex);
+
+    /*!
+     * @brief function takes in an id and returns the team name which corresponds with that id
+     * @param id; int that represents the teams id
+     * @return QString; the name of the team based on the team
+     */
+    QString getTeamName(int id);
+    static bool comparater(generalContainer::node n1, generalContainer::node n2);
 private:
     QSqlQuery query;
 	/*!
@@ -82,6 +100,8 @@ private:
 	 */
 	~DBManager();
 	QStringList parser(QString &line, const char delim);
+
+
 };
 
 

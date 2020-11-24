@@ -242,7 +242,7 @@ int DBManager::GetNumSouvenir(QString teamName)
 
 int DBManager::GetNumTeams()
 {
-	query.prepare("SELECT COUNT(*) teams");
+    query.prepare("SELECT count(teamNames) FROM teams");
 	if (query.exec()) {
 		query.first();
 		return query.value(0).toInt();
@@ -398,4 +398,56 @@ bool DBManager::isSouvenirExist(QString teamName, QString item)
 	query.exec();
 	query.first();
 	return (bool) query.value(0).toInt();
+}
+
+bool DBManager::comparater(generalContainer::node n1, generalContainer::node n2)
+{
+    return (n1.weight < n2.weight);
+}
+std::vector<generalContainer::node> DBManager::getAdjList(int vertex)
+{
+    std::vector<generalContainer::node> returnVec; // vector with all pairs of ending team and weight adj to vertex
+    QString queryString = "SELECT id,distanceTo "
+                          "FROM distance "
+                          "WHERE beginStadium "
+                          "IN(SELECT endStadium FROM distance WHERE id = :id) "
+                          "AND endStadium = (SELECT beginStadium FROM distance WHERE id = :id) "
+                          "AND id!=:id ";
+    query.prepare(queryString);
+    query.bindValue(":id",vertex);
+    if(!query.exec())
+    {
+        qDebug() << "DBManager::getAdjList vertex: " << vertex << " failed";
+    }
+    else
+    {
+        while(query.next())
+        {
+            generalContainer::node tempNode;
+            tempNode.end = query.value(0).toInt();
+            tempNode.weight = query.value(1).toInt();
+            returnVec.push_back(tempNode);
+        }
+    }
+    std::sort(returnVec.begin(), returnVec.end(), comparater);
+    return returnVec;
+}
+
+QString DBManager::getTeamName(int id)
+{
+    QString queryString;
+    queryString = "SELECT teamNames FROM teams WHERE id = :id";
+    query.prepare(queryString);
+    query.bindValue(":id", id);
+
+    if(!query.exec())
+    {
+        qDebug() << "DBManager::getTeamName id: " << id << " failed";
+    }
+    else
+    {
+        query.first();
+        return query.value(0).toString();
+    }
+    return "Invalid Team Name";
 }
