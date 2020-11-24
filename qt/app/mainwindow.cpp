@@ -61,6 +61,7 @@ void MainWindow::on_pushButton_pages_view_clicked()
 
         populateSouvenirs("");
         populateTeams();
+        table->showTeamInfo(ui->tableView_search_info, "");
     }
 
     void MainWindow::on_pushButton_view_list_clicked()
@@ -486,8 +487,17 @@ void MainWindow::on_pushButton_plan_rams_clicked()
 {
     clearButtons();
     ui->pushButton_plan_rams->setDisabled(true);
+    //clearTable
+    table->clearTable(ui->tableView_plan_route);  //reset table
+    ui->label_plan_distance->setText("Distance"); // reset label
 
-    // planning logic
+    //Create bfs obj
+    bfs bfsObj;
+    bfsObj.addEdges();
+    bfsObj.bfsAlgo(19); // starting at La Rams (id: 19)
+    table->showBFSTrip(ui->tableView_plan_route,bfsObj);
+
+    ui->label_plan_distance->setText(QString("Distance: %1").arg(bfsObj.getTotalDistance()));
 
     ui->pushButton_plan_continue->setDisabled(false);
 }
@@ -640,6 +650,9 @@ void MainWindow::on_tableView_search_teams_doubleClicked(const QModelIndex &inde
 {
     populateSouvenirs(index.data().toString());
     table->showTeamInfo(ui->tableView_search_info, index.data().toString());
+
+    bfs temp;
+    temp.addEdges();
 
 }
 
