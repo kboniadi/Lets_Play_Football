@@ -204,3 +204,14 @@ void TableManager::showTeamNames(QTableView *table)
     table->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     table->setModel(model);
 }
+void TableManager::showBFSTrip(QTableView *table, bfs &bfsObj)
+{
+    QStringListModel * model = new QStringListModel;
+    model->setStringList(bfsObj.getBfsList());
+    table->setModel(model);
+}
+void TableManager::clearTable(QTableView *table)
+{
+    QSqlQueryModel *model = new QSqlQueryModel;
+    table->setModel(model);
+}
