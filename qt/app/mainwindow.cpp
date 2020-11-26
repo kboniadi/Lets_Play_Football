@@ -204,7 +204,7 @@ void MainWindow::setResources() // imports and assigns layout elements
     /*----Fonts----*/
     Layout::instance()->importResources();
 
-    QFont mainFont = QFont("Quicksand Bold Oblique", 16); // main font
+    QFont mainFont = QFont("OldSansBlack", 16); // main font
     ui->centralwidget->setFont(mainFont);
     ui->tableView_list->setFont(mainFont);
 
@@ -217,11 +217,22 @@ void MainWindow::setResources() // imports and assigns layout elements
     ui->pushButton_pages_admin->setFont(homeButtons);
     ui->pushButton_pages_exit->setFont(homeButtons);
 
-    QFont label1 = QFont("PRIMETIME", 20);
-    QFont label3 = QFont("OldSansBlack", 20);
-    ui->label_search_info->setFont(label3);
-    ui->label_search_teams->setFont(label3);
-    ui->label_search_souvenirs->setFont(label3);
+    QFont labels = QFont("OldSansBlack", 20);
+    ui->label_search_info->setFont(labels);
+    ui->label_search_teams->setFont(labels);
+    ui->label_search_souvenirs->setFont(labels);
+
+
+//    QFont sublabels = QFont("OldSansBlack", 16);
+//    ui->label_list_sort->setFont(labels);
+//    ui->label_list_filter->setFont(labels);
+//    ui->pushButton_view_list->setFont(sublabels);
+//    ui->pushButton_view_search->setFont(sublabels);
+//    ui->label_list_totalcapacity->setFont(sublabels);
+//    ui->label_list_totalroofs->setFont(sublabels);
+//    ui->label_list_totalgrass->setFont(sublabels);
+
+
 
 
 
