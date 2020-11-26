@@ -203,8 +203,13 @@ void MainWindow::setResources() // imports and assigns layout elements
 {
     /*----Fonts----*/
     Layout::instance()->importResources();
+
+    QFont mainFont = QFont("Quicksand Bold Oblique", 16); // main font
+    ui->centralwidget->setFont(mainFont);
+    ui->tableView_list->setFont(mainFont);
+
     QFont splash = QFont("Freshman", 42, QFont::Bold);
-    QFont homeButtons = QFont("OLD SPORT 02 ATHLETIC NCV", 32);
+    QFont homeButtons = QFont("OLD SPORT 02 ATHLETIC NCV", 32); // page button font
     ui->label_home_splash->setFont(splash);
     ui->pushButton_pages_home->setFont(homeButtons);
     ui->pushButton_pages_view->setFont(homeButtons);
@@ -212,26 +217,13 @@ void MainWindow::setResources() // imports and assigns layout elements
     ui->pushButton_pages_admin->setFont(homeButtons);
     ui->pushButton_pages_exit->setFont(homeButtons);
 
-    QFont tables = QFont("Quicksand Bold Oblique", 16);
-    ui->tableView_edit->setFont(tables);
-    ui->tableView_import->setFont(tables);
-    ui->tableView_import_2->setFont(tables);
-    ui->tableView_import_3->setFont(tables);
-    ui->tableView_list->setFont(tables);
-    ui->tableView_plan_custom->setFont(tables);
-    ui->tableView_plan_route->setFont(tables);
-    ui->tableView_pos_cart->setFont(tables);
-    ui->tableView_pos_trip->setFont(tables);
-    ui->tableView_receipt->setFont(tables);
-    ui->tableView_search_info->setFont(tables);
-    ui->tableView_search_souvenirs->setFont(tables);
-    ui->tableView_search_teams->setFont(tables);
-    ui->tableWidget_edit->setFont(tables);
-    ui->tableWidget_pos_purchase->setFont(tables);
-    ui->comboBox_edit->setFont(tables);
-    ui->comboBox_list_filterstadiums->setFont(tables);
-    ui->comboBox_list_filterteams->setFont(tables);
-    ui->comboBox_list_sort->setFont(tables);
+    QFont label1 = QFont("PRIMETIME", 20);
+    QFont label3 = QFont("OldSansBlack", 20);
+    ui->label_search_info->setFont(label3);
+    ui->label_search_teams->setFont(label3);
+    ui->label_search_souvenirs->setFont(label3);
+
+
 
 
     /*----End Fonts----*/
@@ -270,6 +262,8 @@ void MainWindow::clearButtons() // resets most program states
     ui->pushButton_edit_cancel->setDisabled(true);
     ui->pushButton_edit_delete->setDisabled(true);
     ui->pushButton_edit_add->setDisabled(false);
+    ui->tabWidget_IMPORT->setCurrentIndex(IMPORT);
+    ui->comboBox_edit->setCurrentIndex(EDITSOUV);
 
     // line edits
     ui->lineEdit_edit_souvenir_name->clear();
