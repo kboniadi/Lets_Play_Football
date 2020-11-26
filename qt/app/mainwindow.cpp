@@ -203,7 +203,7 @@ void MainWindow::setResources() // imports and assigns layout elements
     /*----Fonts----*/
     Layout::instance()->importResources();
     QFont splash = QFont("Freshman", 42, QFont::Bold);
-    QFont homeButtons = QFont("Freshman", 12);
+    QFont homeButtons = QFont("OLD SPORT 02 ATHLETIC NCV", 32);
     ui->label_home_splash->setFont(splash);
     ui->pushButton_pages_home->setFont(homeButtons);
     ui->pushButton_pages_view->setFont(homeButtons);
@@ -464,6 +464,7 @@ void MainWindow::on_tableView_edit_doubleClicked(const QModelIndex &index)
 void MainWindow::on_pushButton_plan_packers_clicked()
 {
     clearButtons();
+    ui->pushButton_pages_plan->setDisabled(true);
     ui->pushButton_plan_packers->setDisabled(true);
     ui->gridWidget_plan_custom->setVisible(true);
     ui->tableView_plan_custom->setVisible(true);
@@ -475,6 +476,7 @@ void MainWindow::on_pushButton_plan_packers_clicked()
 void MainWindow::on_pushButton_plan_patriots_clicked()
 {
     clearButtons();
+    ui->pushButton_pages_plan->setDisabled(true);
     ui->pushButton_plan_patriots->setDisabled(true);
 
     // planning logic
@@ -485,6 +487,7 @@ void MainWindow::on_pushButton_plan_patriots_clicked()
 void MainWindow::on_pushButton_plan_rams_clicked()
 {
     clearButtons();
+    ui->pushButton_pages_plan->setDisabled(true);
     ui->pushButton_plan_rams->setDisabled(true);
 
     // planning logic
@@ -495,6 +498,7 @@ void MainWindow::on_pushButton_plan_rams_clicked()
 void MainWindow::on_pushButton_plan_vikings_clicked()
 {
     clearButtons();
+    ui->pushButton_pages_plan->setDisabled(true);
     ui->pushButton_plan_vikings->setDisabled(true);
 
     // planning logic
@@ -505,6 +509,7 @@ void MainWindow::on_pushButton_plan_vikings_clicked()
 void MainWindow::on_pushButton_plan_custom_clicked()
 {
     clearButtons();
+    ui->pushButton_pages_plan->setDisabled(true);
     ui->pushButton_plan_sort->setVisible(true);
     ui->gridWidget_plan_custom->setVisible(true);
     ui->tableView_plan_custom->setVisible(true);
@@ -520,6 +525,7 @@ void MainWindow::on_pushButton_plan_custom_clicked()
 void MainWindow::on_pushButton_plan_MST_clicked()
 {
     clearButtons();
+    ui->pushButton_pages_plan->setDisabled(true);
     ui->pushButton_plan_MST->setDisabled(true);
 }
 
