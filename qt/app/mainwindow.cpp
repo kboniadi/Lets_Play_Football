@@ -210,6 +210,29 @@ void MainWindow::setResources() // imports and assigns layout elements
     ui->pushButton_pages_plan->setFont(homeButtons);
     ui->pushButton_pages_admin->setFont(homeButtons);
     ui->pushButton_pages_exit->setFont(homeButtons);
+
+    QFont tables = QFont("Quicksand Bold Oblique", 16);
+    ui->tableView_edit->setFont(tables);
+    ui->tableView_import->setFont(tables);
+    ui->tableView_import_2->setFont(tables);
+    ui->tableView_import_3->setFont(tables);
+    ui->tableView_list->setFont(tables);
+    ui->tableView_plan_custom->setFont(tables);
+    ui->tableView_plan_route->setFont(tables);
+    ui->tableView_pos_cart->setFont(tables);
+    ui->tableView_pos_trip->setFont(tables);
+    ui->tableView_receipt->setFont(tables);
+    ui->tableView_search_info->setFont(tables);
+    ui->tableView_search_souvenirs->setFont(tables);
+    ui->tableView_search_teams->setFont(tables);
+    ui->tableWidget_edit->setFont(tables);
+    ui->tableWidget_pos_purchase->setFont(tables);
+    ui->comboBox_edit->setFont(tables);
+    ui->comboBox_list_filterstadiums->setFont(tables);
+    ui->comboBox_list_filterteams->setFont(tables);
+    ui->comboBox_list_sort->setFont(tables);
+
+
     /*----End Fonts----*/
 }
 void MainWindow::clearButtons() // resets most program states
