@@ -923,142 +923,34 @@ color: #ffff00
         <property name="palette">
          <palette>
           <active>
-           <colorrole role="WindowText">
-            <brush brushstyle="SolidPattern">
-             <color alpha="255">
-              <red>255</red>
-              <green>255</green>
-              <blue>255</blue>
-             </color>
-            </brush>
-           </colorrole>
-           <colorrole role="Dark">
-            <brush brushstyle="SolidPattern">
-             <color alpha="255">
-              <red>255</red>
-              <green>255</green>
-              <blue>0</blue>
-             </color>
-            </brush>
-           </colorrole>
-           <colorrole role="Text">
-            <brush brushstyle="SolidPattern">
-             <color alpha="255">
-              <red>0</red>
-              <green>0</green>
-              <blue>0</blue>
-             </color>
-            </brush>
-           </colorrole>
            <colorrole role="ButtonText">
             <brush brushstyle="SolidPattern">
              <color alpha="255">
               <red>255</red>
               <green>255</green>
               <blue>255</blue>
-             </color>
-            </brush>
-           </colorrole>
-           <colorrole role="PlaceholderText">
-            <brush brushstyle="SolidPattern">
-             <color alpha="128">
-              <red>0</red>
-              <green>0</green>
-              <blue>0</blue>
              </color>
             </brush>
            </colorrole>
           </active>
           <inactive>
-           <colorrole role="WindowText">
-            <brush brushstyle="SolidPattern">
-             <color alpha="255">
-              <red>255</red>
-              <green>255</green>
-              <blue>255</blue>
-             </color>
-            </brush>
-           </colorrole>
-           <colorrole role="Dark">
-            <brush brushstyle="SolidPattern">
-             <color alpha="255">
-              <red>255</red>
-              <green>255</green>
-              <blue>0</blue>
-             </color>
-            </brush>
-           </colorrole>
-           <colorrole role="Text">
-            <brush brushstyle="SolidPattern">
-             <color alpha="255">
-              <red>0</red>
-              <green>0</green>
-              <blue>0</blue>
-             </color>
-            </brush>
-           </colorrole>
            <colorrole role="ButtonText">
             <brush brushstyle="SolidPattern">
              <color alpha="255">
               <red>255</red>
               <green>255</green>
               <blue>255</blue>
-             </color>
-            </brush>
-           </colorrole>
-           <colorrole role="PlaceholderText">
-            <brush brushstyle="SolidPattern">
-             <color alpha="128">
-              <red>0</red>
-              <green>0</green>
-              <blue>0</blue>
              </color>
             </brush>
            </colorrole>
           </inactive>
           <disabled>
-           <colorrole role="WindowText">
-            <brush brushstyle="SolidPattern">
-             <color alpha="255">
-              <red>255</red>
-              <green>255</green>
-              <blue>0</blue>
-             </color>
-            </brush>
-           </colorrole>
-           <colorrole role="Dark">
-            <brush brushstyle="SolidPattern">
-             <color alpha="255">
-              <red>255</red>
-              <green>255</green>
-              <blue>0</blue>
-             </color>
-            </brush>
-           </colorrole>
-           <colorrole role="Text">
-            <brush brushstyle="SolidPattern">
-             <color alpha="255">
-              <red>255</red>
-              <green>255</green>
-              <blue>0</blue>
-             </color>
-            </brush>
-           </colorrole>
            <colorrole role="ButtonText">
             <brush brushstyle="SolidPattern">
              <color alpha="255">
-              <red>255</red>
-              <green>255</green>
-              <blue>0</blue>
-             </color>
-            </brush>
-           </colorrole>
-           <colorrole role="PlaceholderText">
-            <brush brushstyle="SolidPattern">
-             <color alpha="128">
-              <red>0</red>
-              <green>0</green>
-              <blue>0</blue>
+              <red>120</red>
+              <green>120</green>
+              <blue>120</blue>
              </color>
             </brush>
            </colorrole>
@@ -1095,7 +987,7 @@ color: #ffff00
     <item row="1" column="0">
      <widget class="QStackedWidget" name="stackedWidget_pages">
       <property name="currentIndex">
-       <number>6</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="page_HOME">
        <layout class="QGridLayout" name="gridLayout_home">
@@ -1133,25 +1025,7 @@ color: #ffff00
        <layout class="QGridLayout" name="gridLayout_view">
         <item row="0" column="0">
          <layout class="QGridLayout" name="gridLayout_view_pages">
-          <item row="0" column="0" alignment="Qt::AlignLeft">
-           <widget class="QPushButton" name="pushButton_view_search">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="font">
-             <font>
-              <pointsize>12</pointsize>
-             </font>
-            </property>
-            <property name="text">
-             <string>Team Search</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1" alignment="Qt::AlignLeft">
+          <item row="0" column="2">
            <widget class="QPushButton" name="pushButton_view_list">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -1161,7 +1035,7 @@ color: #ffff00
             </property>
             <property name="font">
              <font>
-              <pointsize>12</pointsize>
+              <pointsize>16</pointsize>
              </font>
             </property>
             <property name="text">
@@ -1169,7 +1043,25 @@ color: #ffff00
             </property>
            </widget>
           </item>
-          <item row="0" column="2">
+          <item row="0" column="1">
+           <widget class="QPushButton" name="pushButton_view_search">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>16</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>Team Search</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
            <spacer name="horizontalSpacer_view">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
@@ -1187,30 +1079,24 @@ color: #ffff00
         <item row="1" column="0">
          <widget class="QStackedWidget" name="stackedWidget_view_pages">
           <property name="currentIndex">
-           <number>1</number>
+           <number>0</number>
           </property>
           <widget class="QWidget" name="page_SEARCH">
            <layout class="QGridLayout" name="gridLayout_search">
-            <item row="3" column="2">
-             <widget class="QTableView" name="tableView_search_souvenirs"/>
-            </item>
-            <item row="1" column="0" rowspan="3">
-             <widget class="QTableView" name="tableView_search_teams"/>
-            </item>
-            <item row="1" column="2">
-             <widget class="QTableView" name="tableView_search_info"/>
-            </item>
-            <item row="0" column="0">
-             <widget class="QLabel" name="label_search_teams">
+            <item row="0" column="2">
+             <widget class="QLabel" name="label_search_info">
               <property name="font">
                <font>
                 <pointsize>12</pointsize>
                </font>
               </property>
               <property name="text">
-               <string>Teams</string>
+               <string>INFORMATION</string>
               </property>
              </widget>
+            </item>
+            <item row="1" column="2">
+             <widget class="QTableView" name="tableView_search_info"/>
             </item>
             <item row="1" column="1">
              <spacer name="horizontalSpacer_search">
@@ -1228,6 +1114,24 @@ color: #ffff00
               </property>
              </spacer>
             </item>
+            <item row="3" column="2">
+             <widget class="QTableView" name="tableView_search_souvenirs"/>
+            </item>
+            <item row="0" column="0">
+             <widget class="QLabel" name="label_search_teams">
+              <property name="font">
+               <font>
+                <pointsize>12</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>TEAMS</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0" rowspan="3">
+             <widget class="QTableView" name="tableView_search_teams"/>
+            </item>
             <item row="2" column="2">
              <widget class="QLabel" name="label_search_souvenirs">
               <property name="font">
@@ -1236,19 +1140,7 @@ color: #ffff00
                </font>
               </property>
               <property name="text">
-               <string>Souvenirs</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="2">
-             <widget class="QLabel" name="label_search_info">
-              <property name="font">
-               <font>
-                <pointsize>12</pointsize>
-               </font>
-              </property>
-              <property name="text">
-               <string>Information</string>
+               <string>SOUVENIRS</string>
               </property>
              </widget>
             </item>
@@ -1262,7 +1154,7 @@ color: #ffff00
                <widget class="QComboBox" name="comboBox_list_sort">
                 <property name="font">
                  <font>
-                  <pointsize>12</pointsize>
+                  <pointsize>16</pointsize>
                  </font>
                 </property>
                </widget>
@@ -1277,7 +1169,7 @@ color: #ffff00
                 </property>
                 <property name="font">
                  <font>
-                  <pointsize>12</pointsize>
+                  <pointsize>16</pointsize>
                  </font>
                 </property>
                </widget>
@@ -1292,7 +1184,7 @@ color: #ffff00
                 </property>
                 <property name="font">
                  <font>
-                  <pointsize>12</pointsize>
+                  <pointsize>16</pointsize>
                  </font>
                 </property>
                </widget>
@@ -1301,7 +1193,7 @@ color: #ffff00
                <widget class="QLabel" name="label_list_totalroofs">
                 <property name="font">
                  <font>
-                  <pointsize>12</pointsize>
+                  <pointsize>16</pointsize>
                  </font>
                 </property>
                 <property name="text">
@@ -1313,7 +1205,7 @@ color: #ffff00
                <widget class="QLabel" name="label_list_totalcapacity">
                 <property name="font">
                  <font>
-                  <pointsize>12</pointsize>
+                  <pointsize>16</pointsize>
                  </font>
                 </property>
                 <property name="text">
@@ -1325,7 +1217,7 @@ color: #ffff00
                <widget class="QLabel" name="label_list_totalgrass">
                 <property name="font">
                  <font>
-                  <pointsize>12</pointsize>
+                  <pointsize>16</pointsize>
                  </font>
                 </property>
                 <property name="text">
@@ -1347,13 +1239,19 @@ color: #ffff00
                </widget>
               </item>
               <item row="1" column="0" colspan="7">
-               <widget class="QTableView" name="tableView_list"/>
+               <widget class="QTableView" name="tableView_list">
+                <property name="font">
+                 <font>
+                  <pointsize>16</pointsize>
+                 </font>
+                </property>
+               </widget>
               </item>
               <item row="0" column="1" alignment="Qt::AlignRight">
                <widget class="QLabel" name="label_list_sort">
                 <property name="font">
                  <font>
-                  <pointsize>12</pointsize>
+                  <pointsize>16</pointsize>
                  </font>
                 </property>
                 <property name="text">
@@ -1365,7 +1263,7 @@ color: #ffff00
                <widget class="QLabel" name="label_list_filter">
                 <property name="font">
                  <font>
-                  <pointsize>12</pointsize>
+                  <pointsize>16</pointsize>
                  </font>
                 </property>
                 <property name="text">
@@ -1781,35 +1679,39 @@ color: #ffff00
       </widget>
       <widget class="QWidget" name="page_LOGIN">
        <layout class="QGridLayout" name="gridLayout_login">
-        <item row="0" column="1">
-         <spacer name="verticalSpacer_login">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
+        <item row="2" column="2">
+         <widget class="QPushButton" name="pushButton_login">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
           </property>
-          <property name="sizeType">
-           <enum>QSizePolicy::Expanding</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
+          <property name="minimumSize">
            <size>
-            <width>20</width>
-            <height>255</height>
+            <width>150</width>
+            <height>0</height>
            </size>
           </property>
-         </spacer>
-        </item>
-        <item row="1" column="1" colspan="2">
-         <widget class="QLabel" name="label_login_error">
           <property name="font">
            <font>
             <pointsize>12</pointsize>
+            <weight>50</weight>
+            <bold>false</bold>
            </font>
           </property>
           <property name="text">
-           <string>(Username or Password is Incorrect)</string>
+           <string>Log In</string>
+          </property>
+          <property name="autoDefault">
+           <bool>false</bool>
+          </property>
+          <property name="default">
+           <bool>false</bool>
           </property>
          </widget>
         </item>
-        <item row="2" column="0">
+        <item row="1" column="0">
          <spacer name="horizontalSpacer_login">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
@@ -1825,7 +1727,39 @@ color: #ffff00
           </property>
          </spacer>
         </item>
-        <item row="2" column="1" colspan="2">
+        <item row="3" column="1">
+         <spacer name="verticalSpacer_login_2">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Expanding</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>254</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="1" column="3">
+         <spacer name="horizontalSpacer_login_2">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Expanding</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>542</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="1" column="1" colspan="2">
          <layout class="QFormLayout" name="formLayout_login">
           <property name="horizontalSpacing">
            <number>10</number>
@@ -1901,56 +1835,8 @@ color: #ffff00
           </item>
          </layout>
         </item>
-        <item row="2" column="3">
-         <spacer name="horizontalSpacer_login_2">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeType">
-           <enum>QSizePolicy::Expanding</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>542</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item row="3" column="2">
-         <widget class="QPushButton" name="pushButton_login">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>150</width>
-            <height>0</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <pointsize>12</pointsize>
-            <weight>50</weight>
-            <bold>false</bold>
-           </font>
-          </property>
-          <property name="text">
-           <string>Log In</string>
-          </property>
-          <property name="autoDefault">
-           <bool>false</bool>
-          </property>
-          <property name="default">
-           <bool>false</bool>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="1">
-         <spacer name="verticalSpacer_login_2">
+        <item row="0" column="1">
+         <spacer name="verticalSpacer_login">
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
@@ -1960,7 +1846,7 @@ color: #ffff00
           <property name="sizeHint" stdset="0">
            <size>
             <width>20</width>
-            <height>254</height>
+            <height>255</height>
            </size>
           </property>
          </spacer>
@@ -2025,7 +1911,7 @@ color: #ffff00
              </sizepolicy>
             </property>
             <property name="currentIndex">
-             <number>1</number>
+             <number>0</number>
             </property>
             <widget class="QWidget" name="page_IMPORT">
              <layout class="QGridLayout" name="gridLayout">
@@ -2070,6 +1956,48 @@ color: #ffff00
               </item>
               <item row="1" column="0" colspan="2">
                <widget class="QTabWidget" name="tabWidget_IMPORT">
+                <property name="palette">
+                 <palette>
+                  <active>
+                   <colorrole role="WindowText">
+                    <brush brushstyle="SolidPattern">
+                     <color alpha="255">
+                      <red>0</red>
+                      <green>0</green>
+                      <blue>0</blue>
+                     </color>
+                    </brush>
+                   </colorrole>
+                  </active>
+                  <inactive>
+                   <colorrole role="WindowText">
+                    <brush brushstyle="SolidPattern">
+                     <color alpha="255">
+                      <red>0</red>
+                      <green>0</green>
+                      <blue>0</blue>
+                     </color>
+                    </brush>
+                   </colorrole>
+                  </inactive>
+                  <disabled>
+                   <colorrole role="WindowText">
+                    <brush brushstyle="SolidPattern">
+                     <color alpha="255">
+                      <red>120</red>
+                      <green>120</green>
+                      <blue>120</blue>
+                     </color>
+                    </brush>
+                   </colorrole>
+                  </disabled>
+                 </palette>
+                </property>
+                <property name="font">
+                 <font>
+                  <pointsize>16</pointsize>
+                 </font>
+                </property>
                 <property name="currentIndex">
                  <number>0</number>
                 </property>

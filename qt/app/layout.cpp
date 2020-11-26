@@ -22,4 +22,8 @@ void Layout::importResources()
 {
     QFontDatabase::addApplicationFont(":/resource/fonts/OldSportAthletic.ttf");
     QFontDatabase::addApplicationFont(":/resource/fonts/Quicksand_Bold_Oblique.otf");
+    QFontDatabase::addApplicationFont(":/resource/fonts/Mont.otf");
+    QFontDatabase::addApplicationFont(":/resource/fonts/OldSansBlack.ttf");
+    QFontDatabase::addApplicationFont(":/resource/fonts/primetime.ttf");
+    QFontDatabase::addApplicationFont(":/resource/fonts/Steinberg.ttf");
 }
