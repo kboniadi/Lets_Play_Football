@@ -987,7 +987,7 @@ color: #ffff00
     <item row="1" column="0">
      <widget class="QStackedWidget" name="stackedWidget_pages">
       <property name="currentIndex">
-       <number>1</number>
+       <number>6</number>
       </property>
       <widget class="QWidget" name="page_HOME">
        <layout class="QGridLayout" name="gridLayout_home">
@@ -1079,7 +1079,7 @@ color: #ffff00
         <item row="1" column="0">
          <widget class="QStackedWidget" name="stackedWidget_view_pages">
           <property name="currentIndex">
-           <number>0</number>
+           <number>1</number>
           </property>
           <widget class="QWidget" name="page_SEARCH">
            <layout class="QGridLayout" name="gridLayout_search">
@@ -1087,7 +1087,7 @@ color: #ffff00
              <widget class="QLabel" name="label_search_info">
               <property name="font">
                <font>
-                <pointsize>12</pointsize>
+                <pointsize>16</pointsize>
                </font>
               </property>
               <property name="text">
@@ -1096,7 +1096,13 @@ color: #ffff00
              </widget>
             </item>
             <item row="1" column="2">
-             <widget class="QTableView" name="tableView_search_info"/>
+             <widget class="QTableView" name="tableView_search_info">
+              <property name="font">
+               <font>
+                <pointsize>16</pointsize>
+               </font>
+              </property>
+             </widget>
             </item>
             <item row="1" column="1">
              <spacer name="horizontalSpacer_search">
@@ -1115,13 +1121,19 @@ color: #ffff00
              </spacer>
             </item>
             <item row="3" column="2">
-             <widget class="QTableView" name="tableView_search_souvenirs"/>
+             <widget class="QTableView" name="tableView_search_souvenirs">
+              <property name="font">
+               <font>
+                <pointsize>16</pointsize>
+               </font>
+              </property>
+             </widget>
             </item>
             <item row="0" column="0">
              <widget class="QLabel" name="label_search_teams">
               <property name="font">
                <font>
-                <pointsize>12</pointsize>
+                <pointsize>16</pointsize>
                </font>
               </property>
               <property name="text">
@@ -1130,13 +1142,19 @@ color: #ffff00
              </widget>
             </item>
             <item row="1" column="0" rowspan="3">
-             <widget class="QTableView" name="tableView_search_teams"/>
+             <widget class="QTableView" name="tableView_search_teams">
+              <property name="font">
+               <font>
+                <pointsize>16</pointsize>
+               </font>
+              </property>
+             </widget>
             </item>
             <item row="2" column="2">
              <widget class="QLabel" name="label_search_souvenirs">
               <property name="font">
                <font>
-                <pointsize>12</pointsize>
+                <pointsize>16</pointsize>
                </font>
               </property>
               <property name="text">
@@ -1255,7 +1273,7 @@ color: #ffff00
                  </font>
                 </property>
                 <property name="text">
-                 <string>Sort:</string>
+                 <string>SORT:</string>
                 </property>
                </widget>
               </item>
@@ -1267,7 +1285,7 @@ color: #ffff00
                  </font>
                 </property>
                 <property name="text">
-                 <string>Filter:</string>
+                 <string>FILTER:</string>
                 </property>
                </widget>
               </item>
@@ -1295,7 +1313,7 @@ color: #ffff00
               </property>
               <property name="font">
                <font>
-                <pointsize>12</pointsize>
+                <pointsize>16</pointsize>
                </font>
               </property>
               <property name="text">
@@ -1313,7 +1331,7 @@ color: #ffff00
               </property>
               <property name="font">
                <font>
-                <pointsize>12</pointsize>
+                <pointsize>16</pointsize>
                </font>
               </property>
               <property name="text">
@@ -1331,7 +1349,7 @@ color: #ffff00
               </property>
               <property name="font">
                <font>
-                <pointsize>12</pointsize>
+                <pointsize>16</pointsize>
                </font>
               </property>
               <property name="text">
@@ -1349,11 +1367,11 @@ color: #ffff00
               </property>
               <property name="font">
                <font>
-                <pointsize>12</pointsize>
+                <pointsize>16</pointsize>
                </font>
               </property>
               <property name="text">
-               <string>Trips:</string>
+               <string>TRIPS</string>
               </property>
              </widget>
             </item>
@@ -1367,7 +1385,7 @@ color: #ffff00
               </property>
               <property name="font">
                <font>
-                <pointsize>12</pointsize>
+                <pointsize>16</pointsize>
                </font>
               </property>
               <property name="text">
@@ -1385,7 +1403,7 @@ color: #ffff00
               </property>
               <property name="font">
                <font>
-                <pointsize>12</pointsize>
+                <pointsize>16</pointsize>
                </font>
               </property>
               <property name="text">
@@ -1403,7 +1421,7 @@ color: #ffff00
               </property>
               <property name="font">
                <font>
-                <pointsize>12</pointsize>
+                <pointsize>16</pointsize>
                </font>
               </property>
               <property name="text">
@@ -1425,7 +1443,7 @@ color: #ffff00
               </property>
               <property name="font">
                <font>
-                <pointsize>12</pointsize>
+                <pointsize>16</pointsize>
                </font>
               </property>
               <property name="text">
@@ -1437,7 +1455,7 @@ color: #ffff00
              <widget class="QLabel" name="label_plan_distance">
               <property name="font">
                <font>
-                <pointsize>12</pointsize>
+                <pointsize>16</pointsize>
                </font>
               </property>
               <property name="text">
@@ -1446,7 +1464,13 @@ color: #ffff00
              </widget>
             </item>
             <item row="0" column="0" colspan="2">
-             <widget class="QTableView" name="tableView_plan_route"/>
+             <widget class="QTableView" name="tableView_plan_route">
+              <property name="font">
+               <font>
+                <pointsize>16</pointsize>
+               </font>
+              </property>
+             </widget>
             </item>
            </layout>
           </item>
@@ -1465,7 +1489,7 @@ color: #ffff00
                  </property>
                  <property name="font">
                   <font>
-                   <pointsize>12</pointsize>
+                   <pointsize>16</pointsize>
                   </font>
                  </property>
                  <property name="text">
@@ -1483,7 +1507,7 @@ color: #ffff00
                  </property>
                  <property name="font">
                   <font>
-                   <pointsize>12</pointsize>
+                   <pointsize>16</pointsize>
                   </font>
                  </property>
                  <property name="text">
@@ -1501,7 +1525,7 @@ color: #ffff00
                  </property>
                  <property name="font">
                   <font>
-                   <pointsize>12</pointsize>
+                   <pointsize>16</pointsize>
                   </font>
                  </property>
                  <property name="text">
@@ -1518,6 +1542,11 @@ color: #ffff00
                  <horstretch>0</horstretch>
                  <verstretch>0</verstretch>
                 </sizepolicy>
+               </property>
+               <property name="font">
+                <font>
+                 <pointsize>16</pointsize>
+                </font>
                </property>
               </widget>
              </item>
@@ -1536,16 +1565,22 @@ color: #ffff00
            <widget class="QLabel" name="label_pos_trip">
             <property name="font">
              <font>
-              <pointsize>12</pointsize>
+              <pointsize>16</pointsize>
              </font>
             </property>
             <property name="text">
-             <string>Trip:</string>
+             <string>TRIP</string>
             </property>
            </widget>
           </item>
           <item row="1" column="0" rowspan="3">
-           <widget class="QTableView" name="tableView_pos_trip"/>
+           <widget class="QTableView" name="tableView_pos_trip">
+            <property name="font">
+             <font>
+              <pointsize>16</pointsize>
+             </font>
+            </property>
+           </widget>
           </item>
           <item row="2" column="4">
            <spacer name="horizontalSpacer_pos">
@@ -1564,7 +1599,7 @@ color: #ffff00
            <widget class="QLabel" name="label_pos_distance">
             <property name="font">
              <font>
-              <pointsize>12</pointsize>
+              <pointsize>16</pointsize>
              </font>
             </property>
             <property name="text">
@@ -1576,25 +1611,37 @@ color: #ffff00
            <widget class="QLabel" name="label_pos_cart">
             <property name="font">
              <font>
-              <pointsize>12</pointsize>
+              <pointsize>16</pointsize>
              </font>
             </property>
             <property name="text">
-             <string>Cart:</string>
+             <string>CART</string>
             </property>
            </widget>
           </item>
           <item row="1" column="1" colspan="5">
-           <widget class="QTableWidget" name="tableWidget_pos_purchase"/>
+           <widget class="QTableWidget" name="tableWidget_pos_purchase">
+            <property name="font">
+             <font>
+              <pointsize>16</pointsize>
+             </font>
+            </property>
+           </widget>
           </item>
           <item row="3" column="1" colspan="5">
-           <widget class="QTableView" name="tableView_pos_cart"/>
+           <widget class="QTableView" name="tableView_pos_cart">
+            <property name="font">
+             <font>
+              <pointsize>16</pointsize>
+             </font>
+            </property>
+           </widget>
           </item>
           <item row="4" column="3">
            <widget class="QPushButton" name="pushButton_pos_cancel">
             <property name="font">
              <font>
-              <pointsize>12</pointsize>
+              <pointsize>16</pointsize>
              </font>
             </property>
             <property name="text">
@@ -1606,7 +1653,7 @@ color: #ffff00
            <widget class="QPushButton" name="pushButton_pos_continue">
             <property name="font">
              <font>
-              <pointsize>12</pointsize>
+              <pointsize>16</pointsize>
              </font>
             </property>
             <property name="text">
@@ -1618,11 +1665,11 @@ color: #ffff00
            <widget class="QLabel" name="label_pos_purchase">
             <property name="font">
              <font>
-              <pointsize>12</pointsize>
+              <pointsize>16</pointsize>
              </font>
             </property>
             <property name="text">
-             <string>Souvenirs:</string>
+             <string>SOUVENIRS</string>
             </property>
            </widget>
           </item>
@@ -1636,7 +1683,7 @@ color: #ffff00
             </property>
             <property name="font">
              <font>
-              <pointsize>12</pointsize>
+              <pointsize>16</pointsize>
              </font>
             </property>
             <property name="text">
@@ -1653,7 +1700,13 @@ color: #ffff00
         <item row="0" column="0">
          <layout class="QGridLayout" name="gridLayout_receipt">
           <item row="0" column="0">
-           <widget class="QTableView" name="tableView_receipt"/>
+           <widget class="QTableView" name="tableView_receipt">
+            <property name="font">
+             <font>
+              <pointsize>16</pointsize>
+             </font>
+            </property>
+           </widget>
           </item>
           <item row="1" column="0" alignment="Qt::AlignHCenter">
            <widget class="QPushButton" name="pushButton_receipt_continue">
@@ -1665,7 +1718,7 @@ color: #ffff00
             </property>
             <property name="font">
              <font>
-              <pointsize>12</pointsize>
+              <pointsize>16</pointsize>
              </font>
             </property>
             <property name="text">
@@ -1695,7 +1748,7 @@ color: #ffff00
           </property>
           <property name="font">
            <font>
-            <pointsize>12</pointsize>
+            <pointsize>16</pointsize>
             <weight>50</weight>
             <bold>false</bold>
            </font>
@@ -1777,7 +1830,7 @@ color: #ffff00
             </property>
             <property name="font">
              <font>
-              <pointsize>12</pointsize>
+              <pointsize>16</pointsize>
              </font>
             </property>
             <property name="text">
@@ -1795,7 +1848,7 @@ color: #ffff00
             </property>
             <property name="font">
              <font>
-              <pointsize>12</pointsize>
+              <pointsize>16</pointsize>
              </font>
             </property>
            </widget>
@@ -1810,7 +1863,7 @@ color: #ffff00
             </property>
             <property name="font">
              <font>
-              <pointsize>12</pointsize>
+              <pointsize>16</pointsize>
              </font>
             </property>
             <property name="text">
@@ -1828,7 +1881,7 @@ color: #ffff00
             </property>
             <property name="font">
              <font>
-              <pointsize>12</pointsize>
+              <pointsize>16</pointsize>
              </font>
             </property>
            </widget>
@@ -1876,7 +1929,7 @@ color: #ffff00
             </property>
             <property name="font">
              <font>
-              <pointsize>12</pointsize>
+              <pointsize>16</pointsize>
              </font>
             </property>
             <property name="text">
@@ -1894,7 +1947,7 @@ color: #ffff00
             </property>
             <property name="font">
              <font>
-              <pointsize>12</pointsize>
+              <pointsize>16</pointsize>
              </font>
             </property>
             <property name="text">
@@ -1910,8 +1963,13 @@ color: #ffff00
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
+            <property name="font">
+             <font>
+              <pointsize>16</pointsize>
+             </font>
+            </property>
             <property name="currentIndex">
-             <number>0</number>
+             <number>1</number>
             </property>
             <widget class="QWidget" name="page_IMPORT">
              <layout class="QGridLayout" name="gridLayout">
@@ -1929,7 +1987,7 @@ color: #ffff00
                  </property>
                  <property name="font">
                   <font>
-                   <pointsize>12</pointsize>
+                   <pointsize>16</pointsize>
                   </font>
                  </property>
                  <property name="text">
@@ -1945,7 +2003,7 @@ color: #ffff00
                  </property>
                  <property name="font">
                   <font>
-                   <pointsize>12</pointsize>
+                   <pointsize>16</pointsize>
                   </font>
                  </property>
                  <property name="text">
@@ -1999,7 +2057,7 @@ color: #ffff00
                  </font>
                 </property>
                 <property name="currentIndex">
-                 <number>0</number>
+                 <number>2</number>
                 </property>
                 <widget class="QWidget" name="tab_INFO">
                  <attribute name="title">
@@ -2027,7 +2085,13 @@ color: #ffff00
                  </attribute>
                  <layout class="QGridLayout" name="gridLayout_3">
                   <item row="0" column="0">
-                   <widget class="QTableView" name="tableView_import_3"/>
+                   <widget class="QTableView" name="tableView_import_3">
+                    <property name="font">
+                     <font>
+                      <pointsize>16</pointsize>
+                     </font>
+                    </property>
+                   </widget>
                   </item>
                  </layout>
                 </widget>
@@ -2070,7 +2134,7 @@ color: #ffff00
                     </property>
                     <property name="font">
                      <font>
-                      <pointsize>12</pointsize>
+                      <pointsize>16</pointsize>
                      </font>
                     </property>
                     <item>
@@ -2100,7 +2164,13 @@ color: #ffff00
                     <widget class="QWidget" name="page_stadium">
                      <layout class="QVBoxLayout" name="verticalLayout_3">
                       <item>
-                       <widget class="QTableView" name="tableView_edit"/>
+                       <widget class="QTableView" name="tableView_edit">
+                        <property name="font">
+                         <font>
+                          <pointsize>16</pointsize>
+                         </font>
+                        </property>
+                       </widget>
                       </item>
                      </layout>
                     </widget>
@@ -2112,7 +2182,7 @@ color: #ffff00
                  <widget class="QPushButton" name="pushButton_edit_confirm">
                   <property name="font">
                    <font>
-                    <pointsize>12</pointsize>
+                    <pointsize>16</pointsize>
                    </font>
                   </property>
                   <property name="text">
@@ -2127,7 +2197,7 @@ color: #ffff00
                     <widget class="QLabel" name="label_edit_stadium_name">
                      <property name="font">
                       <font>
-                       <pointsize>12</pointsize>
+                       <pointsize>16</pointsize>
                       </font>
                      </property>
                      <property name="text">
@@ -2139,20 +2209,8 @@ color: #ffff00
                     <widget class="QLineEdit" name="lineEdit_edit_stadium_name">
                      <property name="font">
                       <font>
-                       <pointsize>12</pointsize>
+                       <pointsize>16</pointsize>
                       </font>
-                     </property>
-                    </widget>
-                   </item>
-                   <item row="1" column="0">
-                    <widget class="QLabel" name="label_edit_stadium_capacity">
-                     <property name="font">
-                      <font>
-                       <pointsize>12</pointsize>
-                      </font>
-                     </property>
-                     <property name="text">
-                      <string>Capacity:</string>
                      </property>
                     </widget>
                    </item>
@@ -2160,7 +2218,7 @@ color: #ffff00
                     <widget class="QLineEdit" name="lineEdit_edit_stadium_capacity">
                      <property name="font">
                       <font>
-                       <pointsize>12</pointsize>
+                       <pointsize>16</pointsize>
                       </font>
                      </property>
                     </widget>
@@ -2169,7 +2227,7 @@ color: #ffff00
                     <widget class="QLabel" name="label_edit_stadium_location">
                      <property name="font">
                       <font>
-                       <pointsize>12</pointsize>
+                       <pointsize>16</pointsize>
                       </font>
                      </property>
                      <property name="text">
@@ -2181,7 +2239,7 @@ color: #ffff00
                     <widget class="QLineEdit" name="lineEdit_edit_stadium_location">
                      <property name="font">
                       <font>
-                       <pointsize>12</pointsize>
+                       <pointsize>16</pointsize>
                       </font>
                      </property>
                     </widget>
@@ -2190,7 +2248,7 @@ color: #ffff00
                     <widget class="QLabel" name="label_edit_stadium_surface">
                      <property name="font">
                       <font>
-                       <pointsize>12</pointsize>
+                       <pointsize>16</pointsize>
                       </font>
                      </property>
                      <property name="text">
@@ -2202,7 +2260,7 @@ color: #ffff00
                     <widget class="QLineEdit" name="lineEdit_edit_stadium_surface">
                      <property name="font">
                       <font>
-                       <pointsize>12</pointsize>
+                       <pointsize>16</pointsize>
                       </font>
                      </property>
                     </widget>
@@ -2211,7 +2269,7 @@ color: #ffff00
                     <widget class="QLabel" name="label_edit_stadium_roof">
                      <property name="font">
                       <font>
-                       <pointsize>12</pointsize>
+                       <pointsize>16</pointsize>
                       </font>
                      </property>
                      <property name="text">
@@ -2223,16 +2281,7 @@ color: #ffff00
                     <widget class="QLineEdit" name="lineEdit_edit_stadium_roof">
                      <property name="font">
                       <font>
-                       <pointsize>12</pointsize>
-                      </font>
-                     </property>
-                    </widget>
-                   </item>
-                   <item row="5" column="1">
-                    <widget class="QLineEdit" name="lineEdit_edit_stadium_dateopen">
-                     <property name="font">
-                      <font>
-                       <pointsize>12</pointsize>
+                       <pointsize>16</pointsize>
                       </font>
                      </property>
                     </widget>
@@ -2241,11 +2290,32 @@ color: #ffff00
                     <widget class="QLabel" name="label_edit_stadium_dateopen">
                      <property name="font">
                       <font>
-                       <pointsize>12</pointsize>
+                       <pointsize>16</pointsize>
                       </font>
                      </property>
                      <property name="text">
                       <string>Date Open:</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="5" column="1">
+                    <widget class="QLineEdit" name="lineEdit_edit_stadium_dateopen">
+                     <property name="font">
+                      <font>
+                       <pointsize>16</pointsize>
+                      </font>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="1" column="0">
+                    <widget class="QLabel" name="label_edit_stadium_capacity">
+                     <property name="font">
+                      <font>
+                       <pointsize>16</pointsize>
+                      </font>
+                     </property>
+                     <property name="text">
+                      <string>Capacity:</string>
                      </property>
                     </widget>
                    </item>
@@ -2256,7 +2326,7 @@ color: #ffff00
                  <widget class="QPushButton" name="pushButton_edit_add">
                   <property name="font">
                    <font>
-                    <pointsize>12</pointsize>
+                    <pointsize>16</pointsize>
                    </font>
                   </property>
                   <property name="text">
@@ -2277,11 +2347,14 @@ color: #ffff00
                      </property>
                      <property name="font">
                       <font>
-                       <pointsize>12</pointsize>
+                       <pointsize>16</pointsize>
                       </font>
                      </property>
                      <property name="text">
                       <string>Team Name:</string>
+                     </property>
+                     <property name="alignment">
+                      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                      </property>
                     </widget>
                    </item>
@@ -2295,7 +2368,7 @@ color: #ffff00
                      </property>
                      <property name="font">
                       <font>
-                       <pointsize>12</pointsize>
+                       <pointsize>16</pointsize>
                       </font>
                      </property>
                     </widget>
@@ -2310,11 +2383,14 @@ color: #ffff00
                      </property>
                      <property name="font">
                       <font>
-                       <pointsize>12</pointsize>
+                       <pointsize>16</pointsize>
                       </font>
                      </property>
                      <property name="text">
                       <string>Souvenir Name:</string>
+                     </property>
+                     <property name="alignment">
+                      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                      </property>
                     </widget>
                    </item>
@@ -2328,7 +2404,7 @@ color: #ffff00
                      </property>
                      <property name="font">
                       <font>
-                       <pointsize>12</pointsize>
+                       <pointsize>16</pointsize>
                       </font>
                      </property>
                     </widget>
@@ -2343,11 +2419,14 @@ color: #ffff00
                      </property>
                      <property name="font">
                       <font>
-                       <pointsize>12</pointsize>
+                       <pointsize>16</pointsize>
                       </font>
                      </property>
                      <property name="text">
                       <string>Price:</string>
+                     </property>
+                     <property name="alignment">
+                      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                      </property>
                     </widget>
                    </item>
@@ -2361,7 +2440,7 @@ color: #ffff00
                      </property>
                      <property name="font">
                       <font>
-                       <pointsize>12</pointsize>
+                       <pointsize>16</pointsize>
                       </font>
                      </property>
                     </widget>
@@ -2373,7 +2452,7 @@ color: #ffff00
                  <widget class="QPushButton" name="pushButton_edit_delete">
                   <property name="font">
                    <font>
-                    <pointsize>12</pointsize>
+                    <pointsize>16</pointsize>
                    </font>
                   </property>
                   <property name="text">
@@ -2385,7 +2464,7 @@ color: #ffff00
                  <widget class="QPushButton" name="pushButton_edit_cancel">
                   <property name="font">
                    <font>
-                    <pointsize>12</pointsize>
+                    <pointsize>16</pointsize>
                    </font>
                   </property>
                   <property name="text">
