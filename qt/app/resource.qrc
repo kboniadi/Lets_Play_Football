@@ -1,7 +1,8 @@
 <RCC>
     <qresource prefix="/resource">
-        <file>fonts/Freshman.ttf</file>
         <file>img/homesplash.jpg</file>
         <file>img/backgroundmatch.xml</file>
+        <file>fonts/Quicksand_Bold_Oblique.otf</file>
+        <file>fonts/OldSportAthletic.ttf</file>
     </qresource>
 </RCC>
