@@ -205,32 +205,41 @@ void MainWindow::setResources() // imports and assigns layout elements
 
     QFont mainFont = QFont("OldSansBlack", 16); // main font
     ui->centralwidget->setFont(mainFont);
-    ui->tableView_list->setFont(mainFont);
 
-    QFont splash = QFont("Freshman", 42, QFont::Bold);
     QFont homeButtons = QFont("OLD SPORT 02 ATHLETIC NCV", 32); // page button font
-    ui->label_home_splash->setFont(splash);
     ui->pushButton_pages_home->setFont(homeButtons);
     ui->pushButton_pages_view->setFont(homeButtons);
     ui->pushButton_pages_plan->setFont(homeButtons);
     ui->pushButton_pages_admin->setFont(homeButtons);
     ui->pushButton_pages_exit->setFont(homeButtons);
 
-    QFont labels = QFont("OldSansBlack", 20);
-    ui->label_search_info->setFont(labels);
-    ui->label_search_teams->setFont(labels);
-    ui->label_search_souvenirs->setFont(labels);
-
-
-//    QFont sublabels = QFont("OldSansBlack", 16);
-//    ui->label_list_sort->setFont(labels);
-//    ui->label_list_filter->setFont(labels);
-//    ui->pushButton_view_list->setFont(sublabels);
-//    ui->pushButton_view_search->setFont(sublabels);
-//    ui->label_list_totalcapacity->setFont(sublabels);
-//    ui->label_list_totalroofs->setFont(sublabels);
-//    ui->label_list_totalgrass->setFont(sublabels);
-
+    QFont tables = QFont("MADE TOMMY", 16); // table font
+    ui->tableView_edit->setFont(tables);
+    ui->tableView_import->setFont(tables);
+    ui->tableView_import_2->setFont(tables);
+    ui->tableView_import_3->setFont(tables);
+    ui->tableView_list->setFont(tables);
+    ui->tableView_plan_custom->setFont(tables);
+    ui->tableView_plan_route->setFont(tables);
+    ui->tableView_pos_cart->setFont(tables);
+    ui->tableView_pos_trip->setFont(tables);
+    ui->tableView_receipt->setFont(tables);
+    ui->tableView_search_info->setFont(tables);
+    ui->tableView_search_souvenirs->setFont(tables);
+    ui->tableView_search_teams->setFont(tables);
+    ui->tableWidget_edit->setFont(tables);
+    ui->tableWidget_pos_purchase->setFont(tables);
+    ui->lineEdit_edit_souvenir_name->setFont(tables);
+    ui->lineEdit_edit_souvenir_price->setFont(tables);
+    ui->lineEdit_edit_souvenir_team->setFont(tables);
+    ui->lineEdit_edit_stadium_capacity->setFont(tables);
+    ui->lineEdit_edit_stadium_dateopen->setFont(tables);
+    ui->lineEdit_edit_stadium_location->setFont(tables);
+    ui->lineEdit_edit_stadium_name->setFont(tables);
+    ui->lineEdit_edit_stadium_roof->setFont(tables);
+    ui->lineEdit_edit_stadium_surface->setFont(tables);
+    ui->lineEdit_login_password->setFont(tables);
+    ui->lineEdit_login_username->setFont(tables);
 
 
 

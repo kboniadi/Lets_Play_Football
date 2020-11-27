@@ -2,11 +2,9 @@
     <qresource prefix="/resource">
         <file>img/homesplash.jpg</file>
         <file>img/backgroundmatch.xml</file>
-        <file>fonts/Quicksand_Bold_Oblique.otf</file>
         <file>fonts/OldSportAthletic.ttf</file>
-        <file>fonts/Mont.otf</file>
-        <file>fonts/primetime.ttf</file>
-        <file>fonts/Steinberg.ttf</file>
         <file>fonts/OldSansBlack.ttf</file>
+        <file>fonts/Tommy Light.otf</file>
+        <file>fonts/Tommy Regular.otf</file>
     </qresource>
 </RCC>
