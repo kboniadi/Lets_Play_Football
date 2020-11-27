@@ -34,9 +34,9 @@
      <colorrole role="Window">
       <brush brushstyle="SolidPattern">
        <color alpha="255">
-        <red>34</red>
-        <green>80</green>
-        <blue>34</blue>
+        <red>48</red>
+        <green>78</green>
+        <blue>37</blue>
        </color>
       </brush>
      </colorrole>
@@ -72,9 +72,9 @@
      <colorrole role="Window">
       <brush brushstyle="SolidPattern">
        <color alpha="255">
-        <red>34</red>
-        <green>80</green>
-        <blue>34</blue>
+        <red>48</red>
+        <green>78</green>
+        <blue>37</blue>
        </color>
       </brush>
      </colorrole>
@@ -101,18 +101,18 @@
      <colorrole role="Base">
       <brush brushstyle="SolidPattern">
        <color alpha="255">
-        <red>34</red>
-        <green>80</green>
-        <blue>34</blue>
+        <red>48</red>
+        <green>78</green>
+        <blue>37</blue>
        </color>
       </brush>
      </colorrole>
      <colorrole role="Window">
       <brush brushstyle="SolidPattern">
        <color alpha="255">
-        <red>34</red>
-        <green>80</green>
-        <blue>34</blue>
+        <red>48</red>
+        <green>78</green>
+        <blue>37</blue>
        </color>
       </brush>
      </colorrole>
@@ -987,7 +987,7 @@ color: #ffff00
     <item row="1" column="0">
      <widget class="QStackedWidget" name="stackedWidget_pages">
       <property name="currentIndex">
-       <number>6</number>
+       <number>5</number>
       </property>
       <widget class="QWidget" name="page_HOME">
        <layout class="QGridLayout" name="gridLayout_home">
@@ -1748,7 +1748,7 @@ color: #ffff00
           </property>
           <property name="font">
            <font>
-            <pointsize>16</pointsize>
+            <pointsize>20</pointsize>
             <weight>50</weight>
             <bold>false</bold>
            </font>
@@ -1830,7 +1830,7 @@ color: #ffff00
             </property>
             <property name="font">
              <font>
-              <pointsize>16</pointsize>
+              <pointsize>20</pointsize>
              </font>
             </property>
             <property name="text">
@@ -1848,7 +1848,7 @@ color: #ffff00
             </property>
             <property name="font">
              <font>
-              <pointsize>16</pointsize>
+              <pointsize>20</pointsize>
              </font>
             </property>
            </widget>
@@ -1863,7 +1863,7 @@ color: #ffff00
             </property>
             <property name="font">
              <font>
-              <pointsize>16</pointsize>
+              <pointsize>20</pointsize>
              </font>
             </property>
             <property name="text">
@@ -1881,8 +1881,11 @@ color: #ffff00
             </property>
             <property name="font">
              <font>
-              <pointsize>16</pointsize>
+              <pointsize>20</pointsize>
              </font>
+            </property>
+            <property name="echoMode">
+             <enum>QLineEdit::Password</enum>
             </property>
            </widget>
           </item>
