@@ -1079,7 +1079,7 @@ color: #ffff00
         <item row="1" column="0">
          <widget class="QStackedWidget" name="stackedWidget_view_pages">
           <property name="currentIndex">
-           <number>1</number>
+           <number>0</number>
           </property>
           <widget class="QWidget" name="page_SEARCH">
            <layout class="QGridLayout" name="gridLayout_search">
@@ -1087,7 +1087,7 @@ color: #ffff00
              <widget class="QLabel" name="label_search_info">
               <property name="font">
                <font>
-                <pointsize>16</pointsize>
+                <pointsize>20</pointsize>
                </font>
               </property>
               <property name="text">
@@ -1133,7 +1133,7 @@ color: #ffff00
              <widget class="QLabel" name="label_search_teams">
               <property name="font">
                <font>
-                <pointsize>16</pointsize>
+                <pointsize>20</pointsize>
                </font>
               </property>
               <property name="text">
@@ -1154,7 +1154,7 @@ color: #ffff00
              <widget class="QLabel" name="label_search_souvenirs">
               <property name="font">
                <font>
-                <pointsize>16</pointsize>
+                <pointsize>20</pointsize>
                </font>
               </property>
               <property name="text">
@@ -1367,7 +1367,7 @@ color: #ffff00
               </property>
               <property name="font">
                <font>
-                <pointsize>16</pointsize>
+                <pointsize>20</pointsize>
                </font>
               </property>
               <property name="text">
@@ -1565,7 +1565,7 @@ color: #ffff00
            <widget class="QLabel" name="label_pos_trip">
             <property name="font">
              <font>
-              <pointsize>16</pointsize>
+              <pointsize>20</pointsize>
              </font>
             </property>
             <property name="text">
@@ -1611,7 +1611,7 @@ color: #ffff00
            <widget class="QLabel" name="label_pos_cart">
             <property name="font">
              <font>
-              <pointsize>16</pointsize>
+              <pointsize>20</pointsize>
              </font>
             </property>
             <property name="text">
@@ -1665,7 +1665,7 @@ color: #ffff00
            <widget class="QLabel" name="label_pos_purchase">
             <property name="font">
              <font>
-              <pointsize>16</pointsize>
+              <pointsize>20</pointsize>
              </font>
             </property>
             <property name="text">
