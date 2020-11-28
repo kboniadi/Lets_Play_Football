@@ -16,8 +16,7 @@ MainWindow::MainWindow(QWidget *parent)
 	DBManager::instance();
 	table = new TableManager;
     Layout::instance();
-
-	initializeLayout();
+    initializeLayout();
 }
 
 MainWindow::~MainWindow()
