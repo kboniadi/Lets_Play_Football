@@ -1540,7 +1540,7 @@ color: #DEA13F
        </palette>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="page_HOME">
        <layout class="QGridLayout" name="gridLayout_home">
@@ -6876,6 +6876,9 @@ color: #DEA13F
                  <font>
                   <pointsize>16</pointsize>
                  </font>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QHeaderView::section { color:FFFFED; background-color:#274673; font: 30px MADE TOMMY,}</string>
                 </property>
                </widget>
               </item>
