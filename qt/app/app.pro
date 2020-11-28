@@ -3,7 +3,7 @@ QT       += sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-CONFIG += c++11
+CONFIG += c++17
 
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
@@ -22,8 +22,9 @@ HEADERS += \
     dbmanager.h \
     layout.h \
     mainwindow.h \
-    tablemanager.h
+    tablemanager.h \
     layout.h \
+    graph.h
 
 FORMS += \
     mainwindow.ui

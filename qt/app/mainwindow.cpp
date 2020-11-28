@@ -5,6 +5,7 @@
 #include "layout.h"
 #include <functional>
 #include <qnamespace.h>
+#include "graph.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -16,7 +17,7 @@ MainWindow::MainWindow(QWidget *parent)
 	table = new TableManager;
     Layout::instance();
 
-    initializeLayout();
+	initializeLayout();
 }
 
 MainWindow::~MainWindow()
