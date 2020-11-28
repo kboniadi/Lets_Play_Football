@@ -1,11 +1,9 @@
 #define Debug 1
 
-#if Debug == 1
+#if Debug == 0
 
 #include "mainwindow.h"
 #include <QApplication>
-#include "unordered_map.h"
-#include <QDebug>
 
 #define print qDebug()
 

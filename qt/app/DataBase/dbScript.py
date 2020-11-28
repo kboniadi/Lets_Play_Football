@@ -18,6 +18,15 @@ def ImportTeamTemplate(filename):
     # cur.close()
     # conn.close()
 
+def CreateTable(tableName, **kwargs):
+    query = "CREATE Table IF NOT EXISTS {0}(purchasesID INTEGER, ".format(tableName)
+    for i, (key, value) in enumerate(kwargs.items()):
+        query += '{0} {1}'.format(key, value)
+        if i + 1 != len(kwargs):
+            query += ', ';
+    query += ')';
+    cur.execute(query)
+
 def ImportFile(filename, tableName, **kwargs):
     # conn = sqlite3.connect("Data.db")
     # cur = conn.cursor()
@@ -100,6 +109,7 @@ if __name__ == "__main__":
     DropTable('information')
     DropTable('souvenir');
     DropTable('accounts')
+    DropTable('purchases')
 
     ImportTeamTemplate('teams.csv')
     ImportFile('nfl_distances.csv', 'distance', beginStadium = 'TEXT',
@@ -109,6 +119,7 @@ if __name__ == "__main__":
     surfaceType = 'TEXT', roofType = 'TEXT', dateOpen = 'TEXT')
     ImportFile('nfl_team_souvenir.csv', 'souvenir', items = 'TEXT', price = 'TEXT')
     ImportAccounts('admin', 'password', 'ADMIN');
+    CreateTable('purchases', items = "TEXT", quantity = "TEXT")
     
     # getData()
 
