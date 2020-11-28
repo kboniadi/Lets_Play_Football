@@ -242,7 +242,7 @@ int DBManager::GetNumSouvenir(QString teamName)
 
 int DBManager::GetNumTeams()
 {
-	query.prepare("SELECT COUNT(*) teams");
+	query.prepare("SELECT COUNT(*) FROM teams");
 	if (query.exec()) {
 		query.first();
 		return query.value(0).toInt();

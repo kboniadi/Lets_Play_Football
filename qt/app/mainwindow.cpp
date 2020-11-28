@@ -5,6 +5,7 @@
 #include "layout.h"
 #include <functional>
 #include <qnamespace.h>
+#include "graph.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -16,6 +17,23 @@ MainWindow::MainWindow(QWidget *parent)
 	table = new TableManager;
     Layout::instance();
 
+	Graph<int> graph;
+	graph.generateGraph();
+	std::vector<int> vect(graph.vertices());
+	std::vector<int> dijkstra;
+	int costsD[graph.size()];
+	int parentD[graph.size()];
+	graph.DijkstraPathFinder(vect.at(
+				std::distance(vect.begin(),
+							  std::find(vect.begin(), vect.end(), 1))),
+								 dijkstra, costsD, parentD);
+
+	for (auto &a : vect) {
+		std::vector<int> path = graph.returnPath(1, a, parentD);
+		qDebug() << "1 to " << a << "...\nPath: ";
+		qDebug() << path;
+		qDebug() << "\nTotal Distance: " << costsD[graph.findVertex(a)] << "\n\n";
+	}
     initializeLayout();
 }
 
