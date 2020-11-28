@@ -213,6 +213,32 @@ void MainWindow::setResources() // imports and assigns layout elements
     ui->pushButton_pages_admin->setFont(homeButtons);
     ui->pushButton_pages_exit->setFont(homeButtons);
 
+    QFont buttons = QFont("OLD SPORT 02 ATHLETIC NCV", 20); // button font
+    ui->pushButton_admin_edit->setFont(buttons);
+    ui->pushButton_admin_import->setFont(buttons);
+    ui->pushButton_edit_add->setFont(buttons);
+    ui->pushButton_edit_cancel->setFont(buttons);
+    ui->pushButton_edit_confirm->setFont(buttons);
+    ui->pushButton_edit_delete->setFont(buttons);
+    ui->pushButton_import->setFont(buttons);
+    ui->pushButton_import_revert->setFont(buttons);
+    ui->pushButton_login->setFont(buttons);
+    ui->pushButton_plan_MST->setFont(buttons);
+    ui->pushButton_plan_add->setFont(buttons);
+    ui->pushButton_plan_continue->setFont(buttons);
+    ui->pushButton_plan_custom->setFont(buttons);
+    ui->pushButton_plan_packers->setFont(buttons);
+    ui->pushButton_plan_patriots->setFont(buttons);
+    ui->pushButton_plan_rams->setFont(buttons);
+    ui->pushButton_plan_remove->setFont(buttons);
+    ui->pushButton_plan_sort->setFont(buttons);
+    ui->pushButton_plan_vikings->setFont(buttons);
+    ui->pushButton_pos_cancel->setFont(buttons);
+    ui->pushButton_pos_continue->setFont(buttons);
+    ui->pushButton_receipt_continue->setFont(buttons);
+    ui->pushButton_view_list->setFont(buttons);
+    ui->pushButton_view_search->setFont(buttons);
+
     QFont tables = QFont("MADE TOMMY", 16); // table font
     ui->tableView_edit->setFont(tables);
     ui->tableView_import->setFont(tables);
