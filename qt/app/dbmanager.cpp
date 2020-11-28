@@ -384,7 +384,8 @@ bool DBManager::isTeamExist(QString teamName)
 {
 	query.prepare("SELECT EXISTS (SELECT 1 FROM teams WHERE teamNames = :teamName)");
 	query.bindValue(":teamName", teamName);
-	query.exec();
+	if (!query.exec())
+		qDebug() << "DBManager::isTeamExist(QString teamName) : query failed";
 	query.first();
 	return (bool) query.value(0).toInt();
 }
@@ -395,7 +396,21 @@ bool DBManager::isSouvenirExist(QString teamName, QString item)
 	query.prepare("SELECT EXISTS (SELECT 1 FROM souvenir, teams WHERE items = :item AND teamNames = :teamName)");
 	query.bindValue(":teamName", teamName);
 	query.bindValue(":item", item);
-	query.exec();
+	if (!query.exec())
+		qDebug() << "DBManager::isSouvenirExist(QString teamName, QString item) : query failed";
 	query.first();
 	return (bool) query.value(0).toInt();
+}
+
+void DBManager::addPurchases(int id, QString item, int qty)
+{
+	query.prepare("INSERT INTO purchase(purchasID, item, quantity) VALUE(:id, :item, :qty)");
+
+	query.bindValue(":id", id);
+	query.bindValue(":item", item);
+	query.bindValue(":qty", qty);
+
+	if (!query.exec())
+		qDebug() << "DBManager::addPurchases(int id, QString item, int qty) : query failed";
+	query.finish();
 }

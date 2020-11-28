@@ -19,7 +19,7 @@ def ImportTeamTemplate(filename):
     # conn.close()
 
 def CreateTable(tableName, **kwargs):
-    query = "CREATE Table IF NOT EXISTS {0}(purchasesID INTEGER, ".format(tableName)
+    query = "CREATE Table IF NOT EXISTS {0}(purchaseID INTEGER, ".format(tableName)
     for i, (key, value) in enumerate(kwargs.items()):
         query += '{0} {1}'.format(key, value)
         if i + 1 != len(kwargs):
