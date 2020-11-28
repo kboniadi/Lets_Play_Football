@@ -16,8 +16,7 @@ MainWindow::MainWindow(QWidget *parent)
 	DBManager::instance();
 	table = new TableManager;
     Layout::instance();
-
-	initializeLayout();
+    initializeLayout();
 }
 
 MainWindow::~MainWindow()
@@ -267,11 +266,6 @@ void MainWindow::setResources() // imports and assigns layout elements
     ui->lineEdit_edit_stadium_surface->setFont(tables);
     ui->lineEdit_login_password->setFont(tables);
     ui->lineEdit_login_username->setFont(tables);
-
-
-
-
-
     /*----End Fonts----*/
 }
 void MainWindow::clearButtons() // resets most program states
