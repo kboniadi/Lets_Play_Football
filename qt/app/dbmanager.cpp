@@ -414,7 +414,6 @@ void DBManager::addPurchases(int id, QString item, int qty)
 		qDebug() << "DBManager::addPurchases(int id, QString item, int qty) : query failed";
 	query.finish();
 }
-
 bool DBManager::comparater(generalContainer::node n1, generalContainer::node n2)
 {
     return (n1.weight < n2.weight);

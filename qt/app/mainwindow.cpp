@@ -12,31 +12,15 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
 	ui->setupUi(this);
-	ui->statusbar->addWidget(&status);
 	DBManager::instance();
 	table = new TableManager;
     Layout::instance();
-
-	initializeLayout();
+    initializeLayout();
 }
 
 MainWindow::~MainWindow()
 {
 	delete ui;
-}
-
-void MainWindow::SetStatusBar(const QString &messg, int timeout)
-{
-	if (timeout == 0) {
-		ui->statusbar->clearMessage();
-		status.setText(messg);
-		if (messg.isEmpty())
-			status.hide();
-		else
-			status.show();
-	} else {
-		ui->statusbar->showMessage(messg, timeout);
-	}
 }
 
 /*----NAVIGATION----*/
@@ -79,7 +63,10 @@ void MainWindow::on_pushButton_pages_plan_clicked()
     ui->stackedWidget_pages->setCurrentIndex(PLAN);
     clearButtons();
     ui->pushButton_pages_plan->setDisabled(true);
-    on_pushButton_plan_MST_clicked();
+    on_pushButton_plan_packers_clicked();
+
+    //sets the total distance for the bfs
+    laRams();
 }
 
     void MainWindow::on_pushButton_plan_continue_clicked()
@@ -139,6 +126,7 @@ void MainWindow::on_pushButton_pages_admin_clicked()
         ui->stackedWidget_admin_pages->setCurrentIndex(IMPORT);
         ui->pushButton_admin_import->setDisabled(true);
         ui->pushButton_admin_edit->setDisabled(false);
+        ui->pushButton_admin_receipts->setDisabled(false);
     }
 
 		void MainWindow::on_pushButton_import_clicked()
@@ -152,24 +140,27 @@ void MainWindow::on_pushButton_pages_admin_clicked()
     void MainWindow::on_pushButton_admin_edit_clicked()
     {
         ui->stackedWidget_admin_pages->setCurrentIndex(EDIT);
-		ui->stackedWidget_edit->setCurrentIndex(EDITSOUV);
+        on_comboBox_edit_activated(EDITSOUV);
         ui->pushButton_admin_import->setDisabled(false);
         ui->pushButton_admin_edit->setDisabled(true);
+        ui->pushButton_admin_receipts->setDisabled(false);
 		table->InitializeAdminEditTable(ui->tableWidget_edit);
 		table->PopulateAdminEditTable(ui->tableWidget_edit);
     }
 
     void MainWindow::on_comboBox_edit_activated(int index)
     {
-//        clearButtons();
-
-        if (index == 0)
+        if (index == EDITSOUV)
         {
+            ui->comboBox_edit->setCurrentIndex(EDITSOUV);
 			ui->stackedWidget_edit->setCurrentIndex(EDITSOUV);
             ui->formWidget_edit_souvenir->setVisible(true);
 			ui->formWidget_edit_stadium->setVisible(false);
 			table->InitializeAdminEditTable(ui->tableWidget_edit);
 			table->PopulateAdminEditTable(ui->tableWidget_edit);
+            ui->pushButton_edit_add->setVisible(true);
+            ui->pushButton_edit_delete->setVisible(true);
+            ui->pushButton_edit_add->clicked();
         }
         else
         {
@@ -179,13 +170,27 @@ void MainWindow::on_pushButton_pages_admin_clicked()
 			ui->tableView_edit->verticalHeader()->hide();
 			table->AdminInfoTable(ui->tableView_edit);
 			ui->pushButton_edit_add->setDisabled(true);
+            ui->pushButton_edit_add->setVisible(false);
+            ui->pushButton_edit_delete->setVisible(false);
+            ui->pushButton_edit_cancel->setVisible(true);
+            ui->pushButton_edit_confirm->setVisible(true);
+
         }
     }
 
-    void MainWindow::on_pushButton_pages_exit_clicked()
+    void MainWindow::on_pushButton_admin_receipts_clicked()
     {
-        QApplication::quit();
+        ui->stackedWidget_admin_pages->setCurrentIndex(RECEIPTS);
+        ui->pushButton_admin_import->setDisabled(false);
+        ui->pushButton_admin_edit->setDisabled(false);
+        ui->pushButton_admin_receipts->setDisabled(true);
     }
+
+
+void MainWindow::on_pushButton_pages_exit_clicked() // exit button
+{
+    QApplication::quit();
+}
 /*----END NAVIGATION----*/
 
 /*----HELPER FUNCTIONS----*/
@@ -204,14 +209,67 @@ void MainWindow::setResources() // imports and assigns layout elements
 {
     /*----Fonts----*/
     Layout::instance()->importResources();
-    QFont splash = QFont("Freshman", 42, QFont::Bold);
-    QFont homeButtons = QFont("Freshman", 12);
-    ui->label_home_splash->setFont(splash);
+
+    QFont mainFont = QFont("OldSansBlack", 16); // main font
+    ui->centralwidget->setFont(mainFont);
+
+    QFont homeButtons = QFont("OLD SPORT 02 ATHLETIC NCV", 32); // page button font
     ui->pushButton_pages_home->setFont(homeButtons);
     ui->pushButton_pages_view->setFont(homeButtons);
     ui->pushButton_pages_plan->setFont(homeButtons);
     ui->pushButton_pages_admin->setFont(homeButtons);
     ui->pushButton_pages_exit->setFont(homeButtons);
+
+    QFont buttons = QFont("OLD SPORT 02 ATHLETIC NCV", 20); // button font
+    ui->pushButton_admin_edit->setFont(buttons);
+    ui->pushButton_admin_import->setFont(buttons);
+    ui->pushButton_admin_receipts->setFont(buttons);
+    ui->pushButton_edit_add->setFont(buttons);
+    ui->pushButton_edit_cancel->setFont(buttons);
+    ui->pushButton_edit_confirm->setFont(buttons);
+    ui->pushButton_edit_delete->setFont(buttons);
+    ui->pushButton_import->setFont(buttons);
+    ui->pushButton_login->setFont(buttons);
+    ui->pushButton_plan_add->setFont(buttons);
+    ui->pushButton_plan_continue->setFont(buttons);
+    ui->pushButton_plan_custom->setFont(buttons);
+    ui->pushButton_plan_packers->setFont(buttons);
+    ui->pushButton_plan_patriots->setFont(buttons);
+    ui->pushButton_plan_remove->setFont(buttons);
+    ui->pushButton_plan_sort->setFont(buttons);
+    ui->pushButton_pos_cancel->setFont(buttons);
+    ui->pushButton_pos_continue->setFont(buttons);
+    ui->pushButton_receipt_continue->setFont(buttons);
+    ui->pushButton_view_list->setFont(buttons);
+    ui->pushButton_view_search->setFont(buttons);
+;
+    QFont tables = QFont("MADE TOMMY", 16); // table font
+    ui->tableView_edit->setFont(tables);
+    ui->tableView_import->setFont(tables);
+    ui->tableView_import_2->setFont(tables);
+    ui->tableView_import_3->setFont(tables);
+    ui->tableView_list->setFont(tables);
+    ui->tableView_plan_custom->setFont(tables);
+    ui->tableView_plan_route->setFont(tables);
+    ui->tableView_pos_cart->setFont(tables);
+    ui->tableView_pos_trip->setFont(tables);
+    ui->tableView_receipt->setFont(tables);
+    ui->tableView_search_info->setFont(tables);
+    ui->tableView_search_souvenirs->setFont(tables);
+    ui->tableView_search_teams->setFont(tables);
+    ui->tableWidget_edit->setFont(tables);
+    ui->tableWidget_pos_purchase->setFont(tables);
+    ui->lineEdit_edit_souvenir_name->setFont(tables);
+    ui->lineEdit_edit_souvenir_price->setFont(tables);
+    ui->lineEdit_edit_souvenir_team->setFont(tables);
+    ui->lineEdit_edit_stadium_capacity->setFont(tables);
+    ui->lineEdit_edit_stadium_dateopen->setFont(tables);
+    ui->lineEdit_edit_stadium_location->setFont(tables);
+    ui->lineEdit_edit_stadium_name->setFont(tables);
+    ui->lineEdit_edit_stadium_roof->setFont(tables);
+    ui->lineEdit_edit_stadium_surface->setFont(tables);
+    ui->lineEdit_login_password->setFont(tables);
+    ui->lineEdit_login_username->setFont(tables);
     /*----End Fonts----*/
 }
 void MainWindow::clearButtons() // resets most program states
@@ -236,18 +294,18 @@ void MainWindow::clearButtons() // resets most program states
     ui->pushButton_plan_continue->setDisabled(true);
     ui->pushButton_plan_packers->setDisabled(false);
     ui->pushButton_plan_patriots->setDisabled(false);
-    ui->pushButton_plan_rams->setDisabled(false);
-    ui->pushButton_plan_vikings->setDisabled(false);
     ui->pushButton_plan_custom->setDisabled(false);
-    ui->pushButton_plan_MST->setDisabled(false);
 
     // admin buttons
-    ui->formWidget_edit_souvenir->setDisabled(true);
-    ui->formWidget_edit_stadium->setDisabled(true);
+    ui->formWidget_edit_souvenir->setEnabled(false);
+    ui->formWidget_edit_stadium->setEnabled(false);
     ui->pushButton_edit_confirm->setDisabled(true);
     ui->pushButton_edit_cancel->setDisabled(true);
     ui->pushButton_edit_delete->setDisabled(true);
     ui->pushButton_edit_add->setDisabled(false);
+    ui->comboBox_edit->setDisabled(false);
+    ui->tabWidget_IMPORT->setCurrentIndex(IMPORT);
+    ui->comboBox_edit->setCurrentIndex(EDITSOUV);
 
     // line edits
     ui->lineEdit_edit_souvenir_name->clear();
@@ -272,10 +330,11 @@ void MainWindow::clearViewLabels()
 
 void MainWindow::on_pushButton_edit_add_clicked() // admin add button
 {
-    ui->formWidget_edit_souvenir->setDisabled(false);
+    ui->formWidget_edit_souvenir->setEnabled(true);
     ui->formWidget_edit_stadium->setDisabled(false);
     ui->pushButton_edit_add->setDisabled(true);
-    ui->pushButton_edit_cancel->setDisabled(false);
+    ui->pushButton_edit_cancel->setEnabled(true);
+    ui->comboBox_edit->setDisabled(true);
 
 	if (ui->stackedWidget_edit->currentIndex() == EDITSOUV) {
 		ui->lineEdit_edit_souvenir_team->setValidator(new QRegExpValidator(QRegExp("[A-Za-z_ ]{0,60}"), this));
@@ -284,12 +343,13 @@ void MainWindow::on_pushButton_edit_add_clicked() // admin add button
 	}
     // code + error checking
 
-    ui->pushButton_edit_confirm->setDisabled(false);
+    ui->pushButton_edit_confirm->setEnabled(true);
 
 }
 
 void MainWindow::on_tableWidget_edit_cellClicked(int row, int col)
 {
+    on_pushButton_edit_cancel_clicked();
 	static int rowStat;
 	static int colStat;
 	rowStat = row;
@@ -322,11 +382,12 @@ void MainWindow::ProcessDelete(int row, int /*col*/)
 	DBManager::instance()->DeleteSouvenir(teamName, item);
 	table->InitializeAdminEditTable(ui->tableWidget_edit);
 	table->PopulateAdminEditTable(ui->tableWidget_edit);
+    ui->pushButton_edit_delete->setDisabled(true);
 }
+#undef table
 
 void MainWindow::on_tableWidget_edit_doubleClicked(const QModelIndex &index)
 {
-	SetStatusBar("Double click the price to modify it or hit the delete button to remove the entry all together", 5000);
 	static QString temp;
 	temp = index.data().toString();
 
@@ -433,7 +494,6 @@ void MainWindow::on_pushButton_edit_cancel_clicked()
 
 void MainWindow::on_tableView_edit_doubleClicked(const QModelIndex &index)
 {
-	SetStatusBar("Modify these entires then confirm your changes", 5000);
 	ui->lineEdit_edit_stadium_name->setValidator(new QRegExpValidator(QRegExp("[A-Za-z_ '&]{0,60}"), this));
 	// ^(?=.)(\d{1,3}(,\d{3})*)?(\.\d+)?$ (commas required)
 	// ^(\\d+|\\d{1,3}(,\\d{3})*)(\\.\\d+)?$ (commas not required)
@@ -466,6 +526,7 @@ void MainWindow::on_tableView_edit_doubleClicked(const QModelIndex &index)
 void MainWindow::on_pushButton_plan_packers_clicked()
 {
     clearButtons();
+    ui->pushButton_pages_plan->setDisabled(true);
     ui->pushButton_plan_packers->setDisabled(true);
     ui->gridWidget_plan_custom->setVisible(true);
     ui->tableView_plan_custom->setVisible(true);
@@ -477,6 +538,7 @@ void MainWindow::on_pushButton_plan_packers_clicked()
 void MainWindow::on_pushButton_plan_patriots_clicked()
 {
     clearButtons();
+    ui->pushButton_pages_plan->setDisabled(true);
     ui->pushButton_plan_patriots->setDisabled(true);
 
     // planning logic
@@ -484,37 +546,10 @@ void MainWindow::on_pushButton_plan_patriots_clicked()
     ui->pushButton_plan_continue->setDisabled(false);
 }
 
-void MainWindow::on_pushButton_plan_rams_clicked()
-{
-    clearButtons();
-    ui->pushButton_plan_rams->setDisabled(true);
-
-    //clearTable
-    table->clearTable(ui->tableView_plan_route);  //reset table
-    ui->label_plan_distance->setText("Distance"); // reset label
-
-    //Create bfs obj
-    bfs bfsObj;
-    bfsObj.addEdges();
-    bfsObj.bfsAlgo(19); // starting at La Rams (id: 19)
-    table->showBFSTrip(ui->tableView_plan_route,bfsObj);
-
-    ui->label_plan_distance->setText(QString("Distance: %1").arg(bfsObj.getTotalDistance()));
-
-    ui->pushButton_plan_continue->setDisabled(false);
-}
-
-void MainWindow::on_pushButton_plan_vikings_clicked()
-{
-    clearButtons();
-    ui->pushButton_plan_vikings->setDisabled(true);
-
-    ui->pushButton_plan_continue->setDisabled(false);
-}
-
 void MainWindow::on_pushButton_plan_custom_clicked()
 {
     clearButtons();
+    ui->pushButton_pages_plan->setDisabled(true);
     ui->pushButton_plan_sort->setVisible(true);
     ui->gridWidget_plan_custom->setVisible(true);
     ui->tableView_plan_custom->setVisible(true);
@@ -525,12 +560,6 @@ void MainWindow::on_pushButton_plan_custom_clicked()
     // planning logic
 
     ui->pushButton_plan_continue->setDisabled(false);
-}
-
-void MainWindow::on_pushButton_plan_MST_clicked()
-{
-    clearButtons();
-    ui->pushButton_plan_MST->setDisabled(true);
 }
 
 /*----END HELPER FUNCTIONS----*/
@@ -714,3 +743,24 @@ QString MainWindow::toUpperCase(const QString &str)
 
 	return parts.join(" ");
 }
+
+void MainWindow::laRams()
+{
+    clearButtons();
+    //ui->pushButton_plan_rams->setDisabled(true);
+
+    //clearTable
+    table->clearTable(ui->tableView_plan_route);  //reset table
+    ui->label_plan_distance->setText("Distance"); // reset label
+
+    //Create bfs obj
+    bfs bfsObj;
+    bfsObj.addEdges();
+    bfsObj.bfsAlgo(19); // starting at La Rams (id: 19)
+    //table->showBFSTrip(ui->tableView_plan_route,bfsObj);
+
+    ui->label_plan_bfs->setText(QString("LA Rams Distance(BFS): %1").arg(bfsObj.getTotalDistance()));
+
+    //ui->pushButton_plan_continue->setDisabled(false);
+}
+

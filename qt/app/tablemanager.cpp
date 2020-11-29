@@ -1,5 +1,6 @@
 #include "tablemanager.h"
 #include "dbmanager.h"
+#include <bfs.h>
 
 void TableManager::AdminInfoTable(QTableView *table)
 {
@@ -217,3 +218,5 @@ void TableManager::clearTable(QTableView *table)
     table->setModel(model);
     table->setEditTriggers(QAbstractItemView::NoEditTriggers);
 }
+
+

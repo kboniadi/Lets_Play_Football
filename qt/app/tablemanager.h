@@ -121,13 +121,13 @@ public:
       * @param table; table name to display values to
       * @param bfsObj; object of bfs class used to get the values to display
       */
-     void showBFSTrip(QTableView * table, bfs &bfsObj);
+    void showBFSTrip(QTableView * table, bfs &bfsObj);
 
      /*!
       * @brief clears the table of all its values
       * @param table; name of the table
       */
-     void clearTable(QTableView * table);
+    void clearTable(QTableView * table);
 };
 
 #endif // TABLEMANAGER_H
