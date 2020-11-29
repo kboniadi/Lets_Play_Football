@@ -20,5 +20,7 @@ Layout* Layout::instance()
 
 void Layout::importResources()
 {
-    QFontDatabase::addApplicationFont(":/resource/fonts/Freshman.ttf");
+    QFontDatabase::addApplicationFont(":/resource/fonts/OldSportAthletic.ttf");
+    QFontDatabase::addApplicationFont(":/resource/fonts/OldSansBlack.ttf");
+    QFontDatabase::addApplicationFont(":/resource/fonts/Tommy Regular.otf");
 }

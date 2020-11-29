@@ -50,6 +50,8 @@ private slots:
 
         void on_pushButton_admin_edit_clicked();
 
+        void on_pushButton_admin_receipts_clicked();
+
         void on_comboBox_edit_activated(int index);
 
     void on_pushButton_pages_exit_clicked();
@@ -74,13 +76,8 @@ private slots:
 
     void on_pushButton_plan_patriots_clicked();
 
-    void on_pushButton_plan_rams_clicked();
-
-    void on_pushButton_plan_vikings_clicked();
-
     void on_pushButton_plan_custom_clicked();
 
-    void on_pushButton_plan_MST_clicked();
     /*----END HELPER FUNCTIONS----*/
 
     //Populate table for stadium view
@@ -139,6 +136,7 @@ private:
     {
         IMPORT,
 		EDIT,
+        RECEIPTS
     };
 
     enum Sort
