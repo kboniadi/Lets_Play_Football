@@ -19,7 +19,6 @@ struct Souvenir
 };
 
 
-
 class DBManager: public QWidget, public QSqlDatabase {
     Q_OBJECT
 public:

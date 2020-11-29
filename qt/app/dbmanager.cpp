@@ -460,10 +460,10 @@ void DBManager::CreateShoppingList(QStringList teams,QVector<Souvenir>& teamSouv
             while(query.next())
             {
                 // Create food item
-                /*int index = query.value(0).toInt();
+                int index = query.value(0).toInt();
                 QString name = query.value(1).toString();
-                double priceeee = c.toDouble(query.value(2).toString());*/
-                Souvenir current(query.value(0).toInt(),query.value(1).toString(),c.toDouble(query.value(2).toString()));
+                double price = c.toDouble(query.value(2).toString());
+                Souvenir current(index,name,price);
 
                 teamSouvenirs.push_back(current);
             }
