@@ -12,9 +12,10 @@
 
 struct Souvenir
 {
+    int teamID;
     QString name;
     double price;
-    Souvenir(QString name,double price):name(name),price(price){}
+    Souvenir(int id,QString name,double price):teamID(id),name(name),price(price){}
 };
 
 
@@ -70,6 +71,14 @@ public:
 	bool isSouvenirExist(QString teamName, QString item);
 	void addPurchases(int id, QString item, int qty);
 	QSqlQuery* getQuery() { return &query; }
+
+    QString getTeamName(int id);
+
+    QString getStadiumName(int id);
+
+    int getTeamID(QString teamName);
+
+    void CreateShoppingList(QStringList teams, QVector<Souvenir>& teamSouvenirs);
 private:
     QSqlQuery query;
 	/*!

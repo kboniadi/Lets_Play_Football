@@ -6,6 +6,7 @@
 #include <functional>
 #include <qnamespace.h>
 #include "graph.h"
+#include "mstGraph.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -62,12 +63,39 @@ void MainWindow::on_pushButton_pages_plan_clicked()
     ui->stackedWidget_pages->setCurrentIndex(PLAN);
     clearButtons();
     ui->pushButton_pages_plan->setDisabled(true);
+    table->clearTable(ui->tableView_plan_custom);
+    table->clearTable(ui->tableView_plan_route);
+
     on_pushButton_plan_packers_clicked();
+
+    mstGraph graph;
+    vector<mstEdge> mstEdges;
+    graph.getMST(mstEdges);
+    int distance = graph.getMSTdistance();
+    ui->label_plan_mst->setText("Total Distance: "+ QString::number(distance) +" miles");
+
 }
 
     void MainWindow::on_pushButton_plan_continue_clicked()
     {
         ui->stackedWidget_pages->setCurrentIndex(POS);
+        QVector<Souvenir> tempCart;
+        DBManager::instance()->CreateShoppingList(selectedTeams,tempCart);
+
+        table->clearTable(ui->tableWidget_pos_purchase);
+        QStringList headers;
+        headers.append("Team");
+        headers.append("Souvenir");
+        headers.append("Price");
+        headers.append("Quantity");
+        table->InitializePurchaseTable(ui->tableWidget_pos_purchase,4,headers);
+        table->PopulatePurchaseTable(ui->tableWidget_pos_purchase,tempCart);
+        table->showTeams(ui->tableView_pos_trip,selectedTeams);
+
+        for (int i = 0; i < table->purchaseTableSpinBoxes->size(); i++)
+        {
+            connect(table->purchaseTableSpinBoxes->at(i), SIGNAL(valueChanged(int)), this, SLOT(updateCartTotal()));
+        }
     }
 
     void MainWindow::on_pushButton_pos_cancel_clicked()
@@ -522,6 +550,8 @@ void MainWindow::on_tableView_edit_doubleClicked(const QModelIndex &index)
 void MainWindow::on_pushButton_plan_packers_clicked()
 {
     clearButtons();
+    ui->label_plan_distance->setText("Trip Distance: ");
+
     ui->pushButton_pages_plan->setDisabled(true);
     ui->pushButton_plan_packers->setDisabled(true);
     ui->gridWidget_plan_custom->setVisible(true);
@@ -534,6 +564,8 @@ void MainWindow::on_pushButton_plan_packers_clicked()
 void MainWindow::on_pushButton_plan_patriots_clicked()
 {
     clearButtons();
+    ui->label_plan_distance->setText("Trip Distance: ");
+
     ui->pushButton_pages_plan->setDisabled(true);
     ui->pushButton_plan_patriots->setDisabled(true);
 
@@ -545,6 +577,13 @@ void MainWindow::on_pushButton_plan_patriots_clicked()
 void MainWindow::on_pushButton_plan_custom_clicked()
 {
     clearButtons();
+    ui->label_plan_distance->setText("Trip Distance: ");
+
+    availableTeams.clear();
+    selectedTeams.clear();
+
+    DBManager::instance()->GetTeams(availableTeams);
+
     ui->pushButton_pages_plan->setDisabled(true);
     ui->pushButton_plan_sort->setVisible(true);
     ui->gridWidget_plan_custom->setVisible(true);
@@ -552,6 +591,7 @@ void MainWindow::on_pushButton_plan_custom_clicked()
     ui->pushButton_plan_custom->setDisabled(true);
 
     table->showTeamNames(ui->tableView_plan_custom);
+    table->showTeams(ui->tableView_plan_route,selectedTeams);
 
     // planning logic
 
@@ -740,3 +780,99 @@ QString MainWindow::toUpperCase(const QString &str)
 	return parts.join(" ");
 }
 
+void MainWindow::on_pushButton_plan_add_clicked()
+{
+    if (ui->tableView_plan_custom->currentIndex().row() >= 0 && ui->tableView_plan_custom->currentIndex().row() < availableTeams.size())
+    {
+        QString selectedString = availableTeams[ui->tableView_plan_custom->currentIndex().row()];
+        availableTeams.removeAt(ui->tableView_plan_custom->currentIndex().row());
+        selectedTeams.push_back(selectedString);
+
+    }
+    table->showTeams(ui->tableView_plan_custom, availableTeams);
+    table->showTeams(ui->tableView_plan_route, selectedTeams);
+}
+
+void MainWindow::on_pushButton_plan_remove_clicked()
+{
+    if (ui->tableView_plan_route->currentIndex().row() >= 0 && ui->tableView_plan_route->currentIndex().row() < availableTeams.size())
+    {
+        QString selectedString = selectedTeams[ui->tableView_plan_route->currentIndex().row()];
+        selectedTeams.removeAt(ui->tableView_plan_route->currentIndex().row());
+        availableTeams.push_back(selectedString);
+
+    }
+    table->showTeams(ui->tableView_plan_custom, availableTeams);
+    table->showTeams(ui->tableView_plan_route, selectedTeams);
+}
+
+void MainWindow::updateCartTotal()
+{
+    double total = table->UpdateTotalPrice(ui->tableWidget_pos_purchase);
+    QString totalString = QString::number(total,'f',2);
+    ui->label_pos_cost->setText("Total Cost: $" + totalString);
+}
+
+void MainWindow::on_pushButton_plan_sort_clicked()
+{
+    if (selectedTeams.size() > 1)
+    {
+        long totalDistance = 0;
+
+        QString startingTeam = selectedTeams[0];
+        selectedTeams.removeFirst();
+        QStringList sortedList;
+        sortedList.push_back(startingTeam);
+
+        recursiveAlgo(startingTeam, sortedList, selectedTeams,totalDistance);
+
+        selectedTeams = sortedList;
+        table->showTeams(ui->tableView_plan_route, selectedTeams);
+        ui->label_plan_distance->setText("Trip Distance: " + QString::number(totalDistance) + " miles");
+
+    }
+}
+
+void MainWindow::recursiveAlgo(QString start, QStringList& selectedList, QStringList& availableList, long& distance)
+{
+    if (availableList.size() == 0)
+        return;
+
+    Graph<QString> graph;
+    graph.generateGraph();
+    std::vector<QString> vect(graph.vertices());
+    std::vector<QString> dijkstra;
+    int costsD[graph.size()];
+    int parentD[graph.size()];
+    graph.DijkstraPathFinder(start,
+                                 dijkstra, costsD, parentD);
+
+    int smallestIndex = 0;
+    int shortestPath = INT_MAX;
+    for (int i = 0 ; i < vect.size(); i++) {
+        std::vector<QString> path = graph.returnPath(start, vect[i], parentD);
+        if (shortestPath > costsD[graph.findVertex(vect[i])])
+        {
+            if(!selectedList.contains(vect[i]) && availableList.contains(vect[i]))
+            {
+                shortestPath = costsD[graph.findVertex(vect[i])];
+                smallestIndex = i;
+            }
+        }
+       // qDebug() << "Arizona Cardinals to " << vect[i] << "...\nPath: ";
+       // qDebug() << path;
+       // qDebug() << "\nTotal Distance: " << costsD[graph.findVertex(vect[i])] << "\n\n";
+    }
+
+    distance+= costsD[graph.findVertex(vect[smallestIndex])];
+    selectedList.push_back(vect[smallestIndex]);
+    for (int i = 0; i < availableList.size(); i++)
+    {
+        if(availableList[i] == vect[smallestIndex])
+        {
+            availableList.removeAt(i);
+        }
+    }
+
+    recursiveAlgo(vect[smallestIndex],selectedList,availableList,distance);
+}
