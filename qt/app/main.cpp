@@ -33,9 +33,8 @@ int main(int argc, char *argv[])
 	std::vector<QString> dijkstra;
 	int costsD[graph.size()];
 	int parentD[graph.size()];
-	graph.DijkstraPathFinder(vect.at(
-				std::distance(vect.begin(),
-							  std::find(vect.begin(), vect.end(), "Arizona Cardinals"))),
+
+    graph.DijkstraPathFinder("Arizona Cardinals",
 								 dijkstra, costsD, parentD);
 
 	for (auto &a : vect) {

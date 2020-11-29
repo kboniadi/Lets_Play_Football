@@ -8,7 +8,10 @@
 #include <QVector>
 #include <QHeaderView>
 #include <QStringListModel>
+
 #include <bfs.h>
+#include "dbmanager.h"
+
 
 class DBManager;
 /*!
@@ -22,7 +25,7 @@ public:
 	/*!
 	 * @brief Default TableManager object constructor
 	 */
-	TableManager() = default;
+    TableManager();
 
 	/*!
 	 * @brief Destructor
@@ -128,6 +131,20 @@ public:
       * @param table; name of the table
       */
     void clearTable(QTableView * table);
+
+
+    void showTeams(QTableView* table, QStringList& avilable);
+
+    void InsertSpinBoxCol(QTableWidget* table, const int min, const int max, const int col);
+
+    void InitializePurchaseTable(QTableWidget* purchaseTable, const int &cols, const QStringList &headers);
+
+    void PopulatePurchaseTable(QTableWidget* purchaseTable, QVector<Souvenir>& teamSouvenir);
+
+    QVector<QSpinBox*>* purchaseTableSpinBoxes;
+
+public slots:
+    double UpdateTotalPrice(QTableWidget* table);
 };
 
 #endif // TABLEMANAGER_H
