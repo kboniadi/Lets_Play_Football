@@ -1540,7 +1540,7 @@ color: #DEA13F
        </palette>
       </property>
       <property name="currentIndex">
-       <number>6</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="page_HOME">
        <layout class="QGridLayout" name="gridLayout_home">
@@ -8165,7 +8165,7 @@ color: #DEA13F
              </widget>
             </item>
             <item row="4" column="0">
-             <widget class="QLabel" name="label">
+             <widget class="QLabel" name="label_plan_dfs">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                 <horstretch>0</horstretch>
@@ -8358,12 +8358,17 @@ color: #DEA13F
              </widget>
             </item>
             <item row="5" column="0">
-             <widget class="QLabel" name="label_2">
+             <widget class="QLabel" name="label_plan_bfs">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>16</pointsize>
+               </font>
               </property>
               <property name="text">
                <string>Rams Trip Distance: &quot;   &quot; miles</string>
@@ -8371,7 +8376,7 @@ color: #DEA13F
              </widget>
             </item>
             <item row="6" column="0">
-             <widget class="QLabel" name="label_3">
+             <widget class="QLabel" name="label_plan_mst">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                 <horstretch>0</horstretch>
@@ -8855,7 +8860,7 @@ color: #DEA13F
                </font>
               </property>
               <property name="text">
-               <string>Total Distance: </string>
+               <string>Trip Distance: </string>
               </property>
              </widget>
             </item>
