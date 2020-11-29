@@ -1,7 +1,7 @@
 Arizona Cardinals,State Farm Stadium,AT&T Stadium,870
 Arizona Cardinals,State Farm Stadium,Levi's Stadium,650
 Arizona Cardinals,State Farm Stadium,NRG Stadium,1115
-Arizona Cardinals,State Farm Stadium,Broncos Stadium at Mile High,580
+Arizona Cardinals,State Farm Stadium,Empower Field at Mile High,580
 Arizona Cardinals,State Farm Stadium,Sofi Stadium,372
 Atlanta Falcons,Mercedes-Benz Stadium,AT&T Stadium,740
 Atlanta Falcons,Mercedes-Benz Stadium,Bank of America Stadium,225
@@ -33,13 +33,13 @@ Cleveland Browns,FirstEnergy Stadium,Paul Brown Stadium,225
 Dallas Cowboys,AT&T Stadium,Arrowhead Stadium,460
 Dallas Cowboys,AT&T Stadium,Mercedes-Benz Stadium,740
 Dallas Cowboys,AT&T Stadium,NRG Stadium,230
-Dallas Cowboys,AT&T Stadium,Broncos Stadium at Mile High,650
+Dallas Cowboys,AT&T Stadium,Empower Field at Mile High,650
 Dallas Cowboys,AT&T Stadium,State Farm Stadium,870
-Denver Broncos,Broncos Stadium at Mile High,AT&T Stadium,650
-Denver Broncos,Broncos Stadium at Mile High,Arrowhead Stadium,560
-Denver Broncos,Broncos Stadium at Mile High,Levi's Stadium,930
-Denver Broncos,Broncos Stadium at Mile High,Sofi Stadium,1015
-Denver Broncos,Broncos Stadium at Mile High,State Farm Stadium,580
+Denver Broncos,Empower Field at Mile High,AT&T Stadium,650
+Denver Broncos,Empower Field at Mile High,Arrowhead Stadium,560
+Denver Broncos,Empower Field at Mile High,Levi's Stadium,930
+Denver Broncos,Empower Field at Mile High,Sofi Stadium,1015
+Denver Broncos,Empower Field at Mile High,State Farm Stadium,580
 Detroit Lions,Ford Field,FirstEnergy Stadium,90
 Detroit Lions,Ford Field,Lucas Oil Stadium,240
 Detroit Lions,Ford Field,Bills Stadium,210
@@ -60,12 +60,12 @@ Jacksonville Jaguars,TIAA Bank Field,Hard Rock Stadium,315
 Kansas City Chiefs,Arrowhead Stadium,AT&T Stadium,460
 Kansas City Chiefs,Arrowhead Stadium,Nissan Stadium,470
 Kansas City Chiefs,Arrowhead Stadium,Soldier Field,415
-Kansas City Chiefs,Arrowhead Stadium,Broncos Stadium at Mile High,560
+Kansas City Chiefs,Arrowhead Stadium,Empower Field at Mile High,560
 Las Vegas Raiders,Allegiant Stadium,CenturyLink Field,1275
 Las Vegas Raiders,Allegiant Stadium,Levi's Stadium,569
 Las Vegas Raiders,Allegiant Stadium,Sofi Stadium,270
 Los Angeles Chargers,Sofi Stadium,Sofi Stadium,15
-Los Angeles Chargers,Sofi Stadium,Broncos Stadium at Mile High,1015
+Los Angeles Chargers,Sofi Stadium,Empower Field at Mile High,1015
 Los Angeles Chargers,Sofi Stadium,State Farm Stadium,372
 Los Angeles Rams,Sofi Stadium,Levi's Stadium,200
 Los Angeles Rams,Sofi Stadium,Allegiant Stadium,270
@@ -99,7 +99,7 @@ Pittsburgh Steelers,Heinz Field,Lincoln Financial Field,315
 Pittsburgh Steelers,Heinz Field,Paul Brown Stadium,260
 Pittsburgh Steelers,Heinz Field,Bills Stadium,225
 San Francisco 49ers,Levi's Stadium,Allegiant Stadium,569
-San Francisco 49ers,Levi's Stadium,Broncos Stadium at Mile High,930
+San Francisco 49ers,Levi's Stadium,Empower Field at Mile High,930
 San Francisco 49ers,Levi's Stadium,Sofi Stadium,200
 San Francisco 49ers,Levi's Stadium,State Farm Stadium,650
 Seattle Seahawks,CenturyLink Field,Allegiant Stadium,1270
