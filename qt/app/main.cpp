@@ -1,11 +1,9 @@
-#define Debug 1
+#define Debug 0
 
-#if Debug == 1
+#if Debug == 0
 
 #include "mainwindow.h"
 #include <QApplication>
-#include "unordered_map.h"
-#include <QDebug>
 
 #define print qDebug()
 
@@ -17,7 +15,41 @@ int main(int argc, char *argv[])
 	return a.exec();
 }
 
-#else
+#elif Debug == 1
+
+#include "mainwindow.h"
+#include <QApplication>
+#include "graph.h"
+
+#define print qDebug()
+
+int main(int argc, char *argv[])
+{
+	QApplication a(argc, argv);
+	MainWindow w;
+	Graph<QString> graph;
+	graph.generateGraph();
+	std::vector<QString> vect(graph.vertices());
+	std::vector<QString> dijkstra;
+	int costsD[graph.size()];
+	int parentD[graph.size()];
+	graph.DijkstraPathFinder(vect.at(
+				std::distance(vect.begin(),
+							  std::find(vect.begin(), vect.end(), "Arizona Cardinals"))),
+								 dijkstra, costsD, parentD);
+
+	for (auto &a : vect) {
+		std::vector<QString> path = graph.returnPath("Arizona Cardinals", a, parentD);
+		qDebug() << "Arizona Cardinals to " << a << "...\nPath: ";
+		qDebug() << path;
+		qDebug() << "\nTotal Distance: " << costsD[graph.findVertex(a)] << "\n\n";
+	}
+
+	w.show();
+	return a.exec();
+}
+
+#elif Debug == 2
 
 #include "unordered_map.h"
 #include <QDebug>

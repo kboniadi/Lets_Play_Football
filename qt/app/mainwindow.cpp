@@ -5,6 +5,7 @@
 #include "layout.h"
 #include <functional>
 #include <qnamespace.h>
+#include "graph.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -16,7 +17,7 @@ MainWindow::MainWindow(QWidget *parent)
 	table = new TableManager;
     Layout::instance();
 
-    initializeLayout();
+	initializeLayout();
 }
 
 MainWindow::~MainWindow()
@@ -60,8 +61,8 @@ void MainWindow::on_pushButton_pages_view_clicked()
         ui->pushButton_view_list->setDisabled(false);
 
         populateSouvenirs("");
-        populateTeams();
         table->showTeamInfo(ui->tableView_search_info, "");
+        populateTeams();
     }
 
     void MainWindow::on_pushButton_view_list_clicked()
@@ -487,6 +488,7 @@ void MainWindow::on_pushButton_plan_rams_clicked()
 {
     clearButtons();
     ui->pushButton_plan_rams->setDisabled(true);
+
     //clearTable
     table->clearTable(ui->tableView_plan_route);  //reset table
     ui->label_plan_distance->setText("Distance"); // reset label
@@ -506,8 +508,6 @@ void MainWindow::on_pushButton_plan_vikings_clicked()
 {
     clearButtons();
     ui->pushButton_plan_vikings->setDisabled(true);
-
-    // planning logic
 
     ui->pushButton_plan_continue->setDisabled(false);
 }
@@ -650,9 +650,6 @@ void MainWindow::on_tableView_search_teams_doubleClicked(const QModelIndex &inde
 {
     populateSouvenirs(index.data().toString());
     table->showTeamInfo(ui->tableView_search_info, index.data().toString());
-
-    bfs temp;
-    temp.addEdges();
 
 }
 
