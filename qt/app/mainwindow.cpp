@@ -12,7 +12,6 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
 	ui->setupUi(this);
-	ui->statusbar->addWidget(&status);
 	DBManager::instance();
 	table = new TableManager;
     Layout::instance();
@@ -22,20 +21,6 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
 	delete ui;
-}
-
-void MainWindow::SetStatusBar(const QString &messg, int timeout)
-{
-	if (timeout == 0) {
-		ui->statusbar->clearMessage();
-		status.setText(messg);
-		if (messg.isEmpty())
-			status.hide();
-		else
-			status.show();
-	} else {
-		ui->statusbar->showMessage(messg, timeout);
-	}
 }
 
 /*----NAVIGATION----*/
@@ -77,7 +62,7 @@ void MainWindow::on_pushButton_pages_plan_clicked()
     ui->stackedWidget_pages->setCurrentIndex(PLAN);
     clearButtons();
     ui->pushButton_pages_plan->setDisabled(true);
-    on_pushButton_plan_MST_clicked();
+    on_pushButton_plan_packers_clicked();
 }
 
     void MainWindow::on_pushButton_plan_continue_clicked()
@@ -168,6 +153,9 @@ void MainWindow::on_pushButton_pages_admin_clicked()
 			ui->formWidget_edit_stadium->setVisible(false);
 			table->InitializeAdminEditTable(ui->tableWidget_edit);
 			table->PopulateAdminEditTable(ui->tableWidget_edit);
+            ui->pushButton_edit_add->setVisible(true);
+            ui->pushButton_edit_delete->setVisible(true);
+            ui->pushButton_edit_add->clicked();
         }
         else
         {
@@ -177,6 +165,11 @@ void MainWindow::on_pushButton_pages_admin_clicked()
 			ui->tableView_edit->verticalHeader()->hide();
 			table->AdminInfoTable(ui->tableView_edit);
 			ui->pushButton_edit_add->setDisabled(true);
+            ui->pushButton_edit_add->setVisible(false);
+            ui->pushButton_edit_delete->setVisible(false);
+            ui->pushButton_edit_cancel->setVisible(true);
+            ui->pushButton_edit_confirm->setVisible(true);
+
         }
     }
 
@@ -221,18 +214,14 @@ void MainWindow::setResources() // imports and assigns layout elements
     ui->pushButton_edit_confirm->setFont(buttons);
     ui->pushButton_edit_delete->setFont(buttons);
     ui->pushButton_import->setFont(buttons);
-    ui->pushButton_import_revert->setFont(buttons);
     ui->pushButton_login->setFont(buttons);
-    ui->pushButton_plan_MST->setFont(buttons);
     ui->pushButton_plan_add->setFont(buttons);
     ui->pushButton_plan_continue->setFont(buttons);
     ui->pushButton_plan_custom->setFont(buttons);
     ui->pushButton_plan_packers->setFont(buttons);
     ui->pushButton_plan_patriots->setFont(buttons);
-    ui->pushButton_plan_rams->setFont(buttons);
     ui->pushButton_plan_remove->setFont(buttons);
     ui->pushButton_plan_sort->setFont(buttons);
-    ui->pushButton_plan_vikings->setFont(buttons);
     ui->pushButton_pos_cancel->setFont(buttons);
     ui->pushButton_pos_continue->setFont(buttons);
     ui->pushButton_receipt_continue->setFont(buttons);
@@ -290,18 +279,16 @@ void MainWindow::clearButtons() // resets most program states
     ui->pushButton_plan_continue->setDisabled(true);
     ui->pushButton_plan_packers->setDisabled(false);
     ui->pushButton_plan_patriots->setDisabled(false);
-    ui->pushButton_plan_rams->setDisabled(false);
-    ui->pushButton_plan_vikings->setDisabled(false);
     ui->pushButton_plan_custom->setDisabled(false);
-    ui->pushButton_plan_MST->setDisabled(false);
 
     // admin buttons
-    ui->formWidget_edit_souvenir->setDisabled(true);
-    ui->formWidget_edit_stadium->setDisabled(true);
+    ui->formWidget_edit_souvenir->setEnabled(false);
+    ui->formWidget_edit_stadium->setEnabled(false);
     ui->pushButton_edit_confirm->setDisabled(true);
     ui->pushButton_edit_cancel->setDisabled(true);
     ui->pushButton_edit_delete->setDisabled(true);
     ui->pushButton_edit_add->setDisabled(false);
+    ui->comboBox_edit->setDisabled(false);
     ui->tabWidget_IMPORT->setCurrentIndex(IMPORT);
     ui->comboBox_edit->setCurrentIndex(EDITSOUV);
 
@@ -328,10 +315,11 @@ void MainWindow::clearViewLabels()
 
 void MainWindow::on_pushButton_edit_add_clicked() // admin add button
 {
-    ui->formWidget_edit_souvenir->setDisabled(false);
+    ui->formWidget_edit_souvenir->setEnabled(true);
     ui->formWidget_edit_stadium->setDisabled(false);
     ui->pushButton_edit_add->setDisabled(true);
-    ui->pushButton_edit_cancel->setDisabled(false);
+    ui->pushButton_edit_cancel->setEnabled(true);
+    ui->comboBox_edit->setDisabled(true);
 
 	if (ui->stackedWidget_edit->currentIndex() == EDITSOUV) {
 		ui->lineEdit_edit_souvenir_team->setValidator(new QRegExpValidator(QRegExp("[A-Za-z_ ]{0,60}"), this));
@@ -340,7 +328,7 @@ void MainWindow::on_pushButton_edit_add_clicked() // admin add button
 	}
     // code + error checking
 
-    ui->pushButton_edit_confirm->setDisabled(false);
+    ui->pushButton_edit_confirm->setEnabled(true);
 
 }
 
@@ -378,11 +366,11 @@ void MainWindow::ProcessDelete(int row, int /*col*/)
 	DBManager::instance()->DeleteSouvenir(teamName, item);
 	table->InitializeAdminEditTable(ui->tableWidget_edit);
 	table->PopulateAdminEditTable(ui->tableWidget_edit);
+    ui->pushButton_edit_delete->setDisabled(true);
 }
 
 void MainWindow::on_tableWidget_edit_doubleClicked(const QModelIndex &index)
 {
-	SetStatusBar("Double click the price to modify it or hit the delete button to remove the entry all together", 5000);
 	static QString temp;
 	temp = index.data().toString();
 
@@ -489,7 +477,6 @@ void MainWindow::on_pushButton_edit_cancel_clicked()
 
 void MainWindow::on_tableView_edit_doubleClicked(const QModelIndex &index)
 {
-	SetStatusBar("Modify these entires then confirm your changes", 5000);
 	ui->lineEdit_edit_stadium_name->setValidator(new QRegExpValidator(QRegExp("[A-Za-z_ '&]{0,60}"), this));
 	// ^(?=.)(\d{1,3}(,\d{3})*)?(\.\d+)?$ (commas required)
 	// ^(\\d+|\\d{1,3}(,\\d{3})*)(\\.\\d+)?$ (commas not required)
@@ -542,28 +529,6 @@ void MainWindow::on_pushButton_plan_patriots_clicked()
     ui->pushButton_plan_continue->setDisabled(false);
 }
 
-void MainWindow::on_pushButton_plan_rams_clicked()
-{
-    clearButtons();
-    ui->pushButton_pages_plan->setDisabled(true);
-    ui->pushButton_plan_rams->setDisabled(true);
-
-    // planning logic
-
-    ui->pushButton_plan_continue->setDisabled(false);
-}
-
-void MainWindow::on_pushButton_plan_vikings_clicked()
-{
-    clearButtons();
-    ui->pushButton_pages_plan->setDisabled(true);
-    ui->pushButton_plan_vikings->setDisabled(true);
-
-    // planning logic
-
-    ui->pushButton_plan_continue->setDisabled(false);
-}
-
 void MainWindow::on_pushButton_plan_custom_clicked()
 {
     clearButtons();
@@ -578,13 +543,6 @@ void MainWindow::on_pushButton_plan_custom_clicked()
     // planning logic
 
     ui->pushButton_plan_continue->setDisabled(false);
-}
-
-void MainWindow::on_pushButton_plan_MST_clicked()
-{
-    clearButtons();
-    ui->pushButton_pages_plan->setDisabled(true);
-    ui->pushButton_plan_MST->setDisabled(true);
 }
 
 /*----END HELPER FUNCTIONS----*/

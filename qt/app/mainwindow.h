@@ -74,13 +74,8 @@ private slots:
 
     void on_pushButton_plan_patriots_clicked();
 
-    void on_pushButton_plan_rams_clicked();
-
-    void on_pushButton_plan_vikings_clicked();
-
     void on_pushButton_plan_custom_clicked();
 
-    void on_pushButton_plan_MST_clicked();
     /*----END HELPER FUNCTIONS----*/
 
     //Populate table for stadium view
