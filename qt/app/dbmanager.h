@@ -16,6 +16,7 @@ struct Souvenir
     QString name;
     double price;
     Souvenir(int id,QString name,double price):teamID(id),name(name),price(price){}
+    Souvenir(const Souvenir&) = default;
 };
 
 
