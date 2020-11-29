@@ -463,9 +463,9 @@ void DBManager::CreateShoppingList(QStringList teams,QVector<Souvenir>& teamSouv
                 int index = query.value(0).toInt();
                 QString name = query.value(1).toString();
                 double price = c.toDouble(query.value(2).toString());
-                Souvenir current(index,name,price);
+                //Souvenir current(index,name,price);
 
-                teamSouvenirs.push_back(current);
+                teamSouvenirs.push_back(Souvenir(index,name,price));
             }
         }
         else // If query fails, output error
