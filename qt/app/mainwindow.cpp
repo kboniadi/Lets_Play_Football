@@ -136,7 +136,7 @@ void MainWindow::on_pushButton_pages_admin_clicked()
     void MainWindow::on_pushButton_admin_edit_clicked()
     {
         ui->stackedWidget_admin_pages->setCurrentIndex(EDIT);
-		ui->stackedWidget_edit->setCurrentIndex(EDITSOUV);
+        on_comboBox_edit_activated(EDITSOUV);
         ui->pushButton_admin_import->setDisabled(false);
         ui->pushButton_admin_edit->setDisabled(true);
         ui->pushButton_admin_receipts->setDisabled(false);
@@ -146,10 +146,9 @@ void MainWindow::on_pushButton_pages_admin_clicked()
 
     void MainWindow::on_comboBox_edit_activated(int index)
     {
-//        clearButtons();
-
-        if (index == 0)
+        if (index == EDITSOUV)
         {
+            ui->comboBox_edit->setCurrentIndex(EDITSOUV);
 			ui->stackedWidget_edit->setCurrentIndex(EDITSOUV);
             ui->formWidget_edit_souvenir->setVisible(true);
 			ui->formWidget_edit_stadium->setVisible(false);
@@ -239,7 +238,7 @@ void MainWindow::setResources() // imports and assigns layout elements
     ui->pushButton_receipt_continue->setFont(buttons);
     ui->pushButton_view_list->setFont(buttons);
     ui->pushButton_view_search->setFont(buttons);
-
+;
     QFont tables = QFont("MADE TOMMY", 16); // table font
     ui->tableView_edit->setFont(tables);
     ui->tableView_import->setFont(tables);
@@ -346,6 +345,7 @@ void MainWindow::on_pushButton_edit_add_clicked() // admin add button
 
 void MainWindow::on_tableWidget_edit_cellClicked(int row, int col)
 {
+    on_pushButton_edit_cancel_clicked();
 	static int rowStat;
 	static int colStat;
 	rowStat = row;
