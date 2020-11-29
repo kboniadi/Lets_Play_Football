@@ -122,6 +122,7 @@ void MainWindow::on_pushButton_pages_admin_clicked()
         ui->stackedWidget_admin_pages->setCurrentIndex(IMPORT);
         ui->pushButton_admin_import->setDisabled(true);
         ui->pushButton_admin_edit->setDisabled(false);
+        ui->pushButton_admin_receipts->setDisabled(false);
     }
 
 		void MainWindow::on_pushButton_import_clicked()
@@ -138,6 +139,7 @@ void MainWindow::on_pushButton_pages_admin_clicked()
 		ui->stackedWidget_edit->setCurrentIndex(EDITSOUV);
         ui->pushButton_admin_import->setDisabled(false);
         ui->pushButton_admin_edit->setDisabled(true);
+        ui->pushButton_admin_receipts->setDisabled(false);
 		table->InitializeAdminEditTable(ui->tableWidget_edit);
 		table->PopulateAdminEditTable(ui->tableWidget_edit);
     }
@@ -173,10 +175,19 @@ void MainWindow::on_pushButton_pages_admin_clicked()
         }
     }
 
-    void MainWindow::on_pushButton_pages_exit_clicked()
+    void MainWindow::on_pushButton_admin_receipts_clicked()
     {
-        QApplication::quit();
+        ui->stackedWidget_admin_pages->setCurrentIndex(RECEIPTS);
+        ui->pushButton_admin_import->setDisabled(false);
+        ui->pushButton_admin_edit->setDisabled(false);
+        ui->pushButton_admin_receipts->setDisabled(true);
     }
+
+
+void MainWindow::on_pushButton_pages_exit_clicked() // exit button
+{
+    QApplication::quit();
+}
 /*----END NAVIGATION----*/
 
 /*----HELPER FUNCTIONS----*/
@@ -209,6 +220,7 @@ void MainWindow::setResources() // imports and assigns layout elements
     QFont buttons = QFont("OLD SPORT 02 ATHLETIC NCV", 20); // button font
     ui->pushButton_admin_edit->setFont(buttons);
     ui->pushButton_admin_import->setFont(buttons);
+    ui->pushButton_admin_receipts->setFont(buttons);
     ui->pushButton_edit_add->setFont(buttons);
     ui->pushButton_edit_cancel->setFont(buttons);
     ui->pushButton_edit_confirm->setFont(buttons);
@@ -368,6 +380,7 @@ void MainWindow::ProcessDelete(int row, int /*col*/)
 	table->PopulateAdminEditTable(ui->tableWidget_edit);
     ui->pushButton_edit_delete->setDisabled(true);
 }
+#undef table
 
 void MainWindow::on_tableWidget_edit_doubleClicked(const QModelIndex &index)
 {
@@ -726,3 +739,4 @@ QString MainWindow::toUpperCase(const QString &str)
 
 	return parts.join(" ");
 }
+

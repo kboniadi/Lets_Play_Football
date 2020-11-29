@@ -50,6 +50,8 @@ private slots:
 
         void on_pushButton_admin_edit_clicked();
 
+        void on_pushButton_admin_receipts_clicked();
+
         void on_comboBox_edit_activated(int index);
 
     void on_pushButton_pages_exit_clicked();
@@ -134,6 +136,7 @@ private:
     {
         IMPORT,
 		EDIT,
+        RECEIPTS
     };
 
     enum Sort
