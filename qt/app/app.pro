@@ -16,12 +16,14 @@ SOURCES += \
     layout.cpp \
     main.cpp \
     mainwindow.cpp \
+    mstGraph.cpp \
     tablemanager.cpp
 
 HEADERS += \
     dbmanager.h \
     layout.h \
     mainwindow.h \
+    mstGraph.h \
     tablemanager.h \
     layout.h \
     graph.h \
