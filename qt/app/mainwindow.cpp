@@ -96,7 +96,6 @@ void MainWindow::on_pushButton_pages_plan_clicked()
         {
             connect(table->purchaseTableSpinBoxes->at(i), SIGNAL(valueChanged(int)), this, SLOT(updateCartTotal()));
         }
-        ui->label_pos_distance->setText(ui->label_plan_distance->text());
     }
 
     void MainWindow::on_pushButton_pos_cancel_clicked()
@@ -276,7 +275,6 @@ void MainWindow::setResources() // imports and assigns layout elements
     ui->tableView_list->setFont(tables);
     ui->tableView_plan_custom->setFont(tables);
     ui->tableView_plan_route->setFont(tables);
-    ui->tableView_pos_cart->setFont(tables);
     ui->tableView_pos_trip->setFont(tables);
     ui->tableView_receipt->setFont(tables);
     ui->tableView_search_info->setFont(tables);
@@ -358,6 +356,7 @@ void MainWindow::on_pushButton_edit_add_clicked() // admin add button
     ui->formWidget_edit_souvenir->setEnabled(true);
     ui->formWidget_edit_stadium->setDisabled(false);
     ui->pushButton_edit_add->setDisabled(true);
+    ui->pushButton_edit_delete->setDisabled(true);
     ui->pushButton_edit_cancel->setEnabled(true);
     ui->comboBox_edit->setDisabled(true);
 
