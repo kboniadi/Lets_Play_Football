@@ -1540,7 +1540,7 @@ color: #DEA13F
        </palette>
       </property>
       <property name="currentIndex">
-       <number>6</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="page_HOME">
        <layout class="QGridLayout" name="gridLayout_home">
@@ -2499,7 +2499,7 @@ color: #DEA13F
            </palette>
           </property>
           <property name="currentIndex">
-           <number>0</number>
+           <number>1</number>
           </property>
           <widget class="QWidget" name="page_SEARCH">
            <layout class="QGridLayout" name="gridLayout_search">
@@ -4571,6 +4571,15 @@ color: #DEA13F
                      </color>
                     </brush>
                    </colorrole>
+                   <colorrole role="ButtonText">
+                    <brush brushstyle="SolidPattern">
+                     <color alpha="255">
+                      <red>28</red>
+                      <green>33</green>
+                      <blue>29</blue>
+                     </color>
+                    </brush>
+                   </colorrole>
                   </active>
                   <inactive>
                    <colorrole role="WindowText">
@@ -4582,6 +4591,15 @@ color: #DEA13F
                      </color>
                     </brush>
                    </colorrole>
+                   <colorrole role="ButtonText">
+                    <brush brushstyle="SolidPattern">
+                     <color alpha="255">
+                      <red>28</red>
+                      <green>33</green>
+                      <blue>29</blue>
+                     </color>
+                    </brush>
+                   </colorrole>
                   </inactive>
                   <disabled>
                    <colorrole role="WindowText">
@@ -4590,6 +4608,15 @@ color: #DEA13F
                       <red>120</red>
                       <green>120</green>
                       <blue>120</blue>
+                     </color>
+                    </brush>
+                   </colorrole>
+                   <colorrole role="ButtonText">
+                    <brush brushstyle="SolidPattern">
+                     <color alpha="255">
+                      <red>222</red>
+                      <green>161</green>
+                      <blue>63</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -4623,6 +4650,15 @@ color: #DEA13F
                      </color>
                     </brush>
                    </colorrole>
+                   <colorrole role="ButtonText">
+                    <brush brushstyle="SolidPattern">
+                     <color alpha="255">
+                      <red>28</red>
+                      <green>33</green>
+                      <blue>29</blue>
+                     </color>
+                    </brush>
+                   </colorrole>
                   </active>
                   <inactive>
                    <colorrole role="WindowText">
@@ -4634,6 +4670,15 @@ color: #DEA13F
                      </color>
                     </brush>
                    </colorrole>
+                   <colorrole role="ButtonText">
+                    <brush brushstyle="SolidPattern">
+                     <color alpha="255">
+                      <red>28</red>
+                      <green>33</green>
+                      <blue>29</blue>
+                     </color>
+                    </brush>
+                   </colorrole>
                   </inactive>
                   <disabled>
                    <colorrole role="WindowText">
@@ -4642,6 +4687,15 @@ color: #DEA13F
                       <red>120</red>
                       <green>120</green>
                       <blue>120</blue>
+                     </color>
+                    </brush>
+                   </colorrole>
+                   <colorrole role="ButtonText">
+                    <brush brushstyle="SolidPattern">
+                     <color alpha="255">
+                      <red>222</red>
+                      <green>161</green>
+                      <blue>63</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -4675,6 +4729,15 @@ color: #DEA13F
                      </color>
                     </brush>
                    </colorrole>
+                   <colorrole role="ButtonText">
+                    <brush brushstyle="SolidPattern">
+                     <color alpha="255">
+                      <red>28</red>
+                      <green>33</green>
+                      <blue>29</blue>
+                     </color>
+                    </brush>
+                   </colorrole>
                   </active>
                   <inactive>
                    <colorrole role="WindowText">
@@ -4686,6 +4749,15 @@ color: #DEA13F
                      </color>
                     </brush>
                    </colorrole>
+                   <colorrole role="ButtonText">
+                    <brush brushstyle="SolidPattern">
+                     <color alpha="255">
+                      <red>28</red>
+                      <green>33</green>
+                      <blue>29</blue>
+                     </color>
+                    </brush>
+                   </colorrole>
                   </inactive>
                   <disabled>
                    <colorrole role="WindowText">
@@ -4694,6 +4766,15 @@ color: #DEA13F
                       <red>120</red>
                       <green>120</green>
                       <blue>120</blue>
+                     </color>
+                    </brush>
+                   </colorrole>
+                   <colorrole role="ButtonText">
+                    <brush brushstyle="SolidPattern">
+                     <color alpha="255">
+                      <red>222</red>
+                      <green>161</green>
+                      <blue>63</blue>
                      </color>
                     </brush>
                    </colorrole>
