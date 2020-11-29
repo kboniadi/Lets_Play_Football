@@ -565,12 +565,27 @@ void MainWindow::on_pushButton_plan_packers_clicked()
 void MainWindow::on_pushButton_plan_patriots_clicked()
 {
     clearButtons();
-    ui->label_plan_distance->setText("Trip Distance: ");
+    ui->label_plan_distance->setText("Trip Distance: ");// sets default label
 
     ui->pushButton_pages_plan->setDisabled(true);
     ui->pushButton_plan_patriots->setDisabled(true);
 
-    // planning logic
+    availableTeams.clear(); //clears avaialableTeams
+    selectedTeams.clear();  //Clears selected teams
+    DBManager::instance()->GetTeams(selectedTeams); // all teams names
+
+    long totalDistance = 0; // initialize total distance
+
+    QString startingTeam = "New England Patriots";
+    selectedTeams.removeAll("New England Patriots");
+    QStringList sortedList; // temp list
+    sortedList.push_back(startingTeam);
+
+    recursiveAlgo(startingTeam, sortedList, selectedTeams,totalDistance);
+
+    selectedTeams = sortedList;
+    table->showTeams(ui->tableView_plan_route, selectedTeams);
+    ui->label_plan_distance->setText("Trip Distance: " + QString::number(totalDistance) + " miles");
 
     ui->pushButton_plan_continue->setDisabled(false);
 }
