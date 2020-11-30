@@ -92,8 +92,6 @@ public:
     QString getTeamName(int id);
     static bool comparater(generalContainer::node n1, generalContainer::node n2);
 
-    QString getTeamName(int id);
-
     QString getStadiumName(int id);
 
     int getTeamID(QString teamName);
