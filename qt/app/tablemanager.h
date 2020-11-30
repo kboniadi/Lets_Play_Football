@@ -128,6 +128,13 @@ public:
 
     QVector<QSpinBox*>* purchaseTableSpinBoxes;
 
+    /*!
+     * @brief shows final receipt of purchase
+     * @param purchaseTable; Table to be displayed
+     * @param teamSouvenir; Souvenirs
+     */
+    void populateReceiptTable(QTableWidget * table, QVector<Souvenir>& teamSouvenir);
+
 public slots:
     double UpdateTotalPrice(QTableWidget* table);
 };

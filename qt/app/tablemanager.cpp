@@ -300,6 +300,73 @@ void TableManager::PopulatePurchaseTable(QTableWidget* purchaseTable, QVector<So
     InsertSpinBoxCol(purchaseTable,0,100,3);
 }
 
+//void populateReceiptTable(QTableWidget * purchaseTable, QVector<Souvenir>& teamSouvenirs)
+//{
+//    QTableWidgetItem* priceItem;
+//    QString currentName;
+//    QString previousName;
+
+//    // For the length of the city list
+//    //for(int teamIndex = 0; teamIndex < teamSouvenirs.size(); teamIndex++)
+//    //{
+//     //   int foodListSize = DBManager::instance
+//                //teamSouvenirs[teamIndex].size();
+//      //  qDebug() << foodListSize;
+
+//        // Iterate through each city's food list
+//    for(int index = 0; index < teamSouvenirs.size(); index++)
+//    {
+//            // Generate food price tablewidgetitem
+//        priceItem = new QTableWidgetItem(QString::number(teamSouvenirs[index].price, 'f', 2));
+
+//            // If list is not empty
+//        if(purchaseTable->rowCount() != 0)
+//        {
+//                // Check to see if there's a match between this row's city name and the previous row's city name
+//            currentName = DBManager::instance()->getTeamName(teamSouvenirs[index-1].teamID);
+//                    //purchaseTable->item(purchaseTable->rowCount() -1, 0)->data(0).toString();
+//            previousName = DBManager::instance()->getTeamName(teamSouvenirs[index].teamID);
+
+//                // Add a row to the end
+//            purchaseTable->insertRow(purchaseTable->rowCount());
+
+
+//            bool match = currentName == previousName;
+
+//                // If the row names do not match, insert the city name into the name column
+//            if(!match)
+//            {
+//                // Insert city name into city name column
+//                purchaseTable->setItem(purchaseTable->rowCount() - 1, 0, new QTableWidgetItem(DBManager::instance()->getTeamName(teamSouvenirs[index].teamID)));
+//            }
+//            else // Else, insert blank name
+//            {
+//                purchaseTable->setItem(purchaseTable->rowCount() - 1, 0, new QTableWidgetItem(""));
+//            }
+//        } // END if purchase table not empty
+//        else // if purchase table empty
+//        {
+//                // Add new row
+//            purchaseTable->insertRow(purchaseTable->rowCount());
+
+//                // Insert city name into city name column
+//            purchaseTable->setItem(purchaseTable->rowCount() - 1, 0, new QTableWidgetItem(DBManager::instance()->getTeamName(teamSouvenirs[index].teamID)));
+//        }
+
+//            // Insert city name into key column
+//            //purchaseTable->setItem(purchaseTable->rowCount() - 1, P_KEY, new QTableWidgetItem(cities->at(cityIndex).GetName()));
+//            // Add food name
+//        purchaseTable->setItem(purchaseTable->rowCount() - 1, 1, new QTableWidgetItem(teamSouvenirs[index].name));
+//            // Add food price
+//        purchaseTable->setItem(purchaseTable->rowCount() - 1, 2, priceItem);
+
+//        QString teamname = DBManager::instance()->getTeamName(teamSouvenirs[index].teamID);
+//        QString souName = teamSouvenirs[index].name;
+//        QString price = QString::number(teamSouvenirs[index].price);
+//    } // END for iterate through food list
+//    InsertSpinBoxCol(purchaseTable,0,100,3);
+//}
+
 void TableManager::InsertSpinBoxCol(QTableWidget* table, const int min, const int max, const int col)
 {
     QSpinBox *sBox;

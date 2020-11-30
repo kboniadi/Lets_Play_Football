@@ -123,6 +123,23 @@ void MainWindow::on_pushButton_pages_plan_clicked()
     void MainWindow::on_pushButton_pos_continue_clicked()
     {
         ui->stackedWidget_pages->setCurrentIndex(RECEIPT);
+        QVector<Souvenir> tempCart;
+        DBManager::instance()->CreateShoppingList(selectedTeams,tempCart);
+
+        table->clearTable(ui->tableWidget_receipt);
+        QStringList headers;
+        headers.append("Team");
+        headers.append("Souvenir");
+        headers.append("Price");
+        headers.append("Quantity");
+        table->InitializePurchaseTable(ui->tableWidget_receipt,4,headers);
+        table->PopulatePurchaseTable(ui->tableWidget_receipt,tempCart);
+
+        for (int i = 0; i < table->purchaseTableSpinBoxes->size(); i++)
+        {
+            connect(table->purchaseTableSpinBoxes->at(i), SIGNAL(valueChanged(int)), this, SLOT(updateCartTotal()));
+        }
+        ui->label_pos_distance->setText(ui->label_plan_distance->text());
     }
 
     void MainWindow::on_pushButton_receipt_continue_clicked()
@@ -294,7 +311,7 @@ void MainWindow::setResources() // imports and assigns layout elements
     ui->tableView_plan_route->setFont(tables);
     ui->tableView_pos_cart->setFont(tables);
     ui->tableView_pos_trip->setFont(tables);
-    ui->tableView_receipt->setFont(tables);
+    ui->tableWidget_receipt->setFont(tables);
     ui->tableView_search_info->setFont(tables);
     ui->tableView_search_souvenirs->setFont(tables);
     ui->tableView_search_teams->setFont(tables);
