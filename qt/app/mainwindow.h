@@ -112,17 +112,6 @@ private slots:
 
 	void on_tableView_edit_doubleClicked(const QModelIndex &index);
 
-    void on_pushButton_plan_add_clicked();
-
-    void on_pushButton_plan_remove_clicked();
-
-    void on_pushButton_plan_sort_clicked();
-
-    void recursiveAlgo(QString start, QStringList& selectedList, QStringList& availableList, long& distance);
-
-public slots:
-    void updateCartTotal();
-
 signals:
 	void EmittedSignal(int row, int col, QString prev);
 	void EmittedDelSignal(int row, int col);
@@ -195,8 +184,5 @@ private:
 
 	bool isValid(QString cur, QString prev);
 	QString toUpperCase(const QString &str);
-
-    QStringList availableTeams;
-    QStringList selectedTeams;
 };
 #endif // MAINWINDOW_H

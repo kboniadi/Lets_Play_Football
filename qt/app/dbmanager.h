@@ -13,13 +13,11 @@
 
 struct Souvenir
 {
-    int teamID;
     QString name;
     double price;
-    Souvenir() = default;
-    Souvenir(int id,QString name,double price):teamID(id),name(name),price(price){}
-    Souvenir(const Souvenir&) = default;
+    Souvenir(QString name,double price):name(name),price(price){}
 };
+
 
 
 class DBManager: public QWidget, public QSqlDatabase {
@@ -74,7 +72,6 @@ public:
 	void addPurchases(int id, QString item, int qty);
 	QSqlQuery* getQuery() { return &query; }
 
-
     /*!
      * @brief function gets all adjacent cities and distances based on the vertex input and
      * returns it all as a vector of type node
@@ -91,13 +88,6 @@ public:
      */
     QString getTeamName(int id);
     static bool comparater(generalContainer::node n1, generalContainer::node n2);
-
-    QString getStadiumName(int id);
-
-    int getTeamID(QString teamName);
-
-    void CreateShoppingList(QStringList teams, QVector<Souvenir>& teamSouvenirs);
-
 private:
     QSqlQuery query;
 	/*!

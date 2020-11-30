@@ -52,9 +52,16 @@ void bfs::bfsAlgo(int start)
             {
                 tempQ.push(i.end);
                 totalDist+=i.weight;
+
+                qDebug() << DBManager::instance()->getTeamName(vertex)<< " " << DBManager::instance()->getTeamName(i.end) << " " << i.weight;
+
                 visited[i.end] = true;
             }
         }
+    }
+    for(auto i: bfsList)
+    {
+        qDebug() << i;
     }
 }
 QStringList bfs::getBfsList()
