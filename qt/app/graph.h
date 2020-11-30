@@ -303,7 +303,6 @@ void Graph<T>::generateGraph()
 			}
 		}
 	}
-
 }
 
 template<typename T>

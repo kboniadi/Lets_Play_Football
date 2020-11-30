@@ -6,6 +6,8 @@
 #include <functional>
 #include <qnamespace.h>
 #include "graph.h"
+#include "graphDFS.h"
+#include "mstGraph.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -67,6 +69,27 @@ void MainWindow::on_pushButton_pages_plan_clicked()
 
     //sets the total distance for the bfs
     laRams();
+	QSqlQuery query;
+	dfs::GraphDFS<QString> graphDFS;
+	graphDFS.generateGraph();
+	std::vector<QString> temp;
+	int distanceDFS = graphDFS.dfs("Minnesota Vikings", temp);
+	ui->label_plan_dfs->setText("Vikings Trip Distance: " +
+								QLocale(QLocale::English).toString(distanceDFS));
+//	query.prepare("SELECT stadiumName FROM information WHERE information.id = "
+//				  "(SELECT id FROM teams WHERE teams.teamNames = :teamName)");
+//	for (auto a: temp) {
+//		query.bindValue(":teamName", a);
+//		query.exec();
+//		query.first();
+//		qDebug() << a << "\t\t" << query.value(0).toString();
+//	}
+//	qDebug() << distance;
+    mstGraph graph;
+    vector<mstEdge> mstEdges;
+    graph.getMST(mstEdges);
+    int distance = graph.getMSTdistance();
+    ui->label_plan_mst->setText("Total Distance: "+ QString::number(distance) +" miles");
 }
 
     void MainWindow::on_pushButton_plan_continue_clicked()
@@ -538,10 +561,26 @@ void MainWindow::on_pushButton_plan_packers_clicked()
 void MainWindow::on_pushButton_plan_patriots_clicked()
 {
     clearButtons();
+    ui->label_plan_distance->setText("Trip Distance: ");// sets default label
     ui->pushButton_pages_plan->setDisabled(true);
     ui->pushButton_plan_patriots->setDisabled(true);
 
-    // planning logic
+    availableTeams.clear(); //clears avaialableTeams
+    selectedTeams.clear();  //Clears selected teams
+    DBManager::instance()->GetTeams(selectedTeams); // all teams names
+
+    long totalDistance = 0; // initialize total distance
+
+    QString startingTeam = "New England Patriots";
+    selectedTeams.removeAll("New England Patriots");
+    QStringList sortedList; // temp list
+    sortedList.push_back(startingTeam);
+
+    recursiveAlgo(startingTeam, sortedList, selectedTeams,totalDistance);
+
+    selectedTeams = sortedList;
+    table->showTeams(ui->tableView_plan_route, selectedTeams);
+    ui->label_plan_distance->setText("Trip Distance: " + QString::number(totalDistance) + " miles");
 
     ui->pushButton_plan_continue->setDisabled(false);
 }
@@ -578,7 +617,10 @@ void MainWindow::populateStadiumInfo(int sortIndex, int teamFilterIndex, int sta
     QString sort[] = {"None","teamNames", "conference","stadiumName", "dateOpen", "seatCap"};
 
     QSqlQuery query;
-    QString queryString = "SELECT (SELECT teams.teamNames FROM teams WHERE teams.id = information.id) as teamNames, stadiumName,seatCap,conference,division,surfaceType,roofType,dateOpen FROM information";
+	QString queryString = "SELECT (SELECT teams.teamNames FROM teams WHERE "
+						  "teams.id = information.id) as teamNames, "
+						  "stadiumName,seatCap,conference,division,surfaceType,"
+						  "roofType,dateOpen FROM information";
 
     switch(teamFilterIndex)
     {
