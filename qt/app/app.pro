@@ -26,7 +26,8 @@ HEADERS += \
     mstGraph.h \
     tablemanager.h \
     layout.h \
-    graph.h
+    graph.h \
+    graphDFS.h
 
 FORMS += \
     mainwindow.ui

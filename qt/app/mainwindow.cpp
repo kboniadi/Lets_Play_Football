@@ -6,6 +6,7 @@
 #include <functional>
 #include <qnamespace.h>
 #include "graph.h"
+#include "graphDFS.h"
 #include "mstGraph.h"
 
 MainWindow::MainWindow(QWidget *parent)
@@ -68,12 +69,27 @@ void MainWindow::on_pushButton_pages_plan_clicked()
 
     on_pushButton_plan_packers_clicked();
 
+	QSqlQuery query;
+	dfs::GraphDFS<QString> graphDFS;
+	graphDFS.generateGraph();
+	std::vector<QString> temp;
+	int distanceDFS = graphDFS.dfs("Minnesota Vikings", temp);
+	ui->label_plan_dfs->setText("Vikings Trip Distance: " +
+								QLocale(QLocale::English).toString(distanceDFS));
+//	query.prepare("SELECT stadiumName FROM information WHERE information.id = "
+//				  "(SELECT id FROM teams WHERE teams.teamNames = :teamName)");
+//	for (auto a: temp) {
+//		query.bindValue(":teamName", a);
+//		query.exec();
+//		query.first();
+//		qDebug() << a << "\t\t" << query.value(0).toString();
+//	}
+//	qDebug() << distance;
     mstGraph graph;
     vector<mstEdge> mstEdges;
     graph.getMST(mstEdges);
     int distance = graph.getMSTdistance();
     ui->label_plan_mst->setText("Total Distance: "+ QString::number(distance) +" miles");
-
 }
 
     void MainWindow::on_pushButton_plan_continue_clicked()
@@ -615,7 +631,10 @@ void MainWindow::populateStadiumInfo(int sortIndex, int teamFilterIndex, int sta
     QString sort[] = {"None","teamNames", "conference","stadiumName", "dateOpen", "seatCap"};
 
     QSqlQuery query;
-    QString queryString = "SELECT (SELECT teams.teamNames FROM teams WHERE teams.id = information.id) as teamNames, stadiumName,seatCap,conference,division,surfaceType,roofType,dateOpen FROM information";
+	QString queryString = "SELECT (SELECT teams.teamNames FROM teams WHERE "
+						  "teams.id = information.id) as teamNames, "
+						  "stadiumName,seatCap,conference,division,surfaceType,"
+						  "roofType,dateOpen FROM information";
 
     switch(teamFilterIndex)
     {
