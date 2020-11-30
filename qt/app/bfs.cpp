@@ -72,4 +72,3 @@ int bfs::getTotalDistance()
 {
     return totalDist;
 }
-

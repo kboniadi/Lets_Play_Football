@@ -242,7 +242,7 @@ int DBManager::GetNumSouvenir(QString teamName)
 
 int DBManager::GetNumTeams()
 {
-    query.prepare("SELECT count(teamNames) FROM teams");
+	query.prepare("SELECT COUNT(*) FROM teams");
 	if (query.exec()) {
 		query.first();
 		return query.value(0).toInt();
@@ -414,6 +414,86 @@ void DBManager::addPurchases(int id, QString item, int qty)
 		qDebug() << "DBManager::addPurchases(int id, QString item, int qty) : query failed";
 	query.finish();
 }
+
+QString DBManager::getTeamName(int id)
+{
+    QString queryString;
+    queryString = "SELECT teamNames FROM teams WHERE id = :id";
+    query.prepare(queryString);
+    query.bindValue(":id", id);
+
+    if(!query.exec())
+    {
+        qDebug() << "DBManager::getTeamName id: " << id << " failed";
+    }
+    else
+    {
+        query.first();
+        return query.value(0).toString();
+    }
+    return "Invalid Team Name";
+}
+
+void DBManager::CreateShoppingList(QStringList teams,QVector<Souvenir>& teamSouvenirs)
+{
+    // Prep general query
+    int teamsAsInt[teams.size()];
+    for (int i = 0; i < teams.size(); i++)
+        teamsAsInt[i] = getTeamID(teams[i]);
+
+    query.prepare("SELECT id,items, price FROM souvenir WHERE "
+                  "id = :teamID");
+
+    //variable to convert string with , to int
+    QLocale c(QLocale::C);
+
+    // Run query in a loop
+    for(int index = 0; index < teams.size(); index++)
+    {
+        // Bind value
+        query.bindValue(":teamID", teamsAsInt[index]);
+
+        // Execute query
+        if(query.exec())
+        {
+            // While food exists in DB for this specific city
+            while(query.next())
+            {
+                // Create food item
+                int index = query.value(0).toInt();
+                QString name = query.value(1).toString();
+                double price = c.toDouble(query.value(2).toString());
+                Souvenir current(index,name,price);
+
+                teamSouvenirs.push_back(current);
+            }
+        }
+        else // If query fails, output error
+        {
+            qDebug() << "Query didn't execute properly";
+        }
+    }
+}
+
+int DBManager::getTeamID(QString teamName)
+{
+    query.prepare("SELECT id FROM teams where teamNames = :team");
+    query.bindValue(":team", teamName);
+    if(query.exec())
+    {
+        query.first();
+        return query.value(0).toInt();
+    }
+    return -1;
+
+}
+
+QString DBManager::getStadiumName(int id)
+{
+    query.exec("SELECT stadiumName FROM information WHERE id = " + QString::number(id));
+    query.first();
+    return query.value(0).toString();
+}
 bool DBManager::comparater(generalContainer::node n1, generalContainer::node n2)
 {
     return (n1.weight < n2.weight);
@@ -445,23 +525,4 @@ std::vector<generalContainer::node> DBManager::getAdjList(int vertex)
     }
     std::sort(returnVec.begin(), returnVec.end(), comparater);
     return returnVec;
-}
-
-QString DBManager::getTeamName(int id)
-{
-    QString queryString;
-    queryString = "SELECT teamNames FROM teams WHERE id = :id";
-    query.prepare(queryString);
-    query.bindValue(":id", id);
-
-    if(!query.exec())
-    {
-        qDebug() << "DBManager::getTeamName id: " << id << " failed";
-    }
-    else
-    {
-        query.first();
-        return query.value(0).toString();
-    }
-    return "Invalid Team Name";
 }

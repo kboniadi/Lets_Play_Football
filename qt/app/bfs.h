@@ -67,5 +67,3 @@ public:
 };
 
 #endif // BFS_H
-
-
