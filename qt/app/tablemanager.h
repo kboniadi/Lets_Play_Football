@@ -8,7 +8,7 @@
 #include <QVector>
 #include <QHeaderView>
 #include <QStringListModel>
-#include <bfs.h>
+#include "dbmanager.h"
 
 class DBManager;
 /*!
@@ -22,7 +22,7 @@ public:
 	/*!
 	 * @brief Default TableManager object constructor
 	 */
-	TableManager() = default;
+    TableManager();
 
 	/*!
 	 * @brief Destructor
@@ -116,18 +116,20 @@ public:
      */
     void showTeamNames(QTableView * table);
 
-    /*!
-      * @brief displays teams in the correct bfs order
-      * @param table; table name to display values to
-      * @param bfsObj; object of bfs class used to get the values to display
-      */
-    void showBFSTrip(QTableView * table, bfs &bfsObj);
-
-     /*!
-      * @brief clears the table of all its values
-      * @param table; name of the table
-      */
     void clearTable(QTableView * table);
+
+    void showTeams(QTableView* table, QStringList& avilable);
+
+    void InsertSpinBoxCol(QTableWidget* table, const int min, const int max, const int col);
+
+    void InitializePurchaseTable(QTableWidget* purchaseTable, const int &cols, const QStringList &headers);
+
+    void PopulatePurchaseTable(QTableWidget* purchaseTable, QVector<Souvenir>& teamSouvenir);
+
+    QVector<QSpinBox*>* purchaseTableSpinBoxes;
+
+public slots:
+    double UpdateTotalPrice(QTableWidget* table);
 };
 
 #endif // TABLEMANAGER_H
