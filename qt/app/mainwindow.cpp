@@ -133,7 +133,7 @@ void MainWindow::on_pushButton_pages_plan_clicked()
         headers.append("Price");
         headers.append("Quantity");
         table->InitializePurchaseTable(ui->tableWidget_receipt,4,headers);
-        table->PopulatePurchaseTable(ui->tableWidget_receipt,tempCart);
+        table->PopulateReceiptTable(ui->tableWidget_receipt,tempCart);
 
         for (int i = 0; i < table->purchaseTableSpinBoxes->size(); i++)
         {

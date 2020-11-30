@@ -126,6 +126,8 @@ public:
 
     void PopulatePurchaseTable(QTableWidget* purchaseTable, QVector<Souvenir>& teamSouvenir);
 
+    void PopulateReceiptTable(QTableWidget* purchaseTable, QVector<Souvenir>& teamSouvenir);
+
     QVector<QSpinBox*>* purchaseTableSpinBoxes;
 
     /*!
@@ -133,7 +135,7 @@ public:
      * @param purchaseTable; Table to be displayed
      * @param teamSouvenir; Souvenirs
      */
-    void populateReceiptTable(QTableWidget * table, QVector<Souvenir>& teamSouvenir);
+
 
 public slots:
     double UpdateTotalPrice(QTableWidget* table);
