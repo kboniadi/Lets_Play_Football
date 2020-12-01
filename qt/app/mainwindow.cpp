@@ -145,8 +145,6 @@ void MainWindow::on_pushButton_pages_plan_clicked()
         headers.append("Total");
         table->InitializeReceiptTable(ui->tableWidget_receipt,5,headers);
         table->PopulateReceiptTable(ui->tableWidget_receipt,tempCart);
-      
-        ui->label_pos_distance->setText(ui->label_plan_distance->text());
 
         DBManager::instance()->addPurchases(tempCart);
         for (int i = 0; i < table->purchaseTableSpinBoxes->size(); i++)
