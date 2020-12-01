@@ -73,6 +73,8 @@ public:
 	bool isTeamExist(QString teamName);
 	bool isSouvenirExist(QString teamName, QString item);
 	void addPurchases(int id, QString item, int qty);
+    void getPurchaseIDS(QStringList& ids);
+    void getPurchase(QVector<Souvenir>& souvenirs, QString id);
 	QSqlQuery* getQuery() { return &query; }
 
     QString getTeamName(int id);

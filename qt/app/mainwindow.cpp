@@ -253,6 +253,11 @@ void MainWindow::on_pushButton_pages_admin_clicked()
         ui->pushButton_admin_import->setDisabled(false);
         ui->pushButton_admin_edit->setDisabled(false);
         ui->pushButton_admin_receipts->setDisabled(true);
+
+        // initialize purchases combo box
+        QStringList ids;
+        DBManager::instance()->getPurchaseIDS(ids);
+        ui->comboBox_admin_receipts->addItems(ids);
     }
 
 
