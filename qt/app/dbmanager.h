@@ -72,7 +72,15 @@ public:
 						   QString dateOpen);
 	bool isTeamExist(QString teamName);
 	bool isSouvenirExist(QString teamName, QString item);
-	void addPurchases(int id, QString item, int qty);
+
+    /*!
+     * @brief function adds souvenirs from recent purchase into the 'purchases' database table
+     * @param souvenirs; collection of all souvenirs
+     */
+    void addPurchases(QVector<Souvenir> souvenirs);
+    int getNewID();
+//    void getPurchaseIDS(QStringList& ids);
+//    void getPurchase(QVector<Souvenir>& souvenirs, QString id);
 	QSqlQuery* getQuery() { return &query; }
 
     QString getTeamName(int id);

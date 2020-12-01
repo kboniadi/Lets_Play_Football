@@ -22501,9 +22501,6 @@ color: #DEA13F
             </widget>
             <widget class="QWidget" name="page_RECEIPTS">
              <layout class="QGridLayout" name="gridLayout_4">
-              <item row="0" column="1" rowspan="4">
-               <widget class="QTableView" name="tableView_admin_receipts"/>
-              </item>
               <item row="0" column="0" alignment="Qt::AlignBottom">
                <widget class="QLabel" name="label_admin_receipts">
                 <property name="font">
@@ -22556,6 +22553,9 @@ color: #DEA13F
                  </palette>
                 </property>
                </widget>
+              </item>
+              <item row="0" column="1" rowspan="4">
+               <widget class="QTableView" name="tableView_admin_receipts"/>
               </item>
              </layout>
             </widget>
@@ -22943,6 +22943,8 @@ color: #DEA13F
    </property>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="resource.qrc"/>
+ </resources>
  <connections/>
 </ui>

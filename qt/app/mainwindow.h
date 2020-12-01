@@ -128,6 +128,8 @@ private slots:
 
     void recursiveAlgo(QString start, QStringList& selectedList, QStringList& availableList, long& distance);
 
+//    void on_comboBox_admin_receipts_currentIndexChanged(int index);
+
 public slots:
     void updateCartTotal();
 

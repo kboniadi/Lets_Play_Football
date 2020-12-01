@@ -402,18 +402,87 @@ bool DBManager::isSouvenirExist(QString teamName, QString item)
 	return (bool) query.value(0).toInt();
 }
 
-void DBManager::addPurchases(int id, QString item, int qty)
+void DBManager::addPurchases(QVector<Souvenir> souvenirs)
 {
-	query.prepare("INSERT INTO purchase(purchasID, item, quantity) VALUE(:id, :item, :qty)");
+    int id = getNewID();
+    query.prepare("INSERT INTO purchases(teamID, purchaseID, items, quantity) VALUES(:teamID, :id, :item, :qty)");
 
-	query.bindValue(":id", id);
-	query.bindValue(":item", item);
-	query.bindValue(":qty", qty);
+    for (int i = 0; i < souvenirs.size(); i++)
+    {
+        QString qty = QString::number(souvenirs[i].purchaseQty);
+        query.bindValue(":teamID", souvenirs[i].teamID);
+        query.bindValue(":id", id);
+        query.bindValue(":item", souvenirs[i].name);
+        query.bindValue(":qty", QString::number(souvenirs[i].purchaseQty));
 
-	if (!query.exec())
-		qDebug() << "DBManager::addPurchases(int id, QString item, int qty) : query failed";
-	query.finish();
+        if (!query.exec())
+            qDebug() << "DBManager::addPurchases(QVector<Souvenir> souvenirs) : query failed";
+        query.finish();
+    }
 }
+
+int DBManager::getNewID()
+{
+    int maxID = 1;
+    query.prepare("SELECT purchaseID FROM purchases ORDER BY purchaseID DESC LIMIT 1");
+    if(query.exec())
+    {
+        if (query.first())
+        {
+            maxID = query.value(0).toInt();
+            query.finish();
+            return maxID + 1;
+        }
+        else
+            return maxID;
+    }
+    qDebug() << "DBManager::getNewID() : query failed";
+    return -1;
+}
+
+//void DBManager::getPurchaseIDS(QStringList& ids) // returns all available purchase ids
+//{
+//    query.prepare("SELECT UNIQUE purchaseID FROM purchases");
+//    if (query.exec()) {
+//        while (query.next())
+//            ids.push_back(query.value(0).toString());
+//        query.finish();
+//    } else {
+//        qDebug() << "DBManager::GetTeams(QStringList&) : query failed";
+//    }
+//}
+
+//void DBManager::getPurchase(QVector<Souvenir>& souvenirs, QString id) // returns list of souvenirs and their qtys for a given purchase
+//{
+//    query.prepare("SELECT teamID, items, quantity FROM purchases WHERE "
+//                  "purchaseID = :id");
+//    query.bindValue(":id", id);
+
+//    //variable to convert string with , to int
+//    QLocale c(QLocale::C);
+
+//    // Execute query
+//    if(query.exec())
+//    {
+//        // While food exists in DB for this specific city
+//        while(query.next())
+//        {
+//            // Create souvenir
+//            int index = query.value(0).toInt();
+//            QString name = query.value(1).toString();
+//            int qty = query.value(2).toInt();
+//            double price = c.toDouble(query.value(3).toString());
+//            Souvenir current(index,name,price);
+//            current.purchaseQty = qty;
+
+//            souvenirs.push_back(current);
+//        }
+//    }
+//    else // If query fails, output error
+//    {
+//        qDebug() << "Query didn't execute properly";
+//    }
+//}
 
 QString DBManager::getTeamName(int id)
 {
