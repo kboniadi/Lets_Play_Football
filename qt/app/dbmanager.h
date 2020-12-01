@@ -79,8 +79,8 @@ public:
      */
     void addPurchases(QVector<Souvenir> souvenirs);
     int getNewID();
-    void getPurchaseIDS(QStringList& ids);
-    void getPurchase(QVector<Souvenir>& souvenirs, QString id);
+//    void getPurchaseIDS(QStringList& ids);
+//    void getPurchase(QVector<Souvenir>& souvenirs, QString id);
 	QSqlQuery* getQuery() { return &query; }
 
     QString getTeamName(int id);

@@ -253,9 +253,9 @@ void MainWindow::on_pushButton_pages_admin_clicked()
         ui->pushButton_admin_receipts->setDisabled(true);
 
         // initialize purchases combo box
-        QStringList ids;
-        DBManager::instance()->getPurchaseIDS(ids);
-        ui->comboBox_admin_receipts->addItems(ids);
+//        QStringList ids;
+//        DBManager::instance()->getPurchaseIDS(ids);
+//        ui->comboBox_admin_receipts->addItems(ids);
     }
 
 
@@ -1048,21 +1048,21 @@ long MainWindow::calculateDistance(QStringList teams) // calculates trip distanc
     return temp;
 }
 
-void MainWindow::on_comboBox_admin_receipts_currentIndexChanged(int index)
-{
-    QString id = ui->comboBox_admin_receipts->currentData().toString();
-    QVector<Souvenir> tempCart;
-    DBManager::instance()->getPurchase(tempCart, id);
+//void MainWindow::on_comboBox_admin_receipts_currentIndexChanged(int index)
+//{
+//    QString id = ui->comboBox_admin_receipts->currentData().toString();
+//    QVector<Souvenir> tempCart;
+//    DBManager::instance()->getPurchase(tempCart, id);
 
 
-    table->clearTable(ui->tableWidget_admin_receipts);
-    QStringList headers;
-    headers.append("Team");
-    headers.append("Souvenir");
-    headers.append("Price");
-    headers.append("Quantity");
-    headers.append("Total");
-    table->InitializeReceiptTable(ui->tableWidget_receipt,5,headers);
-    table->PopulateReceiptTable(ui->tableWidget_admin_receipts,tempCart);
+//    table->clearTable(ui->tableWidget_admin_receipts);
+//    QStringList headers;
+//    headers.append("Team");
+//    headers.append("Souvenir");
+//    headers.append("Price");
+//    headers.append("Quantity");
+//    headers.append("Total");
+//    table->InitializeReceiptTable(ui->tableWidget_receipt,5,headers);
+//    table->PopulateReceiptTable(ui->tableWidget_admin_receipts,tempCart);
 
-}
+//}

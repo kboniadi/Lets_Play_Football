@@ -15052,7 +15052,7 @@ color: #DEA13F
              </font>
             </property>
             <property name="currentIndex">
-             <number>1</number>
+             <number>2</number>
             </property>
             <widget class="QWidget" name="page_IMPORT">
              <layout class="QGridLayout" name="gridLayout">
@@ -23680,7 +23680,7 @@ color: #DEA13F
                <widget class="QComboBox" name="comboBox_admin_receipts"/>
               </item>
               <item row="0" column="1" rowspan="4">
-               <widget class="QTableWidget" name="tableWidget_admin_receipts"/>
+               <widget class="QTableView" name="tableView_admin_receipts"/>
               </item>
              </layout>
             </widget>
