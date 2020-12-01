@@ -569,13 +569,22 @@ void MainWindow::on_pushButton_plan_packers_clicked()
     clearButtons();
     ui->label_plan_distance->setText("Trip Distance: ");
 
+    //disable Continue
+    ui->pushButton_plan_continue->setDisabled(true);
+
     ui->pushButton_pages_plan->setDisabled(true);
     ui->pushButton_plan_packers->setDisabled(true);
     ui->gridWidget_plan_custom->setVisible(true);
     ui->tableView_plan_custom->setVisible(true);
-    // planning logic
+    //clears the routes table
+    table->clearTable(ui->tableView_plan_route);
+    availableTeams.clear();
+    selectedTeams.clear();
 
-    ui->pushButton_plan_continue->setDisabled(false);
+    DBManager::instance()->GetTeams(availableTeams);
+    availableTeams.removeAll("Green Bay Packers");
+
+    table->showTeams(ui->tableView_plan_custom, availableTeams);
 }
 
 void MainWindow::on_pushButton_plan_patriots_clicked()
@@ -817,7 +826,22 @@ QString MainWindow::toUpperCase(const QString &str)
 
 void MainWindow::on_pushButton_plan_add_clicked()
 {
-    if (ui->tableView_plan_custom->currentIndex().row() >= 0 && ui->tableView_plan_custom->currentIndex().row() < availableTeams.size())
+    if(!(ui->pushButton_plan_packers->isEnabled()))
+    {
+        ui->pushButton_plan_continue->setDisabled(false);
+        QString selectedString = availableTeams[ui->tableView_plan_custom->currentIndex().row()];
+        availableTeams.removeAt(ui->tableView_plan_custom->currentIndex().row());
+
+        QStringList selected;
+        selected.push_back("Green Bay Packers");
+        selectedTeams.push_back(selectedString);
+        long totalDist;
+        recursiveAlgo("Green Bay Packers",selected,selectedTeams,totalDist);
+        selectedTeams = selected;
+        ui->label_plan_distance->setText("Trip Distance: " + QString::number(totalDist) + " miles");
+    }
+
+    else if (ui->tableView_plan_custom->currentIndex().row() >= 0 && ui->tableView_plan_custom->currentIndex().row() < availableTeams.size())
     {
         QString selectedString = availableTeams[ui->tableView_plan_custom->currentIndex().row()];
         availableTeams.removeAt(ui->tableView_plan_custom->currentIndex().row());
@@ -830,6 +854,16 @@ void MainWindow::on_pushButton_plan_add_clicked()
 
 void MainWindow::on_pushButton_plan_remove_clicked()
 {
+    if(!(ui->pushButton_plan_packers->isEnabled()))
+    {
+        ui->pushButton_plan_continue->setDisabled(true);
+        selectedTeams.clear();
+        availableTeams.clear();
+        table->clearTable(ui->tableView_plan_route);
+        DBManager::instance()->GetTeams(availableTeams);
+        availableTeams.removeAll("Green Bay Packers");
+        ui->pushButton_plan_add->setDisabled(false);
+    }
     if (ui->tableView_plan_route->currentIndex().row() >= 0 && ui->tableView_plan_route->currentIndex().row() < availableTeams.size())
     {
         QString selectedString = selectedTeams[ui->tableView_plan_route->currentIndex().row()];
@@ -837,6 +871,7 @@ void MainWindow::on_pushButton_plan_remove_clicked()
         availableTeams.push_back(selectedString);
 
     }
+    ui->label_plan_distance->setText("Trip Distance: ");
     table->showTeams(ui->tableView_plan_custom, availableTeams);
     table->showTeams(ui->tableView_plan_route, selectedTeams);
 }
