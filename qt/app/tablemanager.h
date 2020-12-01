@@ -126,6 +126,8 @@ public:
 
     void PopulatePurchaseTable(QTableWidget* purchaseTable, QVector<Souvenir>& teamSouvenir);
 
+    void InitializeReceiptTable(QTableWidget* receiptTable, const int &cols, const QStringList &headers);
+
     void PopulateReceiptTable(QTableWidget* purchaseTable, QVector<Souvenir>& teamSouvenir);
 
     QVector<QSpinBox*>* purchaseTableSpinBoxes;

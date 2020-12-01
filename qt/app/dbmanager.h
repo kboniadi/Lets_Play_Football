@@ -15,6 +15,7 @@ struct Souvenir
     int teamID;
     QString name;
     double price;
+    int purchaseQty = 0;
     Souvenir() = default;
     Souvenir(int id,QString name,double price):teamID(id),name(name),price(price){}
     Souvenir(const Souvenir&) = default;

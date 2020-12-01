@@ -125,6 +125,7 @@ void MainWindow::on_pushButton_pages_plan_clicked()
         ui->stackedWidget_pages->setCurrentIndex(RECEIPT);
         QVector<Souvenir> tempCart;
         DBManager::instance()->CreateShoppingList(selectedTeams,tempCart);
+        CreateReceipt(tempCart);
 
         table->clearTable(ui->tableWidget_receipt);
         QStringList headers;
@@ -132,7 +133,8 @@ void MainWindow::on_pushButton_pages_plan_clicked()
         headers.append("Souvenir");
         headers.append("Price");
         headers.append("Quantity");
-        table->InitializePurchaseTable(ui->tableWidget_receipt,4,headers);
+        headers.append("Total");
+        table->InitializeReceiptTable(ui->tableWidget_receipt,5,headers);
         table->PopulateReceiptTable(ui->tableWidget_receipt,tempCart);
 
         for (int i = 0; i < table->purchaseTableSpinBoxes->size(); i++)
@@ -863,6 +865,7 @@ void MainWindow::updateCartTotal()
     double total = table->UpdateTotalPrice(ui->tableWidget_pos_purchase);
     QString totalString = QString::number(total,'f',2);
     ui->label_pos_cost->setText("Total Cost: $" + totalString);
+    ui->label_receipt_total->setText("Total Cost: $" + totalString);
 }
 
 void MainWindow::on_pushButton_plan_sort_clicked()
@@ -927,4 +930,13 @@ void MainWindow::recursiveAlgo(QString start, QStringList& selectedList, QString
     }
 
     recursiveAlgo(vect[smallestIndex],selectedList,availableList,distance);
+}
+
+void MainWindow::CreateReceipt(QVector<Souvenir>& souvenirs)
+{
+    for(int souvIndex = 0; souvIndex < souvenirs.size(); souvIndex++)
+    {
+        // Add food to item
+        souvenirs.operator[](souvIndex).purchaseQty = table->purchaseTableSpinBoxes->at(souvIndex)->value();
+    }
 }

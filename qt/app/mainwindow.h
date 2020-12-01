@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QTableWidgetItem>
 #include <QLabel>
+#include "dbmanager.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -77,6 +78,8 @@ private slots:
     void on_pushButton_plan_patriots_clicked();
 
     void on_pushButton_plan_custom_clicked();
+
+    void CreateReceipt(QVector<Souvenir>& souvenirs);
 
     /*----END HELPER FUNCTIONS----*/
 
