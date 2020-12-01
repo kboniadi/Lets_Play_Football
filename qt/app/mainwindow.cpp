@@ -146,11 +146,9 @@ void MainWindow::on_pushButton_pages_plan_clicked()
         table->InitializeReceiptTable(ui->tableWidget_receipt,5,headers);
         table->PopulateReceiptTable(ui->tableWidget_receipt,tempCart);
 
-        for (int i = 0; i < table->purchaseTableSpinBoxes->size(); i++)
-        {
-            connect(table->purchaseTableSpinBoxes->at(i), SIGNAL(valueChanged(int)), this, SLOT(updateCartTotal()));
-        }
         ui->label_pos_distance->setText(ui->label_plan_distance->text());
+
+        DBManager::instance()->addPurchases(tempCart);
     }
 
     void MainWindow::on_pushButton_receipt_continue_clicked()
@@ -1053,4 +1051,18 @@ long MainWindow::calculateDistance(QStringList teams) // calculates trip distanc
 void MainWindow::on_comboBox_admin_receipts_currentIndexChanged(int index)
 {
     QString id = ui->comboBox_admin_receipts->currentData().toString();
+    QVector<Souvenir> tempCart;
+    DBManager::instance()->getPurchase(tempCart, id);
+
+
+    table->clearTable(ui->tableWidget_admin_receipts);
+    QStringList headers;
+    headers.append("Team");
+    headers.append("Souvenir");
+    headers.append("Price");
+    headers.append("Quantity");
+    headers.append("Total");
+    table->InitializeReceiptTable(ui->tableWidget_receipt,5,headers);
+    table->PopulateReceiptTable(ui->tableWidget_admin_receipts,tempCart);
+
 }
