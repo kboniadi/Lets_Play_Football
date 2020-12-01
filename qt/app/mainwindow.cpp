@@ -942,6 +942,7 @@ void MainWindow::CreateReceipt(QVector<Souvenir>& souvenirs)
         // Add food to item
         souvenirs.operator[](souvIndex).purchaseQty = table->purchaseTableSpinBoxes->at(souvIndex)->value();
     }
+}
 void MainWindow::laRams()
 {
     clearButtons();
