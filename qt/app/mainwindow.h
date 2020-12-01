@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QTableWidgetItem>
 #include <QLabel>
+#include "dbmanager.h"
 #include <bfs.h>
 
 QT_BEGIN_NAMESPACE
@@ -80,6 +81,8 @@ private slots:
     void on_pushButton_plan_custom_clicked();
 
     long calculateDistance(QStringList);
+    
+    void CreateReceipt(QVector<Souvenir>& souvenirs);
 
     /*----END HELPER FUNCTIONS----*/
 

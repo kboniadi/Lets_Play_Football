@@ -300,6 +300,130 @@ void TableManager::PopulatePurchaseTable(QTableWidget* purchaseTable, QVector<So
     InsertSpinBoxCol(purchaseTable,0,100,3);
 }
 
+void TableManager::InitializeReceiptTable(QTableWidget* receiptTable, const int &cols, const QStringList &headers)
+{
+    receiptTable->clearContents();
+    receiptTable->setColumnCount(cols);
+    receiptTable->setHorizontalHeaderLabels(headers);
+    receiptTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    receiptTable->setEditTriggers(QTableView::NoEditTriggers);
+    //receiptTable->hideColumn(P_KEY);
+    receiptTable->verticalHeader()->hide();
+
+    DeleteAllTableRows(receiptTable);
+}
+
+void TableManager::PopulateReceiptTable(QTableWidget* receiptTable, QVector<Souvenir>& teamSouvenirs)
+{
+    QTableWidgetItem* priceItem;
+    QTableWidgetItem* qtyItem;
+    QTableWidgetItem* totalItem;
+    QTableWidgetItem* teamTotal;
+    QTableWidgetItem* grandTotal;
+    double teamCounter;
+    double totalCounter;
+    QString currentName;
+    QString previousName;
+    int souvListSize = teamSouvenirs.size();
+
+    // remove any souvenirs with qty == 0
+    for (int i = 0; i < souvListSize; i++)
+    {
+        qtyItem = new QTableWidgetItem(QString::number(teamSouvenirs.at(i).purchaseQty));
+        if (qtyItem->text().toDouble() == 0)
+        {
+            teamSouvenirs.removeAt(i);
+            i--;
+            souvListSize--;
+        }
+    }
+        // Iterate through full souvenir list
+    for(int index = 0; index < teamSouvenirs.size(); index++)
+    {
+            // generate price tablewidgetitem
+        priceItem = new QTableWidgetItem(QString::number(teamSouvenirs[index].price, 'f', 2));
+            // generate qty tablewidgetitem
+        qtyItem = new QTableWidgetItem(QString::number(teamSouvenirs[index].purchaseQty));
+            // generate total tablewidgetitem
+        totalItem = new QTableWidgetItem(QString::number((teamSouvenirs[index].price) * (teamSouvenirs[index].purchaseQty), 'f', 2));
+
+            // If list is not empty
+        if(receiptTable->rowCount() != 0)
+        {
+                // Check to see if there's a match between this row's city name and the previous row's city name
+            currentName = DBManager::instance()->getTeamName(teamSouvenirs[index-1].teamID);
+            previousName = DBManager::instance()->getTeamName(teamSouvenirs[index].teamID);
+
+                // Add a row to the end
+            receiptTable->insertRow(receiptTable->rowCount());
+
+                // If the row names do not match, insert the city name into the name column
+            bool match = currentName == previousName;
+            if(!match)
+            {
+                // insert team total into table
+                teamTotal = new QTableWidgetItem(QString::number(teamCounter, 'f', 2));
+                receiptTable->setItem(receiptTable->rowCount() - 1, 4, teamTotal);
+                receiptTable->setItem(receiptTable->rowCount() - 1, 3, new QTableWidgetItem("Team Total:"));
+                receiptTable->insertRow(receiptTable->rowCount());
+                //start team counter over
+                teamCounter = 0;
+                // Insert city name into city name column
+                receiptTable->setItem(receiptTable->rowCount() - 1, 0, new QTableWidgetItem(DBManager::instance()->getTeamName(teamSouvenirs[index].teamID)));
+            }
+            else // Else, insert blank name
+            {
+                receiptTable->setItem(receiptTable->rowCount() - 1, 0, new QTableWidgetItem(""));
+            }
+        } // END if purchase table not empty
+        else // if purchase table empty
+        {
+                // Add new row
+            receiptTable->insertRow(receiptTable->rowCount());
+
+                // Insert city name into city name column
+            receiptTable->setItem(receiptTable->rowCount() - 1, 0, new QTableWidgetItem(DBManager::instance()->getTeamName(teamSouvenirs[index].teamID)));
+        }
+        if (teamSouvenirs[index].purchaseQty != 0)
+        {
+
+            // Insert city name into key column
+            //receiptTable->setItem(receiptTable->rowCount() - 1, P_KEY, new QTableWidgetItem(cities->at(cityIndex).GetName()));
+            // Add food name
+        receiptTable->setItem(receiptTable->rowCount() - 1, 1, new QTableWidgetItem(teamSouvenirs[index].name));
+            // Add food price
+        receiptTable->setItem(receiptTable->rowCount() - 1, 2, priceItem);
+            // Add food qty
+        receiptTable->setItem(receiptTable->rowCount() - 1, 3, qtyItem);
+            // add total
+        receiptTable->setItem(receiptTable->rowCount() - 1, 4, totalItem);
+
+        QString teamname = DBManager::instance()->getTeamName(teamSouvenirs[index].teamID);
+        QString souName = teamSouvenirs[index].name;
+        QString price = QString::number(teamSouvenirs[index].price);
+        }
+        // add to team total
+        teamCounter = teamCounter + (teamSouvenirs[index].price) * (teamSouvenirs[index].purchaseQty);
+        // add to grand total
+        totalCounter = totalCounter + (teamSouvenirs[index].price) * (teamSouvenirs[index].purchaseQty);
+    } // END for iterate through food list
+
+    // generate final team total
+    receiptTable->insertRow(receiptTable->rowCount());
+    teamTotal = new QTableWidgetItem(QString::number(teamCounter, 'f', 2));
+    receiptTable->setItem(receiptTable->rowCount() - 1, 4, teamTotal);
+    receiptTable->setItem(receiptTable->rowCount() - 1, 3, new QTableWidgetItem("Team Total:"));
+
+    // generate grand total
+    receiptTable->insertRow(receiptTable->rowCount());
+    grandTotal = new QTableWidgetItem(QString::number(totalCounter, 'f', 2));
+    receiptTable->setItem(receiptTable->rowCount() - 1, 4, grandTotal);
+    receiptTable->setItem(receiptTable->rowCount() - 1, 3, new QTableWidgetItem("Grand Total:"));
+
+
+}
+
+
 void TableManager::InsertSpinBoxCol(QTableWidget* table, const int min, const int max, const int col)
 {
     QSpinBox *sBox;
