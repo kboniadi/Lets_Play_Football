@@ -423,25 +423,21 @@ void DBManager::addPurchases(QVector<Souvenir> souvenirs)
 
 int DBManager::getNewID()
 {
-    int maxID = 0;
+    int maxID = 1;
     query.prepare("SELECT purchaseID FROM purchases ORDER BY purchaseID DESC LIMIT 1");
     if(query.exec())
     {
-        while(query.next())
+        if (query.first())
         {
-            if (!query.value(0).toInt())
-                maxID = 1;
-            else
-                maxID = query.value(0).toInt();
-            maxID = maxID + 1;
+            maxID = query.value(0).toInt();
+            query.finish();
+            return maxID + 1;
         }
-        query.finish();
-        return maxID;
+        else
+            return maxID;
     }
-    else
-        qDebug() << "DBManager::getNewID() : query failed";
-        return 69;
-
+    qDebug() << "DBManager::getNewID() : query failed";
+    return -1;
 }
 
 void DBManager::getPurchaseIDS(QStringList& ids) // returns all available purchase ids
