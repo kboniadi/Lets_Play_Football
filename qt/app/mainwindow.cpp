@@ -126,6 +126,25 @@ void MainWindow::on_pushButton_pages_plan_clicked()
     void MainWindow::on_pushButton_pos_continue_clicked()
     {
         ui->stackedWidget_pages->setCurrentIndex(RECEIPT);
+        QVector<Souvenir> tempCart;
+        DBManager::instance()->CreateShoppingList(selectedTeams,tempCart);
+        CreateReceipt(tempCart);
+
+        table->clearTable(ui->tableWidget_receipt);
+        QStringList headers;
+        headers.append("Team");
+        headers.append("Souvenir");
+        headers.append("Price");
+        headers.append("Quantity");
+        headers.append("Total");
+        table->InitializeReceiptTable(ui->tableWidget_receipt,5,headers);
+        table->PopulateReceiptTable(ui->tableWidget_receipt,tempCart);
+
+        for (int i = 0; i < table->purchaseTableSpinBoxes->size(); i++)
+        {
+            connect(table->purchaseTableSpinBoxes->at(i), SIGNAL(valueChanged(int)), this, SLOT(updateCartTotal()));
+        }
+        ui->label_pos_distance->setText(ui->label_plan_distance->text());
     }
 
     void MainWindow::on_pushButton_receipt_continue_clicked()
@@ -297,7 +316,7 @@ void MainWindow::setResources() // imports and assigns layout elements
     ui->tableView_plan_route->setFont(tables);
     ui->tableView_pos_cart->setFont(tables);
     ui->tableView_pos_trip->setFont(tables);
-    ui->tableView_receipt->setFont(tables);
+    ui->tableWidget_receipt->setFont(tables);
     ui->tableView_search_info->setFont(tables);
     ui->tableView_search_souvenirs->setFont(tables);
     ui->tableView_search_teams->setFont(tables);
@@ -894,6 +913,7 @@ void MainWindow::updateCartTotal()
     double total = table->UpdateTotalPrice(ui->tableWidget_pos_purchase);
     QString totalString = QString::number(total,'f',2);
     ui->label_pos_cost->setText("Total Cost: $" + totalString);
+    ui->label_receipt_total->setText("Total Cost: $" + totalString);
 }
 
 void MainWindow::on_pushButton_plan_sort_clicked()
@@ -960,6 +980,14 @@ void MainWindow::recursiveAlgo(QString start, QStringList& selectedList, QString
     recursiveAlgo(vect[smallestIndex],selectedList,availableList,distance);
 }
 
+void MainWindow::CreateReceipt(QVector<Souvenir>& souvenirs)
+{
+    for(int souvIndex = 0; souvIndex < souvenirs.size(); souvIndex++)
+    {
+        // Add food to item
+        souvenirs.operator[](souvIndex).purchaseQty = table->purchaseTableSpinBoxes->at(souvIndex)->value();
+    }
+}
 void MainWindow::laRams()
 {
     clearButtons();
