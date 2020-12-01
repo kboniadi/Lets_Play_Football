@@ -80,6 +80,8 @@ private slots:
 
     void on_pushButton_plan_custom_clicked();
 
+    long calculateDistance(QStringList);
+    
     void CreateReceipt(QVector<Souvenir>& souvenirs);
 
     /*----END HELPER FUNCTIONS----*/

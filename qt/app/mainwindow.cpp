@@ -878,7 +878,8 @@ void MainWindow::on_pushButton_plan_add_clicked()
         QString selectedString = availableTeams[ui->tableView_plan_custom->currentIndex().row()];
         availableTeams.removeAt(ui->tableView_plan_custom->currentIndex().row());
         selectedTeams.push_back(selectedString);
-
+        long customDistance = calculateDistance(selectedTeams);
+        ui->label_plan_distance->setText("Trip Distance: " + QString::number(customDistance) + " miles");
     }
     table->showTeams(ui->tableView_plan_custom, availableTeams);
     table->showTeams(ui->tableView_plan_route, selectedTeams);
@@ -901,9 +902,10 @@ void MainWindow::on_pushButton_plan_remove_clicked()
         QString selectedString = selectedTeams[ui->tableView_plan_route->currentIndex().row()];
         selectedTeams.removeAt(ui->tableView_plan_route->currentIndex().row());
         availableTeams.push_back(selectedString);
-
+        long customDistance = calculateDistance(selectedTeams);
+        ui->label_plan_distance->setText("Trip Distance: " + QString::number(customDistance) + " miles");
     }
-    ui->label_plan_distance->setText("Trip Distance: ");
+//    ui->label_plan_distance->setText("Trip Distance: ");
     table->showTeams(ui->tableView_plan_custom, availableTeams);
     table->showTeams(ui->tableView_plan_route, selectedTeams);
 }
@@ -1006,4 +1008,26 @@ void MainWindow::laRams()
     ui->label_plan_bfs->setText(QString("LA Rams Distance(BFS): %1").arg(bfsObj.getTotalDistance()));
 
     //ui->pushButton_plan_continue->setDisabled(false);
+}
+
+long MainWindow::calculateDistance(QStringList teams) // calculates trip distance for unsorted custom trips
+{
+    long temp = 0;
+    for (int i = 0; i < teams.size() - 1; i++) // gets dijkstra distance between each city on list progressively
+    {
+        QString start = teams[i];
+        QString end = teams[i + 1];
+
+        Graph<QString> graph;
+        graph.generateGraph();
+        std::vector<QString> vect(graph.vertices());
+        std::vector<QString> dijkstra;
+        int costsD[graph.size()];
+        int parentD[graph.size()];
+        graph.DijkstraPathFinder(start,
+                                     dijkstra, costsD, parentD);
+
+        temp += costsD[graph.findVertex(end)]; // totals up distance
+    }
+    return temp;
 }
