@@ -6,6 +6,7 @@
 #include <functional>
 #include <qnamespace.h>
 #include "graph.h"
+#include "graphDFS.h"
 #include "mstGraph.h"
 
 MainWindow::MainWindow(QWidget *parent)
@@ -46,6 +47,7 @@ void MainWindow::on_pushButton_pages_view_clicked()
         ui->pushButton_view_list->setDisabled(false);
 
         populateSouvenirs("");
+        table->showTeamInfo(ui->tableView_search_info,"");
         populateTeams();
     }
 
@@ -68,12 +70,29 @@ void MainWindow::on_pushButton_pages_plan_clicked()
 
     on_pushButton_plan_packers_clicked();
 
+    //sets Total Dist for LA rams
+    laRams();
+	QSqlQuery query;
+	dfs::GraphDFS<QString> graphDFS;
+	graphDFS.generateGraph();
+	std::vector<QString> temp;
+	int distanceDFS = graphDFS.dfs("Minnesota Vikings", temp);
+	ui->label_plan_dfs->setText("Vikings Trip Distance: " +
+								QLocale(QLocale::English).toString(distanceDFS));
+//	query.prepare("SELECT stadiumName FROM information WHERE information.id = "
+//				  "(SELECT id FROM teams WHERE teams.teamNames = :teamName)");
+//	for (auto a: temp) {
+//		query.bindValue(":teamName", a);
+//		query.exec();
+//		query.first();
+//		qDebug() << a << "\t\t" << query.value(0).toString();
+//	}
+//	qDebug() << distance;
     mstGraph graph;
     vector<mstEdge> mstEdges;
     graph.getMST(mstEdges);
     int distance = graph.getMSTdistance();
     ui->label_plan_mst->setText("Total Distance: "+ QString::number(distance) +" miles");
-
 }
 
     void MainWindow::on_pushButton_plan_continue_clicked()
@@ -106,6 +125,25 @@ void MainWindow::on_pushButton_pages_plan_clicked()
     void MainWindow::on_pushButton_pos_continue_clicked()
     {
         ui->stackedWidget_pages->setCurrentIndex(RECEIPT);
+        QVector<Souvenir> tempCart;
+        DBManager::instance()->CreateShoppingList(selectedTeams,tempCart);
+        CreateReceipt(tempCart);
+
+        table->clearTable(ui->tableWidget_receipt);
+        QStringList headers;
+        headers.append("Team");
+        headers.append("Souvenir");
+        headers.append("Price");
+        headers.append("Quantity");
+        headers.append("Total");
+        table->InitializeReceiptTable(ui->tableWidget_receipt,5,headers);
+        table->PopulateReceiptTable(ui->tableWidget_receipt,tempCart);
+
+        for (int i = 0; i < table->purchaseTableSpinBoxes->size(); i++)
+        {
+            connect(table->purchaseTableSpinBoxes->at(i), SIGNAL(valueChanged(int)), this, SLOT(updateCartTotal()));
+        }
+        ui->label_pos_distance->setText(ui->label_plan_distance->text());
     }
 
     void MainWindow::on_pushButton_receipt_continue_clicked()
@@ -276,7 +314,7 @@ void MainWindow::setResources() // imports and assigns layout elements
     ui->tableView_plan_custom->setFont(tables);
     ui->tableView_plan_route->setFont(tables);
     ui->tableView_pos_trip->setFont(tables);
-    ui->tableView_receipt->setFont(tables);
+    ui->tableWidget_receipt->setFont(tables);
     ui->tableView_search_info->setFont(tables);
     ui->tableView_search_souvenirs->setFont(tables);
     ui->tableView_search_teams->setFont(tables);
@@ -552,24 +590,48 @@ void MainWindow::on_pushButton_plan_packers_clicked()
     clearButtons();
     ui->label_plan_distance->setText("Trip Distance: ");
 
+    //disable Continue
+    ui->pushButton_plan_continue->setDisabled(true);
+
     ui->pushButton_pages_plan->setDisabled(true);
     ui->pushButton_plan_packers->setDisabled(true);
     ui->gridWidget_plan_custom->setVisible(true);
     ui->tableView_plan_custom->setVisible(true);
-    // planning logic
+    //clears the routes table
+    table->clearTable(ui->tableView_plan_route);
+    availableTeams.clear();
+    selectedTeams.clear();
 
-    ui->pushButton_plan_continue->setDisabled(false);
+    DBManager::instance()->GetTeams(availableTeams);
+    availableTeams.removeAll("Green Bay Packers");
+
+    table->showTeams(ui->tableView_plan_custom, availableTeams);
 }
 
 void MainWindow::on_pushButton_plan_patriots_clicked()
 {
     clearButtons();
-    ui->label_plan_distance->setText("Trip Distance: ");
+    ui->label_plan_distance->setText("Trip Distance: ");// sets default label
 
     ui->pushButton_pages_plan->setDisabled(true);
     ui->pushButton_plan_patriots->setDisabled(true);
 
-    // planning logic
+    availableTeams.clear(); //clears avaialableTeams
+    selectedTeams.clear();  //Clears selected teams
+    DBManager::instance()->GetTeams(selectedTeams); // all teams names
+
+    long totalDistance = 0; // initialize total distance
+
+    QString startingTeam = "New England Patriots";
+    selectedTeams.removeAll("New England Patriots");
+    QStringList sortedList; // temp list
+    sortedList.push_back(startingTeam);
+
+    recursiveAlgo(startingTeam, sortedList, selectedTeams,totalDistance);
+
+    selectedTeams = sortedList;
+    table->showTeams(ui->tableView_plan_route, selectedTeams);
+    ui->label_plan_distance->setText("Trip Distance: " + QString::number(totalDistance) + " miles");
 
     ui->pushButton_plan_continue->setDisabled(false);
 }
@@ -614,7 +676,10 @@ void MainWindow::populateStadiumInfo(int sortIndex, int teamFilterIndex, int sta
     QString sort[] = {"None","teamNames", "conference","stadiumName", "dateOpen", "seatCap"};
 
     QSqlQuery query;
-    QString queryString = "SELECT (SELECT teams.teamNames FROM teams WHERE teams.id = information.id) as teamNames, stadiumName,seatCap,conference,division,surfaceType,roofType,dateOpen FROM information";
+	QString queryString = "SELECT (SELECT teams.teamNames FROM teams WHERE "
+						  "teams.id = information.id) as teamNames, "
+						  "stadiumName,seatCap,conference,division,surfaceType,"
+						  "roofType,dateOpen FROM information";
 
     switch(teamFilterIndex)
     {
@@ -782,12 +847,38 @@ QString MainWindow::toUpperCase(const QString &str)
 
 void MainWindow::on_pushButton_plan_add_clicked()
 {
-    if (ui->tableView_plan_custom->currentIndex().row() >= 0 && ui->tableView_plan_custom->currentIndex().row() < availableTeams.size())
+    if(!(ui->pushButton_plan_packers->isEnabled()))
+    {
+
+        //disables the plan continue
+        ui->pushButton_plan_continue->setDisabled(false);
+        if(ui->tableView_plan_custom->currentIndex().row() >= 0 && ui->tableView_plan_custom->currentIndex().row() < availableTeams.size() && selectedTeams.size() <=1)
+        {
+            QString selectedString;
+
+            selectedString = availableTeams[ui->tableView_plan_custom->currentIndex().row()];
+
+            availableTeams.removeAt(ui->tableView_plan_custom->currentIndex().row());
+
+            QStringList selected;
+            selected.push_back("Green Bay Packers");
+            selectedTeams.push_back(selectedString);
+            long totalDist;
+            recursiveAlgo("Green Bay Packers",selected,selectedTeams,totalDist);
+            selectedTeams = selected;
+            ui->label_plan_distance->setText("Trip Distance: " + QString::number(totalDist) + " miles");
+            //selectedTeams.clear
+        }
+
+    }
+
+    else if (ui->tableView_plan_custom->currentIndex().row() >= 0 && ui->tableView_plan_custom->currentIndex().row() < availableTeams.size())
     {
         QString selectedString = availableTeams[ui->tableView_plan_custom->currentIndex().row()];
         availableTeams.removeAt(ui->tableView_plan_custom->currentIndex().row());
         selectedTeams.push_back(selectedString);
-
+        long customDistance = calculateDistance(selectedTeams);
+        ui->label_plan_distance->setText("Trip Distance: " + QString::number(customDistance) + " miles");
     }
     table->showTeams(ui->tableView_plan_custom, availableTeams);
     table->showTeams(ui->tableView_plan_route, selectedTeams);
@@ -795,13 +886,25 @@ void MainWindow::on_pushButton_plan_add_clicked()
 
 void MainWindow::on_pushButton_plan_remove_clicked()
 {
+    if(!(ui->pushButton_plan_packers->isEnabled()))
+    {
+        ui->pushButton_plan_continue->setDisabled(true);
+        selectedTeams.clear();
+        availableTeams.clear();
+        table->clearTable(ui->tableView_plan_route);
+        DBManager::instance()->GetTeams(availableTeams);
+        availableTeams.removeAll("Green Bay Packers");
+        ui->pushButton_plan_add->setDisabled(false);
+    }
     if (ui->tableView_plan_route->currentIndex().row() >= 0 && ui->tableView_plan_route->currentIndex().row() < availableTeams.size())
     {
         QString selectedString = selectedTeams[ui->tableView_plan_route->currentIndex().row()];
         selectedTeams.removeAt(ui->tableView_plan_route->currentIndex().row());
         availableTeams.push_back(selectedString);
-
+        long customDistance = calculateDistance(selectedTeams);
+        ui->label_plan_distance->setText("Trip Distance: " + QString::number(customDistance) + " miles");
     }
+//    ui->label_plan_distance->setText("Trip Distance: ");
     table->showTeams(ui->tableView_plan_custom, availableTeams);
     table->showTeams(ui->tableView_plan_route, selectedTeams);
 }
@@ -811,6 +914,7 @@ void MainWindow::updateCartTotal()
     double total = table->UpdateTotalPrice(ui->tableWidget_pos_purchase);
     QString totalString = QString::number(total,'f',2);
     ui->label_pos_cost->setText("Total Cost: $" + totalString);
+    ui->label_receipt_total->setText("Total Cost: $" + totalString);
 }
 
 void MainWindow::on_pushButton_plan_sort_clicked()
@@ -875,4 +979,54 @@ void MainWindow::recursiveAlgo(QString start, QStringList& selectedList, QString
     }
 
     recursiveAlgo(vect[smallestIndex],selectedList,availableList,distance);
+}
+
+void MainWindow::CreateReceipt(QVector<Souvenir>& souvenirs)
+{
+    for(int souvIndex = 0; souvIndex < souvenirs.size(); souvIndex++)
+    {
+        // Add food to item
+        souvenirs.operator[](souvIndex).purchaseQty = table->purchaseTableSpinBoxes->at(souvIndex)->value();
+    }
+}
+void MainWindow::laRams()
+{
+    clearButtons();
+    //ui->pushButton_plan_rams->setDisabled(true);
+
+    //clearTable
+    table->clearTable(ui->tableView_plan_route);  //reset table
+    ui->label_plan_distance->setText("Distance"); // reset label
+
+    //Create bfs obj
+    bfs bfsObj;
+    bfsObj.addEdges();
+    bfsObj.bfsAlgo(19); // starting at La Rams (id: 19)
+    //table->showBFSTrip(ui->tableView_plan_route,bfsObj);
+
+    ui->label_plan_bfs->setText(QString("LA Rams Distance(BFS): %1").arg(bfsObj.getTotalDistance()));
+
+    //ui->pushButton_plan_continue->setDisabled(false);
+}
+
+long MainWindow::calculateDistance(QStringList teams) // calculates trip distance for unsorted custom trips
+{
+    long temp = 0;
+    for (int i = 0; i < teams.size() - 1; i++) // gets dijkstra distance between each city on list progressively
+    {
+        QString start = teams[i];
+        QString end = teams[i + 1];
+
+        Graph<QString> graph;
+        graph.generateGraph();
+        std::vector<QString> vect(graph.vertices());
+        std::vector<QString> dijkstra;
+        int costsD[graph.size()];
+        int parentD[graph.size()];
+        graph.DijkstraPathFinder(start,
+                                     dijkstra, costsD, parentD);
+
+        temp += costsD[graph.findVertex(end)]; // totals up distance
+    }
+    return temp;
 }

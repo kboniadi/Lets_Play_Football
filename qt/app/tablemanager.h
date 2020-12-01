@@ -126,7 +126,18 @@ public:
 
     void PopulatePurchaseTable(QTableWidget* purchaseTable, QVector<Souvenir>& teamSouvenir);
 
+    void InitializeReceiptTable(QTableWidget* receiptTable, const int &cols, const QStringList &headers);
+
+    void PopulateReceiptTable(QTableWidget* purchaseTable, QVector<Souvenir>& teamSouvenir);
+
     QVector<QSpinBox*>* purchaseTableSpinBoxes;
+
+    /*!
+     * @brief shows final receipt of purchase
+     * @param purchaseTable; Table to be displayed
+     * @param teamSouvenir; Souvenirs
+     */
+
 
 public slots:
     double UpdateTotalPrice(QTableWidget* table);

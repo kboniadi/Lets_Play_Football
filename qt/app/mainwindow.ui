@@ -11458,8 +11458,20 @@ color: #DEA13F
        <layout class="QGridLayout" name="gridLayout_receipt_2">
         <item row="0" column="0">
          <layout class="QGridLayout" name="gridLayout_receipt">
-          <item row="0" column="0">
-           <widget class="QTableView" name="tableView_receipt">
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_receipt_total">
+            <property name="font">
+             <font>
+              <pointsize>16</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>Total Price: </string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0" colspan="4">
+           <widget class="QTableWidget" name="tableWidget_receipt">
             <property name="palette">
              <palette>
               <active>
@@ -11750,7 +11762,7 @@ color: #DEA13F
             </property>
            </widget>
           </item>
-          <item row="1" column="0" alignment="Qt::AlignHCenter">
+          <item row="1" column="3">
            <widget class="QPushButton" name="pushButton_receipt_continue">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
