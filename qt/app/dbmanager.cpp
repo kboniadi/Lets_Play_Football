@@ -404,17 +404,16 @@ bool DBManager::isSouvenirExist(QString teamName, QString item)
 
 void DBManager::addPurchases(QVector<Souvenir> souvenirs)
 {
-    QStringList ids;
-    getPurchaseIDS(ids);
-    int id = ids.size() + 1;
-    query.prepare("INSERT INTO purchase(teamID, purchaseID, items, quantity) VALUE(:teamID, :purchaseID, :item, :qty)");
+    int id = getNewID();
+    query.prepare("INSERT INTO purchases(teamID, purchaseID, items, quantity) VALUES(:teamID, :id, :item, :qty)");
 
     for (int i = 0; i < souvenirs.size(); i++)
     {
+        QString qty = QString::number(souvenirs[i].purchaseQty);
         query.bindValue(":teamID", souvenirs[i].teamID);
         query.bindValue(":id", id);
         query.bindValue(":item", souvenirs[i].name);
-        query.bindValue(":qty", souvenirs[i].purchaseQty);
+        query.bindValue(":qty", QString::number(souvenirs[i].purchaseQty));
 
         if (!query.exec())
             qDebug() << "DBManager::addPurchases(QVector<Souvenir> souvenirs) : query failed";
@@ -422,9 +421,32 @@ void DBManager::addPurchases(QVector<Souvenir> souvenirs)
     }
 }
 
+int DBManager::getNewID()
+{
+    int maxID = 0;
+    query.prepare("SELECT purchaseID FROM purchases ORDER BY purchaseID DESC LIMIT 1");
+    if(query.exec())
+    {
+        while(query.next())
+        {
+            if (!query.value(0).toInt())
+                maxID = 1;
+            else
+                maxID = query.value(0).toInt();
+            maxID = maxID + 1;
+        }
+        query.finish();
+        return maxID;
+    }
+    else
+        qDebug() << "DBManager::getNewID() : query failed";
+        return 69;
+
+}
+
 void DBManager::getPurchaseIDS(QStringList& ids) // returns all available purchase ids
 {
-    query.prepare("SELECT purchaseID FROM purchases");
+    query.prepare("SELECT UNIQUE purchaseID FROM purchases");
     if (query.exec()) {
         while (query.next())
             ids.push_back(query.value(0).toString());
