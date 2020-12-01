@@ -12,6 +12,7 @@ CONFIG += c++17
 INCLUDEPATH += $$PWD/include
 
 SOURCES += \
+    bfs.cpp \
     dbmanager.cpp \
     layout.cpp \
     main.cpp \
@@ -20,6 +21,8 @@ SOURCES += \
     tablemanager.cpp
 
 HEADERS += \
+    bfs.h \
+    bfsNamespace.h \
     dbmanager.h \
     layout.h \
     mainwindow.h \

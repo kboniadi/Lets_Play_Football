@@ -5,6 +5,7 @@
 #include <QTableWidgetItem>
 #include <QLabel>
 #include "dbmanager.h"
+#include <bfs.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -82,6 +83,9 @@ private slots:
     void CreateReceipt(QVector<Souvenir>& souvenirs);
 
     /*----END HELPER FUNCTIONS----*/
+
+    //Used to set the total Distance for the LA rams BFS
+    void laRams();
 
     //Populate table for stadium view
     void populateStadiumInfo(int sortIndex, int teamFilterIndex, int stadiumFilterIndex);

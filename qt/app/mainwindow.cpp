@@ -47,6 +47,7 @@ void MainWindow::on_pushButton_pages_view_clicked()
         ui->pushButton_view_list->setDisabled(false);
 
         populateSouvenirs("");
+        table->showTeamInfo(ui->tableView_search_info,"");
         populateTeams();
     }
 
@@ -69,6 +70,8 @@ void MainWindow::on_pushButton_pages_plan_clicked()
 
     on_pushButton_plan_packers_clicked();
 
+    //sets Total Dist for LA rams
+    laRams();
 	QSqlQuery query;
 	dfs::GraphDFS<QString> graphDFS;
 	graphDFS.generateGraph();
@@ -939,4 +942,22 @@ void MainWindow::CreateReceipt(QVector<Souvenir>& souvenirs)
         // Add food to item
         souvenirs.operator[](souvIndex).purchaseQty = table->purchaseTableSpinBoxes->at(souvIndex)->value();
     }
+void MainWindow::laRams()
+{
+    clearButtons();
+    //ui->pushButton_plan_rams->setDisabled(true);
+
+    //clearTable
+    table->clearTable(ui->tableView_plan_route);  //reset table
+    ui->label_plan_distance->setText("Distance"); // reset label
+
+    //Create bfs obj
+    bfs bfsObj;
+    bfsObj.addEdges();
+    bfsObj.bfsAlgo(19); // starting at La Rams (id: 19)
+    //table->showBFSTrip(ui->tableView_plan_route,bfsObj);
+
+    ui->label_plan_bfs->setText(QString("LA Rams Distance(BFS): %1").arg(bfsObj.getTotalDistance()));
+
+    //ui->pushButton_plan_continue->setDisabled(false);
 }
