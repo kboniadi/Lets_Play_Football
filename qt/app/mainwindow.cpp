@@ -828,17 +828,27 @@ void MainWindow::on_pushButton_plan_add_clicked()
 {
     if(!(ui->pushButton_plan_packers->isEnabled()))
     {
-        ui->pushButton_plan_continue->setDisabled(false);
-        QString selectedString = availableTeams[ui->tableView_plan_custom->currentIndex().row()];
-        availableTeams.removeAt(ui->tableView_plan_custom->currentIndex().row());
 
-        QStringList selected;
-        selected.push_back("Green Bay Packers");
-        selectedTeams.push_back(selectedString);
-        long totalDist;
-        recursiveAlgo("Green Bay Packers",selected,selectedTeams,totalDist);
-        selectedTeams = selected;
-        ui->label_plan_distance->setText("Trip Distance: " + QString::number(totalDist) + " miles");
+        //disables the plan continue
+        ui->pushButton_plan_continue->setDisabled(false);
+        if(ui->tableView_plan_custom->currentIndex().row() >= 0 && ui->tableView_plan_custom->currentIndex().row() < availableTeams.size() && selectedTeams.size() <=1)
+        {
+            QString selectedString;
+
+            selectedString = availableTeams[ui->tableView_plan_custom->currentIndex().row()];
+
+            availableTeams.removeAt(ui->tableView_plan_custom->currentIndex().row());
+
+            QStringList selected;
+            selected.push_back("Green Bay Packers");
+            selectedTeams.push_back(selectedString);
+            long totalDist;
+            recursiveAlgo("Green Bay Packers",selected,selectedTeams,totalDist);
+            selectedTeams = selected;
+            ui->label_plan_distance->setText("Trip Distance: " + QString::number(totalDist) + " miles");
+            //selectedTeams.clear
+        }
+
     }
 
     else if (ui->tableView_plan_custom->currentIndex().row() >= 0 && ui->tableView_plan_custom->currentIndex().row() < availableTeams.size())
