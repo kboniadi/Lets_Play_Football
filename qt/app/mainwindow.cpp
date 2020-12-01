@@ -117,7 +117,6 @@ void MainWindow::on_pushButton_pages_plan_clicked()
         {
             connect(table->purchaseTableSpinBoxes->at(i), SIGNAL(valueChanged(int)), this, SLOT(updateCartTotal()));
         }
-        ui->label_pos_distance->setText(ui->label_plan_distance->text());
 
         for (int i = 0; i < tempCart.size(); i++)
         {
