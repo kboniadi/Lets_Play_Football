@@ -1540,7 +1540,7 @@ color: #DEA13F
        </palette>
       </property>
       <property name="currentIndex">
-       <number>3</number>
+       <number>6</number>
       </property>
       <widget class="QWidget" name="page_HOME">
        <layout class="QGridLayout" name="gridLayout_home">
@@ -1845,7 +1845,7 @@ color: #DEA13F
            <string/>
           </property>
           <property name="pixmap">
-           <pixmap>:/resource/img/blurborder2.jpg</pixmap>
+           <pixmap resource="resource.qrc">:/resource/img/blurborder2.jpg</pixmap>
           </property>
           <property name="scaledContents">
            <bool>true</bool>
@@ -2499,7 +2499,7 @@ color: #DEA13F
            </palette>
           </property>
           <property name="currentIndex">
-           <number>0</number>
+           <number>1</number>
           </property>
           <widget class="QWidget" name="page_SEARCH">
            <layout class="QGridLayout" name="gridLayout_search">
@@ -17792,6 +17792,15 @@ color: #DEA13F
                              </color>
                             </brush>
                            </colorrole>
+                           <colorrole role="Button">
+                            <brush brushstyle="SolidPattern">
+                             <color alpha="255">
+                              <red>239</red>
+                              <green>239</green>
+                              <blue>239</blue>
+                             </color>
+                            </brush>
+                           </colorrole>
                            <colorrole role="Dark">
                             <brush brushstyle="SolidPattern">
                              <color alpha="255">
@@ -17822,9 +17831,9 @@ color: #DEA13F
                            <colorrole role="ButtonText">
                             <brush brushstyle="SolidPattern">
                              <color alpha="255">
-                              <red>255</red>
-                              <green>255</green>
-                              <blue>237</blue>
+                              <red>7</red>
+                              <green>8</green>
+                              <blue>8</blue>
                              </color>
                             </brush>
                            </colorrole>
@@ -17884,6 +17893,15 @@ color: #DEA13F
                              </color>
                             </brush>
                            </colorrole>
+                           <colorrole role="Button">
+                            <brush brushstyle="SolidPattern">
+                             <color alpha="255">
+                              <red>239</red>
+                              <green>239</green>
+                              <blue>239</blue>
+                             </color>
+                            </brush>
+                           </colorrole>
                            <colorrole role="Dark">
                             <brush brushstyle="SolidPattern">
                              <color alpha="255">
@@ -17914,9 +17932,9 @@ color: #DEA13F
                            <colorrole role="ButtonText">
                             <brush brushstyle="SolidPattern">
                              <color alpha="255">
-                              <red>255</red>
-                              <green>255</green>
-                              <blue>237</blue>
+                              <red>7</red>
+                              <green>8</green>
+                              <blue>8</blue>
                              </color>
                             </brush>
                            </colorrole>
@@ -17973,6 +17991,15 @@ color: #DEA13F
                               <red>222</red>
                               <green>161</green>
                               <blue>63</blue>
+                             </color>
+                            </brush>
+                           </colorrole>
+                           <colorrole role="Button">
+                            <brush brushstyle="SolidPattern">
+                             <color alpha="255">
+                              <red>239</red>
+                              <green>239</green>
+                              <blue>239</blue>
                              </color>
                             </brush>
                            </colorrole>
@@ -22527,6 +22554,15 @@ color: #DEA13F
                      </color>
                     </brush>
                    </colorrole>
+                   <colorrole role="ButtonText">
+                    <brush brushstyle="SolidPattern">
+                     <color alpha="255">
+                      <red>7</red>
+                      <green>8</green>
+                      <blue>8</blue>
+                     </color>
+                    </brush>
+                   </colorrole>
                   </active>
                   <inactive>
                    <colorrole role="WindowText">
@@ -22535,6 +22571,15 @@ color: #DEA13F
                       <red>0</red>
                       <green>0</green>
                       <blue>0</blue>
+                     </color>
+                    </brush>
+                   </colorrole>
+                   <colorrole role="ButtonText">
+                    <brush brushstyle="SolidPattern">
+                     <color alpha="255">
+                      <red>7</red>
+                      <green>8</green>
+                      <blue>8</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -22549,13 +22594,63 @@ color: #DEA13F
                      </color>
                     </brush>
                    </colorrole>
+                   <colorrole role="ButtonText">
+                    <brush brushstyle="SolidPattern">
+                     <color alpha="255">
+                      <red>222</red>
+                      <green>161</green>
+                      <blue>63</blue>
+                     </color>
+                    </brush>
+                   </colorrole>
                   </disabled>
                  </palette>
                 </property>
                </widget>
               </item>
               <item row="0" column="1" rowspan="4">
-               <widget class="QTableView" name="tableView_admin_receipts"/>
+               <widget class="QTableView" name="tableView_admin_receipts">
+                <property name="palette">
+                 <palette>
+                  <active>
+                   <colorrole role="Light">
+                    <brush brushstyle="SolidPattern">
+                     <color alpha="255">
+                      <red>255</red>
+                      <green>255</green>
+                      <blue>237</blue>
+                     </color>
+                    </brush>
+                   </colorrole>
+                  </active>
+                  <inactive>
+                   <colorrole role="Light">
+                    <brush brushstyle="SolidPattern">
+                     <color alpha="255">
+                      <red>255</red>
+                      <green>255</green>
+                      <blue>237</blue>
+                     </color>
+                    </brush>
+                   </colorrole>
+                  </inactive>
+                  <disabled>
+                   <colorrole role="Light">
+                    <brush brushstyle="SolidPattern">
+                     <color alpha="255">
+                      <red>255</red>
+                      <green>255</green>
+                      <blue>237</blue>
+                     </color>
+                    </brush>
+                   </colorrole>
+                  </disabled>
+                 </palette>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QHeaderView::section {background-color:#FFFFED; font: 24px MADE TOMMY;}</string>
+                </property>
+               </widget>
               </item>
              </layout>
             </widget>

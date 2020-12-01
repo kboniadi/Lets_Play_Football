@@ -86,9 +86,9 @@ void TableManager::AdminPuchaseTable(QTableView *table, int index)
 	if (index < 0)
 		return;
 	QSqlQueryModel *model = new QSqlQueryModel;
-	model->setQuery("SELECT purchases.items, price, quantity FROM souvenir, purchases "
+	model->setQuery("SELECT teamNames, purchases.items, price, quantity FROM teams, souvenir, purchases "
 					"WHERE purchaseID = '" + QString::number(index + 1) + "' "
-					"AND souvenir.id = purchaseID");
+					"AND souvenir.id = purchaseID AND purchases.items = souvenir.items AND teams.id = teamID");
 
 	if (!model->query().exec())
 		qDebug() << "TableManager::AdminPuchaseTable(QTableView *table, int index) : query failed";

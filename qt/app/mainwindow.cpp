@@ -93,7 +93,6 @@ void MainWindow::setResources() // imports and assigns layout elements
 	ui->tableView_list->setFont(tables);
 	ui->tableView_plan_custom->setFont(tables);
 	ui->tableView_plan_route->setFont(tables);
-	ui->tableView_pos_cart->setFont(tables);
 	ui->tableView_pos_trip->setFont(tables);
 	ui->tableWidget_receipt->setFont(tables);
 	ui->tableView_search_info->setFont(tables);
@@ -649,20 +648,6 @@ void MainWindow::on_pushButton_pages_admin_clicked()
         }
     }
 
-    void MainWindow::on_pushButton_admin_receipts_clicked()
-    {
-        ui->stackedWidget_admin_pages->setCurrentIndex(RECEIPTS);
-        ui->pushButton_admin_import->setDisabled(false);
-        ui->pushButton_admin_edit->setDisabled(false);
-        ui->pushButton_admin_receipts->setDisabled(true);
-
-        // initialize purchases combo box
-//        QStringList ids;
-//        DBManager::instance()->getPurchaseIDS(ids);
-//        ui->comboBox_admin_receipts->addItems(ids);
-    }
-
-
 void MainWindow::on_pushButton_pages_exit_clicked() // exit button
 {
     QApplication::quit();
@@ -670,128 +655,6 @@ void MainWindow::on_pushButton_pages_exit_clicked() // exit button
 /*----END NAVIGATION----*/
 
 /*----HELPER FUNCTIONS----*/
-
-void MainWindow::setResources() // imports and assigns layout elements
-{
-    /*----Fonts----*/
-    Layout::instance()->importResources();
-
-    QFont mainFont = QFont("OldSansBlack", 16); // main font
-    ui->centralwidget->setFont(mainFont);
-
-    QFont homeButtons = QFont("OLD SPORT 02 ATHLETIC NCV", 32); // page button font
-    ui->pushButton_pages_home->setFont(homeButtons);
-    ui->pushButton_pages_view->setFont(homeButtons);
-    ui->pushButton_pages_plan->setFont(homeButtons);
-    ui->pushButton_pages_admin->setFont(homeButtons);
-    ui->pushButton_pages_exit->setFont(homeButtons);
-
-    QFont buttons = QFont("OLD SPORT 02 ATHLETIC NCV", 20); // button font
-    ui->pushButton_admin_edit->setFont(buttons);
-    ui->pushButton_admin_import->setFont(buttons);
-    ui->pushButton_admin_receipts->setFont(buttons);
-    ui->pushButton_edit_add->setFont(buttons);
-    ui->pushButton_edit_cancel->setFont(buttons);
-    ui->pushButton_edit_confirm->setFont(buttons);
-    ui->pushButton_edit_delete->setFont(buttons);
-    ui->pushButton_import->setFont(buttons);
-    ui->pushButton_login->setFont(buttons);
-    ui->pushButton_plan_add->setFont(buttons);
-    ui->pushButton_plan_continue->setFont(buttons);
-    ui->pushButton_plan_custom->setFont(buttons);
-    ui->pushButton_plan_packers->setFont(buttons);
-    ui->pushButton_plan_patriots->setFont(buttons);
-    ui->pushButton_plan_remove->setFont(buttons);
-    ui->pushButton_plan_sort->setFont(buttons);
-    ui->pushButton_pos_cancel->setFont(buttons);
-    ui->pushButton_pos_continue->setFont(buttons);
-    ui->pushButton_receipt_continue->setFont(buttons);
-    ui->pushButton_view_list->setFont(buttons);
-    ui->pushButton_view_search->setFont(buttons);
-;
-    QFont tables = QFont("MADE TOMMY", 16); // table font
-    ui->tableView_edit->setFont(tables);
-    ui->tableView_import->setFont(tables);
-    ui->tableView_import_2->setFont(tables);
-    ui->tableView_import_3->setFont(tables);
-    ui->tableView_list->setFont(tables);
-    ui->tableView_plan_custom->setFont(tables);
-    ui->tableView_plan_route->setFont(tables);
-    ui->tableView_pos_trip->setFont(tables);
-    ui->tableWidget_receipt->setFont(tables);
-    ui->tableView_search_info->setFont(tables);
-    ui->tableView_search_souvenirs->setFont(tables);
-    ui->tableView_search_teams->setFont(tables);
-    ui->tableWidget_edit->setFont(tables);
-    ui->tableWidget_pos_purchase->setFont(tables);
-    ui->lineEdit_edit_souvenir_name->setFont(tables);
-    ui->lineEdit_edit_souvenir_price->setFont(tables);
-    ui->lineEdit_edit_souvenir_team->setFont(tables);
-    ui->lineEdit_edit_stadium_capacity->setFont(tables);
-    ui->lineEdit_edit_stadium_dateopen->setFont(tables);
-    ui->lineEdit_edit_stadium_location->setFont(tables);
-    ui->lineEdit_edit_stadium_name->setFont(tables);
-    ui->lineEdit_edit_stadium_roof->setFont(tables);
-    ui->lineEdit_edit_stadium_surface->setFont(tables);
-    ui->lineEdit_login_password->setFont(tables);
-    ui->lineEdit_login_username->setFont(tables);
-    /*----End Fonts----*/
-}
-void MainWindow::clearButtons() // resets most program states
-{
-    // home pages
-    ui->pushButton_pages_home->setDisabled(false);
-    ui->pushButton_pages_view->setDisabled(false);
-    ui->pushButton_pages_plan->setDisabled(false);
-    ui->pushButton_pages_admin->setDisabled(false);
-
-    // view page
-    ui->comboBox_list_sort->setCurrentIndex(NOSORT);
-    ui->comboBox_list_filterteams->setCurrentIndex(ALLTEAMS);
-    ui->comboBox_list_filterstadiums->setCurrentIndex(ALLSTADIUMS);
-    clearViewLabels();
-
-
-    // trip planning buttons
-    ui->pushButton_plan_sort->setVisible(false);
-    ui->gridWidget_plan_custom->setVisible(false);
-    ui->tableView_plan_custom->setVisible(false);
-    ui->pushButton_plan_continue->setDisabled(true);
-    ui->pushButton_plan_packers->setDisabled(false);
-    ui->pushButton_plan_patriots->setDisabled(false);
-    ui->pushButton_plan_custom->setDisabled(false);
-
-    // admin buttons
-    ui->formWidget_edit_souvenir->setEnabled(false);
-    ui->formWidget_edit_stadium->setEnabled(false);
-    ui->pushButton_edit_confirm->setDisabled(true);
-    ui->pushButton_edit_cancel->setDisabled(true);
-    ui->pushButton_edit_delete->setDisabled(true);
-    ui->pushButton_edit_add->setDisabled(false);
-    ui->comboBox_edit->setDisabled(false);
-    ui->tabWidget_IMPORT->setCurrentIndex(IMPORT);
-    ui->comboBox_edit->setCurrentIndex(EDITSOUV);
-
-    // line edits
-    ui->lineEdit_edit_souvenir_name->clear();
-    ui->lineEdit_edit_souvenir_price->clear();
-    ui->lineEdit_edit_souvenir_team->clear();
-    ui->lineEdit_login_password->clear();
-    ui->lineEdit_login_username->clear();
-	ui->lineEdit_edit_stadium_capacity->clear();
-	ui->lineEdit_edit_stadium_location->clear();
-	ui->lineEdit_edit_stadium_name->clear();
-	ui->lineEdit_edit_stadium_roof->clear();
-	ui->lineEdit_edit_stadium_surface->clear();
-	ui->lineEdit_edit_stadium_dateopen->clear();
-}
-
-void MainWindow::clearViewLabels()
-{
-    ui->label_list_totalcapacity->hide();
-    ui->label_list_totalgrass->hide();
-    ui->label_list_totalroofs->hide();
-}
 
 void MainWindow::on_pushButton_edit_add_clicked() // admin add button
 {
@@ -1105,7 +968,7 @@ void MainWindow::on_pushButton_plan_add_clicked()
             QStringList selected;
             selected.push_back("Green Bay Packers");
             selectedTeams.push_back(selectedString);
-            long totalDist;
+			long totalDist = 0;
             recursiveAlgo("Green Bay Packers",selected,selectedTeams,totalDist);
             selectedTeams = selected;
             ui->label_plan_distance->setText("Trip Distance: " + QString::number(totalDist) + " miles");
