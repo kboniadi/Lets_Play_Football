@@ -1049,3 +1049,8 @@ long MainWindow::calculateDistance(QStringList teams) // calculates trip distanc
     }
     return temp;
 }
+
+void MainWindow::on_comboBox_admin_receipts_currentIndexChanged(int index)
+{
+    QString id = ui->comboBox_admin_receipts->currentData().toString();
+}

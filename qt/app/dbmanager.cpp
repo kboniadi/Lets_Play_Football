@@ -402,16 +402,20 @@ bool DBManager::isSouvenirExist(QString teamName, QString item)
 	return (bool) query.value(0).toInt();
 }
 
-void DBManager::addPurchases(int id, QString item, int qty)
+void DBManager::addPurchases(int teamID, QString item, int qty)
 {
-	query.prepare("INSERT INTO purchase(purchasID, item, quantity) VALUE(:id, :item, :qty)");
+    QStringList ids;
+    getPurchaseIDS(ids);
+    int id = ids.size() + 1;
+    query.prepare("INSERT INTO purchase(purchaseID, teamID, item, quantity) VALUE(:id, :teamID, :item, :qty)");
 
 	query.bindValue(":id", id);
+    query.bindValue(":teamID", teamID);
 	query.bindValue(":item", item);
 	query.bindValue(":qty", qty);
 
 	if (!query.exec())
-		qDebug() << "DBManager::addPurchases(int id, QString item, int qty) : query failed";
+        qDebug() << "DBManager::addPurchases(int teamID, QString item, int qty) : query failed";
 	query.finish();
 }
 
@@ -430,11 +434,11 @@ void DBManager::getPurchaseIDS(QStringList& ids) // returns all available purcha
 void DBManager::getPurchase(QVector<Souvenir>& souvenirs, QString id) // returns list of souvenirs and their qtys for a given purchase
 {
     query.prepare("SELECT teamID, item, qty FROM purchases WHERE "
-                  "id = :purchaseID");
+                  "purchaseID = :id");
+    query.bindValue(":id", id);
 
     //variable to convert string with , to int
     QLocale c(QLocale::C);
-
 
     // Execute query
     if(query.exec())
