@@ -982,10 +982,10 @@ void MainWindow::laRams()
     //ui->pushButton_plan_continue->setDisabled(false);
 }
 
-long MainWindow::calculateDistance(QStringList teams)
+long MainWindow::calculateDistance(QStringList teams) // calculates trip distance for unsorted custom trips
 {
     long temp = 0;
-    for (int i = 0; i < teams.size() - 1; i++)
+    for (int i = 0; i < teams.size() - 1; i++) // gets dijkstra distance between each city on list progressively
     {
         QString start = teams[i];
         QString end = teams[i + 1];
@@ -999,7 +999,7 @@ long MainWindow::calculateDistance(QStringList teams)
         graph.DijkstraPathFinder(start,
                                      dijkstra, costsD, parentD);
 
-        temp += costsD[graph.findVertex(end)];
+        temp += costsD[graph.findVertex(end)]; // totals up distance
     }
     return temp;
 }
