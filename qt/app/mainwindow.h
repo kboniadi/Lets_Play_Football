@@ -79,6 +79,8 @@ private slots:
 
     void on_pushButton_plan_custom_clicked();
 
+    long calculateDistance(QStringList);
+
     /*----END HELPER FUNCTIONS----*/
 
     //Used to set the total Distance for the LA rams BFS
