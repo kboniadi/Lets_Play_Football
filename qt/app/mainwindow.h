@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QTableWidgetItem>
 #include <QLabel>
+#include <bfs.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -79,6 +80,9 @@ private slots:
     void on_pushButton_plan_custom_clicked();
 
     /*----END HELPER FUNCTIONS----*/
+
+    //Used to set the total Distance for the LA rams BFS
+    void laRams();
 
     //Populate table for stadium view
     void populateStadiumInfo(int sortIndex, int teamFilterIndex, int stadiumFilterIndex);

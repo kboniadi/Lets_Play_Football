@@ -24056,8 +24056,6 @@ color: #DEA13F
    </property>
   </widget>
  </widget>
- <resources>
-  <include location="resource.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>
