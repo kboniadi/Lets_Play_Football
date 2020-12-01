@@ -19,12 +19,10 @@ def ImportTeamTemplate(filename):
     # conn.close()
 
 def CreateTable(tableName, **kwargs):
-    query = "CREATE Table IF NOT EXISTS {0}(purchaseID INTEGER, ".format(tableName)
+    query = "CREATE Table IF NOT EXISTS {0}(teamID INTEGER, purchaseID INTEGER, ".format(tableName)
     for i, (key, value) in enumerate(kwargs.items()):
-        query += '{0} {1}'.format(key, value)
-        if i + 1 != len(kwargs):
-            query += ', ';
-    query += ')';
+        query += '{0} {1}, '.format(key, value)
+    query += 'FOREIGN KEY(teamID) REFERENCES teams(id) ON DELETE CASCADE)'
     cur.execute(query)
 
 def ImportFile(filename, tableName, **kwargs):
@@ -74,8 +72,8 @@ def ImportFile(filename, tableName, **kwargs):
     # conn.close()
 
 def ImportAccounts(username, password, accessLevel):
-    cur.execute("CREATE TABLE IF NOT EXISTS accounts(username TEXT, password TEXT, level TEXT)");
-    cur.execute("INSERT INTO accounts(username, password, level) VALUES(?, ?, ?)", (username, password, accessLevel));
+    cur.execute("CREATE TABLE IF NOT EXISTS accounts(username TEXT, password TEXT, level TEXT)")
+    cur.execute("INSERT INTO accounts(username, password, level) VALUES(?, ?, ?)", (username, password, accessLevel))
 
 # def getData():
 #     con = sqlite3.connect('Data.db')
@@ -107,7 +105,7 @@ if __name__ == "__main__":
     DropTable('teams')
     DropTable('distance')
     DropTable('information')
-    DropTable('souvenir');
+    DropTable('souvenir')
     DropTable('accounts')
     DropTable('purchases')
 
@@ -118,7 +116,7 @@ if __name__ == "__main__":
     seatCap = 'TEXT', location = 'TEXT', conference = 'TEXT', division = 'TEXT',
     surfaceType = 'TEXT', roofType = 'TEXT', dateOpen = 'TEXT')
     ImportFile('nfl_team_souvenir.csv', 'souvenir', items = 'TEXT', price = 'TEXT')
-    ImportAccounts('admin', 'password', 'ADMIN');
+    ImportAccounts('admin', 'password', 'ADMIN')
     CreateTable('purchases', items = "TEXT", quantity = "TEXT")
     
     # getData()
