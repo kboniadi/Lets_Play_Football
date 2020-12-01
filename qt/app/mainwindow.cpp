@@ -122,7 +122,7 @@ void MainWindow::on_pushButton_pages_plan_clicked()
         {
             souvenirList.insert({tempCart[i].teamID, tempCart[i]});
         }
-    }
+}
 
     void MainWindow::on_pushButton_pos_cancel_clicked()
     {
@@ -145,10 +145,14 @@ void MainWindow::on_pushButton_pages_plan_clicked()
         headers.append("Total");
         table->InitializeReceiptTable(ui->tableWidget_receipt,5,headers);
         table->PopulateReceiptTable(ui->tableWidget_receipt,tempCart);
-
+      
         ui->label_pos_distance->setText(ui->label_plan_distance->text());
 
         DBManager::instance()->addPurchases(tempCart);
+        for (int i = 0; i < table->purchaseTableSpinBoxes->size(); i++)
+        {
+            connect(table->purchaseTableSpinBoxes->at(i), SIGNAL(valueChanged(int)), this, SLOT(updateCartTotal()));
+        }
     }
 
     void MainWindow::on_pushButton_receipt_continue_clicked()
@@ -323,7 +327,6 @@ void MainWindow::setResources() // imports and assigns layout elements
     ui->tableView_list->setFont(tables);
     ui->tableView_plan_custom->setFont(tables);
     ui->tableView_plan_route->setFont(tables);
-    ui->tableView_pos_cart->setFont(tables);
     ui->tableView_pos_trip->setFont(tables);
     ui->tableWidget_receipt->setFont(tables);
     ui->tableView_search_info->setFont(tables);
@@ -405,6 +408,7 @@ void MainWindow::on_pushButton_edit_add_clicked() // admin add button
     ui->formWidget_edit_souvenir->setEnabled(true);
     ui->formWidget_edit_stadium->setDisabled(false);
     ui->pushButton_edit_add->setDisabled(true);
+    ui->pushButton_edit_delete->setDisabled(true);
     ui->pushButton_edit_cancel->setEnabled(true);
     ui->comboBox_edit->setDisabled(true);
 
