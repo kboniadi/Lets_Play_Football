@@ -122,7 +122,7 @@ void MainWindow::on_pushButton_pages_plan_clicked()
         {
             souvenirList.insert({tempCart[i].teamID, tempCart[i]});
         }
-
+}
 
     void MainWindow::on_pushButton_pos_cancel_clicked()
     {
