@@ -6,6 +6,7 @@
 #include <QLabel>
 #include "dbmanager.h"
 #include <bfs.h>
+#include "unordered_map.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -205,5 +206,8 @@ private:
 
     QStringList availableTeams;
     QStringList selectedTeams;
+
+    nonstd::unordered_map<int,Souvenir> souvenirList;
 };
+
 #endif // MAINWINDOW_H

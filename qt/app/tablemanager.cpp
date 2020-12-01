@@ -217,6 +217,7 @@ void TableManager::showTeams(QTableView* table, QStringList& available)
 
     table->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     table->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    table->setEditTriggers(QTableView::NoEditTriggers);
     table->setModel(model);
 }
 

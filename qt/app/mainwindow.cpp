@@ -97,6 +97,8 @@ void MainWindow::on_pushButton_pages_plan_clicked()
 
     void MainWindow::on_pushButton_plan_continue_clicked()
     {
+        if(selectedTeams.size() < 2)
+            return;
         ui->stackedWidget_pages->setCurrentIndex(POS);
         QVector<Souvenir> tempCart;
         DBManager::instance()->CreateShoppingList(selectedTeams,tempCart);
@@ -115,7 +117,12 @@ void MainWindow::on_pushButton_pages_plan_clicked()
         {
             connect(table->purchaseTableSpinBoxes->at(i), SIGNAL(valueChanged(int)), this, SLOT(updateCartTotal()));
         }
-    }
+
+        for (int i = 0; i < tempCart.size(); i++)
+        {
+            souvenirList.insert({tempCart[i].teamID, tempCart[i]});
+        }
+
 
     void MainWindow::on_pushButton_pos_cancel_clicked()
     {
@@ -143,7 +150,6 @@ void MainWindow::on_pushButton_pages_plan_clicked()
         {
             connect(table->purchaseTableSpinBoxes->at(i), SIGNAL(valueChanged(int)), this, SLOT(updateCartTotal()));
         }
-        ui->label_pos_distance->setText(ui->label_plan_distance->text());
     }
 
     void MainWindow::on_pushButton_receipt_continue_clicked()
@@ -655,9 +661,6 @@ void MainWindow::on_pushButton_plan_custom_clicked()
     table->showTeamNames(ui->tableView_plan_custom);
     table->showTeams(ui->tableView_plan_route,selectedTeams);
 
-    // planning logic
-
-    ui->pushButton_plan_continue->setDisabled(false);
 }
 
 /*----END HELPER FUNCTIONS----*/
@@ -882,6 +885,11 @@ void MainWindow::on_pushButton_plan_add_clicked()
     }
     table->showTeams(ui->tableView_plan_custom, availableTeams);
     table->showTeams(ui->tableView_plan_route, selectedTeams);
+
+    if(selectedTeams.size() < 2)
+        ui->pushButton_plan_continue->setDisabled(true);
+    else
+        ui->pushButton_plan_continue->setDisabled(false);
 }
 
 void MainWindow::on_pushButton_plan_remove_clicked()
@@ -895,6 +903,7 @@ void MainWindow::on_pushButton_plan_remove_clicked()
         DBManager::instance()->GetTeams(availableTeams);
         availableTeams.removeAll("Green Bay Packers");
         ui->pushButton_plan_add->setDisabled(false);
+        ui->label_plan_distance->setText("Trip Distance: ");
     }
     if (ui->tableView_plan_route->currentIndex().row() >= 0 && ui->tableView_plan_route->currentIndex().row() < availableTeams.size())
     {
@@ -907,6 +916,10 @@ void MainWindow::on_pushButton_plan_remove_clicked()
 //    ui->label_plan_distance->setText("Trip Distance: ");
     table->showTeams(ui->tableView_plan_custom, availableTeams);
     table->showTeams(ui->tableView_plan_route, selectedTeams);
+
+    if(selectedTeams.size() < 2)
+        ui->pushButton_plan_continue->setDisabled(true);
+
 }
 
 void MainWindow::updateCartTotal()
