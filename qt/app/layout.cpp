@@ -1,24 +1,22 @@
 #include "layout.h"
 
-Layout::Layout()
+Layout::Layout() // default constructor
 {
 
 }
 
-Layout::~Layout()
+Layout::~Layout() // destructor
 {
-    // Output when layout closes{
     qDebug() << "Layout has been closed";
 }
 
-Layout* Layout::instance()
+Layout* Layout::instance() // Create one and only one instance of the database
 {
-    // Create one and only one instance of the database
     static Layout instance;
     return &instance;
 }
 
-void Layout::importResources()
+void Layout::importResources() // imports external assets
 {
     QFontDatabase::addApplicationFont(":/resource/fonts/OldSportAthletic.ttf");
     QFontDatabase::addApplicationFont(":/resource/fonts/OldSansBlack.ttf");

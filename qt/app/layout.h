@@ -4,7 +4,6 @@
 #include <QDebug>
 #include <QFontDatabase>
 
-
 class Layout
 {
 public:
@@ -13,8 +12,10 @@ public:
      * @return Pointer to the instance of the layout class
      */
     static Layout* instance();
-
-    Layout(); // constructor
+    /*!
+     * \brief default constructor
+     */
+    Layout();
 
     /*!
      * @brief imports application resources to current system

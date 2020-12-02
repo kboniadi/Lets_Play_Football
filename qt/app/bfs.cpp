@@ -61,6 +61,7 @@ void bfs::bfsAlgo(int start)
             }
         }
     }
+
     //UNCOMMENT LINES 67 - 72 TO DEBUG INCASE BFS TRIP IS WRONG
 
     /*
