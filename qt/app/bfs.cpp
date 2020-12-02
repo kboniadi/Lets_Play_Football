@@ -1,6 +1,5 @@
 #include "bfs.h"
 
-
 bfs::bfs()
 {
     bfsList.clear();                                              //always clears the list
@@ -33,6 +32,8 @@ void bfs::bfsAlgo(int start)
         visited[index] = false;
     }
 
+    // UNCOMMENT LINES 36 TO DEBUG BFS INCASE TOTAL DISTANCE IS INCORRECT
+    //qDebug() << "\n\n BFS TRIPS AND THEIR RESPECTIVE DISTANCES\n-------------------\n";
     vertex = start;
     tempQ.push(vertex);
     visited[vertex] = true;
@@ -53,16 +54,22 @@ void bfs::bfsAlgo(int start)
                 tempQ.push(i.end);
                 totalDist+=i.weight;
 
-                qDebug() << DBManager::instance()->getTeamName(vertex)<< " " << DBManager::instance()->getTeamName(i.end) << " " << i.weight;
+                //UNCOMMENT LINE 58 TO DEBUG IN CASE NUMBER IS WRONG
+                //qDebug() << DBManager::instance()->getTeamName(vertex)<< " " << DBManager::instance()->getTeamName(i.end) << " " << i.weight;
 
                 visited[i.end] = true;
             }
         }
     }
+    //UNCOMMENT LINES 67 - 72 TO DEBUG INCASE BFS TRIP IS WRONG
+
+    /*
+    qDebug() << "\n\n THIS IS THE ORDER OF TEAMS IN THE BFS TRAVERSAL \n-----------------------\n";
     for(auto i: bfsList)
     {
         qDebug() << i;
     }
+    */
 }
 QStringList bfs::getBfsList()
 {
