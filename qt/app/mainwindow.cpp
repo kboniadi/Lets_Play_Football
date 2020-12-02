@@ -443,6 +443,9 @@ void MainWindow::on_pushButton_pages_view_clicked()
 
     void MainWindow::on_pushButton_view_list_clicked()
     {
+        ClearButtons();
+        ui->pushButton_pages_view->setDisabled(true);
+
         ui->stackedWidget_view_pages->setCurrentIndex(LIST);
         ui->pushButton_view_search->setDisabled(false);
         ui->pushButton_view_list->setDisabled(true);
@@ -467,7 +470,7 @@ void MainWindow::on_pushButton_pages_plan_clicked()
 	graphDFS.GenerateGraph();
 	std::vector<QString> temp;
 	int distanceDFS = graphDFS.dfs("Minnesota Vikings", temp);
-	ui->label_plan_dfs->setText("Vikings Trip Distance: " +
+    ui->label_plan_dfs->setText("Vikings Trip Distance(DFS): " +
 								QLocale(QLocale::English).toString(distanceDFS) + " miles");
 
 	mstGraph graph;
