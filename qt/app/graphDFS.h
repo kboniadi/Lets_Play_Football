@@ -7,15 +7,13 @@
 #include "dbmanager.h"
 
 namespace dfs {
-/***********************************************************************
- * Edge struct
- *   This struct represents a Edge object. It manages 4 attributes:
- *   u, v, discoverEdge, weight.
- ***********************************************************************/
+/*!
+ * \brief The Edge struct
+ */
 template<typename T>
 struct Edge {
-    T u;
-    T v;
+	T u;	/// start
+	T v;	/// end
     bool discoverEdge;
     int weight;
 
@@ -44,12 +42,10 @@ struct Edge {
     bool operator!=(const Edge<T> &rhs) const { return !(this == rhs); }
 };
 
-/***********************************************************************
- * Vertex struct
- *   This struct represents a Vertex object. It manages 3 attributes:
- *   vert, visited, edgeList.
- ***********************************************************************/
 template<typename T>
+/*!
+ * \brief The Vertex struct
+ */
 struct Vertex {
     T vert;
     bool visited;
@@ -83,30 +79,25 @@ struct Vertex {
     int NumOfEdges() const { return edgeList.size(); }
 };
 
-/***********************************************************************
- * Graph class
- *   This struct represents a Graph object. It manages 2 attributes:
- *   distance, graph.
- ***********************************************************************/
 template<typename T>
+/*!
+ * \brief The Graph class with dijkstra logic
+ */
 class GraphDFS {
 public:
-	/***************************************************************
-	 * Graph();
-	 *   Constructor; Initialize class attributes
-	 *   Parameters: none
-	 *   Return: none
-	 ***************************************************************/
+	/*!
+	 * \brief Graph constructor
+	 */
 	GraphDFS() : dfsDistance{0} {}
 
-	/*********************************************************************
-	 * ~Graph();
-	 *   Destructor; deallocates any allocated memory
-	 *   Parameters: none
-	 *   Return: none
-	 *********************************************************************/
+	/*!
+	 * \brief Graph destructor
+	 */
 	~GraphDFS() = default;
 
+	/*!
+	 * \brief generateGraph from db
+	 */
 	void generateGraph()
 	{
 		QSqlQuery query;
@@ -152,53 +143,33 @@ public:
 	}
 
 
-	/*******************************************************************
-	 * bool empty() const
-	 *
-	 *   Accessor; checks if list is empty
-	 *------------------------------------------------------------------
-	 *   Parameter: (none)
-	 *------------------------------------------------------------------
-	 *   Return: (bool) - isEmpty
-		 *******************************************************************/
+	/*!
+	 * \brief checks if graph is empty
+	 * \return bool
+	 */
 	bool empty() const { return graph.empty(); }
 
-	/*******************************************************************
-	 * int size() const
-	 *
-	 *   Accessor; number of nodes
-	 *------------------------------------------------------------------
-	 *   Parameter: (none)
-	 *------------------------------------------------------------------
-	 *   Return: (int) - number of nodes in skip list
-	 *******************************************************************/
+	/*!
+	 * \brief size of graph
+	 * \return int
+	 */
 	int size() const { return graph.size(); }
 
-	/*******************************************************************
-	 * void addVertex(T vert)
-	 *
-	 *   Mutator; adds vert to graph
-	 *------------------------------------------------------------------
-	 *   Parameter: (T) - vertex
-	 *------------------------------------------------------------------
-	 *   Return: (void) - nothing
-	 *******************************************************************/
+	/*!
+	 * \brief addVertex
+	 * \param vert; type T
+	 */
 	void addVertex(T vert) {
 		if (findVertex(vert) == -1)
 			graph.push_back(Vertex<T>{vert, false});
 	}
 
-	/*******************************************************************
-	 * void addEdge(T u, T v, int weight)
-	 *
-	 *   Mutator; adds vert to graph
-	 *------------------------------------------------------------------
-	 *   Parameter: (T) - starting vert
-	 *              (T) - end vert
-	 *              (int) - distance between
-	 *------------------------------------------------------------------
-	 *   Return: (void) - nothing
-	 *******************************************************************/
+	/*!
+	 * \brief addEdge
+	 * \param u; starting vert
+	 * \param v; ending vert
+	 * \param weight; "distance"
+	 */
 	void addEdge(T u, T v, int weight) {
 		int index = findVertex(u);
 
@@ -210,15 +181,11 @@ public:
 		}
 	}
 
-	/*******************************************************************
-	 * std::size_t findVertex(T vert) const
-	 *
-	 *   Mutator; index of vert in graph
-	 *------------------------------------------------------------------
-	 *   Parameter: (T) - vert
-	 *------------------------------------------------------------------
-	 *   Return: (void) - nothing
-	 *******************************************************************/
+	/*!
+	 * \brief findVertex
+	 * \param vert
+	 * \return index in graph container
+	 */
 	int findVertex(T vert) const {
 		int index = 0;
 
@@ -230,15 +197,10 @@ public:
 		return -1;
 	}
 
-	/*******************************************************************
-	 * std::vector<T> vertices() const
-	 *
-	 *   Mutator; finds all the verts
-	 *------------------------------------------------------------------
-	 *   Parameter: none
-	 *------------------------------------------------------------------
-	 *   Return: (std::vector<T>) - return all verts
-	 *******************************************************************/
+	/*!
+	 * \brief vertices
+	 * \return list of vertices in graph
+	 */
 	std::vector<T> vertices() const {
 		std::vector<T> temp;
 		for (auto a: graph)
@@ -246,15 +208,10 @@ public:
 		return temp;
 	}
 
-	/*******************************************************************
-	 * std::vector<std::string> edges() const
-	 *
-	 *   Mutator; finds all the edges
-	 *------------------------------------------------------------------
-	 *   Parameter: none
-	 *------------------------------------------------------------------
-	 *   Return: (std::vector<T>) - return all edges
-	 *******************************************************************/
+	/*!
+	 * \brief edges
+	 * \return list of edges in graph
+	 */
 	std::vector<std::string> edges() const {
 		std::vector<std::string> temp;
 		for (int i = 0; i < size(); i++) {
@@ -269,16 +226,12 @@ public:
 		return temp;
 	}
 
-	/*******************************************************************
-	 * int dfs(T start, std::vector<T> &list)
-	 *
-	 *   Mutator; find path between all verts
-	 *------------------------------------------------------------------
-	 *   Parameter: (T) - starting vert
-	 *              (std::vector<>) - empty list to contain dfs results
-	 *------------------------------------------------------------------
-	 *   Return: (int) - total distance
-	 *******************************************************************/
+	/*!
+	 * \brief dfs depth first search
+	 * \param start
+	 * \param list
+	 * \return total distance "cost"
+	 */
 	int dfs(T start, std::vector<T> &list) {
 		int index = findVertex(start);
 		graph.at(index).visited = true;
@@ -297,15 +250,11 @@ public:
 		return dfsDistance;
 	}
 
-	/*******************************************************************
-	 * std::vector<std::string> getDiscoveryEdges(const std::vector<T> &dfs)
-	 *
-	 *   Mutator; finds all the discovery edges in dfs search list
-	 *------------------------------------------------------------------
-	 *   Parameter: (T) - (std::vector<>) - dfs search result
-	 *------------------------------------------------------------------
-	 *   Return: (std::vector<>) - all discovery edges
-	 *******************************************************************/
+	/*!
+	 * \brief getDiscoveryEdges
+	 * \param dfs
+	 * \return list of discovery edges
+	 */
 	std::vector<std::string> getDiscoveryEdges(const std::vector<T> &dfs) {
 		std::vector<Edge<T>> discEdges;
 
@@ -330,15 +279,11 @@ public:
 		return discoveryEdges;
 	}
 
-	/*******************************************************************
-	 * std::vector<std::string> getBackEdges(const std::vector<T> &dfs)
-	 *
-	 *   Mutator; finds all the back edges in dfs search list
-	 *------------------------------------------------------------------
-	 *   Parameter: (T) - (std::vector<>) - dfs search result
-	 *------------------------------------------------------------------
-	 *   Return: (std::vector<>) - all back edges
-	 *******************************************************************/
+	/*!
+	 * \brief getBackEdges
+	 * \param dfs; list containing dfs list
+	 * \return list of back edges
+	 */
 	std::vector<std::string> getBackEdges(const std::vector<T> &dfs) {
 		std::vector<Edge<T>> backEdges;
 
@@ -466,7 +411,7 @@ private:
 		}
 	}
 
-	std::vector<Vertex<T>> graph;
+	std::vector<Vertex<T>> graph;	/// graph container
 	int dfsDistance;
 };
 }
