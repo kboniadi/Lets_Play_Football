@@ -21,7 +21,15 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
+	/*!
+	 * @brief Default MainWindow object constructor
+	 * @param parent; Pointer to parent object (null)
+	 */
     MainWindow(QWidget *parent = nullptr);
+
+	/*!
+	 * @brief Destructor
+	 */
     ~MainWindow();
 private:
 	/*----HELPER FUNCTIONS----*/
@@ -53,19 +61,47 @@ private:
 	//Used to set the total Distance for the LA rams BFS
 	void laRams();
 
-	//Populate table for stadium view
-	void populateStadiumInfo(int sortIndex, int teamFilterIndex, int stadiumFilterIndex);
+    /**
+     * @brief Populate the stadium table with the right sort and filter condition
+     * @param sortIndex: int storing the sort condition
+     * @param teamFilterIndex: int storing the team filter condition
+     * @param stadiumFilterIndex: int storing the stadium filter condition
+     */
+    void populateStadiumInfo(int sortIndex, int teamFilterIndex, int stadiumFilterIndex);
 
-	//Populate table for team search view
-	void populateTeams();
+    /**
+     * @brief Populate the list of teams for display
+     */
+    void populateTeams();
 
-	//Populate souvenir table for selected team search
-	void populateSouvenirs(QString team);
+    /**
+     * @brief Populate the souvenirs of the team being selected
+     * @param team: team that contains the souvenirs info
+     */
+    void populateSouvenirs(QString team);
 
+    /**
+     * @brief Calculate and select the shortest distance from start location
+     * @param start: starting location
+     * @param selectedList: list storing the current in correct order trip
+     * @param availableList: list storing the list to be sorted
+     * @param distance: total distance for the trip
+     */
 	void recursiveAlgo(QString start, QStringList& selectedList, QStringList& availableList, long& distance);
 
+	/*!
+	 * \brief isValid
+	 * \param cur; new value
+	 * \param prev; old value
+	 * \return bool
+	 */
 	bool isValid(QString cur, QString prev);
 
+	/*!
+	 * \brief toUpperCase
+	 * \param str; un-modified string
+	 * \return string with upper case starting words
+	 */
 	QString toUpperCase(const QString &str);
 	/*----END HELPER FUNCTIONS----*/
 private slots:
@@ -165,9 +201,32 @@ private slots:
     //Control stadium filter combobox
     void on_comboBox_list_filterstadiums_currentIndexChanged(int index);
 
+	/*!
+	 * \brief on_tableWidget_edit_cellClicked slot on edit table click
+	 * \param row; index
+	 * \param column; index
+	 */
 	void on_tableWidget_edit_cellClicked(int row, int column);
+
+	/*!
+	 * \brief ProcessDelete slot to process delete
+	 * \param row; index
+	 * \param col; index
+	 */
 	void ProcessDelete(int row, int col);
+
+	/*!
+	 * \brief on_tableWidget_edit_doubleClicked on edit table click
+	 * \param index
+	 */
 	void on_tableWidget_edit_doubleClicked(const QModelIndex &index);
+
+	/*!
+	 * \brief UpdateTable
+	 * \param row; index
+	 * \param col; index
+	 * \param prev; previous value at (row, column)
+	 */
 	void UpdateTable(int row, int col, QString prev);
 
 	void on_tableView_edit_doubleClicked(const QModelIndex &index);
@@ -184,7 +243,19 @@ public slots:
     void updateCartTotal();
 
 signals:
+	/*!
+	 * \brief EmittedSignal
+	 * \param row; index
+	 * \param col; index
+	 * \param prev; previous value at (row, column)
+	 */
 	void EmittedSignal(int row, int col, QString prev);
+
+	/*!
+	 * \brief EmittedDelSignal
+	 * \param row; index
+	 * \param col; index
+	 */
 	void EmittedDelSignal(int row, int col);
 private:
     /*----NAVIGATION ENUMS----*/
@@ -260,8 +331,10 @@ private:
     /*----END NAVIGATION ENUMS----*/
 
     /*----DIRECTORY COMBO BOXES----*/
-    QStringList sort = { "None", "Team Name", "Conference Name", "Stadium Name", "Date Opened", "Capacity" };
-    QStringList filterTeams = { "All", "AFC", "NFC", "NFC North", "Bermuda Grass" };
+	QStringList sort = { "None", "Team Name", "Conference Name",
+						 "Stadium Name", "Date Opened", "Capacity" };
+	QStringList filterTeams = { "All", "AFC", "NFC", "NFC North",
+								"Bermuda Grass" };
     QStringList filterStadiums = { "All", "Open Roof" };
     /*----END DIRECTORY COMBO BOXES----*/
 
