@@ -558,6 +558,7 @@ void MainWindow::on_pushButton_pages_admin_clicked()
 			table->AdminInfoTable(ui->tableView_import);
 			table->AdminDistTable(ui->tableView_import_2);
 			table->AdminSouvTable(ui->tableView_import_3);
+			disconnect(ui->lineEdit_login_password, SIGNAL(returnPressed()), ui->pushButton_login, SLOT(click()));
         }
         else
         {
