@@ -20,7 +20,7 @@ public:
     /*!
      * @brief imports application resources to current system
      */
-    void importResources();
+	void ImportResources();
 
     /*!
      * @brief Destructor

@@ -142,26 +142,26 @@ public:
      * @param table; Table to be displayed
      * @param teamName; name of teams whos info will be displayed
      */
-    void showTeamInfo(QTableView * table, QString teamName);
+	void ShowTeamInfo(QTableView * table, QString teamName);
 
     /*!
      * @brief shows list of teams user can visit
      * @param table; Table to be displayed
      */
-    void showTeamNames(QTableView * table);
+	void ShowTeamNames(QTableView * table);
 
 	/*!
 	 * \brief clearTable
 	 * \param table ui pointer
 	 */
-    void clearTable(QTableView * table);
+	void ClearTable(QTableView * table);
 
     /**
      * @brief Show list of teams on a qtableview
      * @param table: qtableview to display
      * @param avilable: list of teams to display
      */
-    void showTeams(QTableView* table, QStringList& avilable);
+	void ShowTeams(QTableView* table, QStringList& avilable);
 
     /**
      * @brief Insert column of spinboxes in purchase page

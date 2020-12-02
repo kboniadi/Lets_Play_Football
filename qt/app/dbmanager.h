@@ -53,7 +53,7 @@ public:
      * @brief Compares user login to values in the database
      * @return bool representing successful login
      */
-    bool checkLogin(const QString &username, const QString &password);
+	bool CheckLogin(const QString &username, const QString &password);
 
 	/*!
 	 * \brief ImportTeams to db
@@ -166,34 +166,34 @@ public:
 	 * \brief function adds souvenirs from recent purchase into the 'purchases' database table
 	 * \param souvenirs; collection of all souvenirs
      */
-    void addPurchases(QVector<Souvenir> souvenirs);
+	void AddPurchases(QVector<Souvenir> souvenirs);
 
 	/*!
 	 * \brief getNewID
 	 * \return a new id from db
 	 */
-    int getNewID();
+	int GetNewID();
 
 	/*!
 	 * \brief getTeamName
 	 * \param id; linked to team name
 	 * \return name of team
 	 */
-    QString getTeamName(int id);
+	QString GetTeamName(int id);
 
 	/*!
 	 * \brief getStadiumName
 	 * \param id; team linker
 	 * \return stadium name
 	 */
-    QString getStadiumName(int id);
+	QString GetStadiumName(int id);
 
 	/*!
 	 * \brief getTeamID
 	 * \param teamName
 	 * \return id in db linked to a team name
 	 */
-    int getTeamID(QString teamName);
+	int GetTeamID(QString teamName);
 
 	/*!
 	 * \brief CreateShoppingList
@@ -235,7 +235,7 @@ private:
 	 * \param delim
 	 * \return QStringList of strings separated by delim
 	 */
-	QStringList parser(QString &line, const char delim);
+	QStringList Parser(QString &line, const char delim);
 };
 
 

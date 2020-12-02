@@ -5,7 +5,7 @@
 #include <QTableWidgetItem>
 #include <QLabel>
 #include "dbmanager.h"
-#include <bfs.h>
+#include "bfs.h"
 #include "unordered_map.h"
 
 QT_BEGIN_NAMESPACE
@@ -39,19 +39,19 @@ private:
     /*!
      * \brief sets default pages on program restart
      */
-	void initializeLayout();
+	void InitializeLayout();
     /*!
      * \brief imports and applies external assets
      */
-	void setResources();
+	void SetResources();
     /*!
      * \brief resets most program states
      */
-	void clearButtons();
+	void ClearButtons();
 
-	void clearViewLabels();
+	void ClearViewLabels();
 
-	long calculateDistance(QStringList);
+	long CalculateDistance(QStringList);
     /*!
      * \brief assigns quantities to souvenirs
      * \param souvenirs; list of souvenirs to edit
@@ -62,7 +62,7 @@ private:
     /*!
      * @brief preforms a bfs and displays the total distance travelled
      */
-	void laRams();
+	void LaRams();
 
     /**
      * @brief Populate the stadium table with the right sort and filter condition
@@ -70,18 +70,18 @@ private:
      * @param teamFilterIndex: int storing the team filter condition
      * @param stadiumFilterIndex: int storing the stadium filter condition
      */
-    void populateStadiumInfo(int sortIndex, int teamFilterIndex, int stadiumFilterIndex);
+	void PopulateStadiumInfo(int sortIndex, int teamFilterIndex, int stadiumFilterIndex);
 
     /**
      * @brief Populate the list of teams for display
      */
-    void populateTeams();
+	void PopulateTeams();
 
     /**
      * @brief Populate the souvenirs of the team being selected
      * @param team: team that contains the souvenirs info
      */
-    void populateSouvenirs(QString team);
+	void PopulateSouvenirs(QString team);
 
     /**
      * @brief Calculate and select the shortest distance from start location
@@ -90,7 +90,7 @@ private:
      * @param availableList: list storing the list to be sorted
      * @param distance: total distance for the trip
      */
-	void recursiveAlgo(QString start, QStringList& selectedList, QStringList& availableList, long& distance);
+	void RecursiveAlgo(QString start, QStringList& selectedList, QStringList& availableList, long& distance);
 
 	/*!
 	 * \brief isValid
@@ -232,18 +232,35 @@ private slots:
 	 */
 	void UpdateTable(int row, int col, QString prev);
 
+	/*!
+	 * \brief on_tableView_edit_doubleClicked
+	 * \param index; entry to be modified
+	 */
 	void on_tableView_edit_doubleClicked(const QModelIndex &index);
 
+	/*!
+	 * \brief on_pushButton_plan_add_clicked add data to db
+	 */
     void on_pushButton_plan_add_clicked();
 
+	/*!
+	 * \brief on_pushButton_plan_remove_clicked remove data from db
+	 */
     void on_pushButton_plan_remove_clicked();
 
+	/*!
+	 * \brief on_pushButton_plan_sort_clicked sort data in table
+	 */
     void on_pushButton_plan_sort_clicked();
 
+	/*!
+	 * \brief on_comboBox_admin_receipts_currentIndexChanged
+	 * \param index; current displayed entry
+	 */
 	void on_comboBox_admin_receipts_currentIndexChanged(int index);
 
 public slots:
-    void updateCartTotal();
+	void UpdateCartTotal();
 
 signals:
 	/*!
@@ -334,11 +351,11 @@ private:
     /*----END NAVIGATION ENUMS----*/
 
     /*----DIRECTORY COMBO BOXES----*/
-	QStringList sort = { "None", "Team Name", "Conference Name",
+	const QStringList sort = { "None", "Team Name", "Conference Name",
 						 "Stadium Name", "Date Opened", "Capacity" };
-	QStringList filterTeams = { "All", "AFC", "NFC", "NFC North",
+	const QStringList filterTeams = { "All", "AFC", "NFC", "NFC North",
 								"Bermuda Grass" };
-    QStringList filterStadiums = { "All", "Open Roof" };
+	const QStringList filterStadiums = { "All", "Open Roof" };
     /*----END DIRECTORY COMBO BOXES----*/
 
 	Ui::MainWindow *ui;

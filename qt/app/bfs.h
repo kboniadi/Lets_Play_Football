@@ -19,7 +19,7 @@ private:
     /*!
      * @brief holds the total distance travelled as a int
      */
-    int totalDist;
+	int totalDist;
 
     /*!
      * @brief contains the names of the team to visit in bfs order
@@ -44,7 +44,7 @@ public:
     /*!
      * @brief initializes the ADJ list from the values in the data table
      */
-    void addEdges(); // initializes the adj list
+	void AddEdges(); // initializes the adj list
 
     /*!
      * @brief preforms a bfs traversal through the team
@@ -57,13 +57,13 @@ public:
      * @brief returns the total distance traveled
      * @return  int
      */
-    int getTotalDistance(); // returns the total distance
+	int GetTotalDistance(); // returns the total distance
 
     /*!
      * @brief returns a QStringList of all the teams in their bfs order
      * @return QStringList
      */
-    QStringList getBfsList();
+	QStringList GetBfsList();
 };
 
 #endif // BFS_H

@@ -16,7 +16,7 @@ Layout* Layout::instance() // Create one and only one instance of the database
     return &instance;
 }
 
-void Layout::importResources() // imports external assets
+void Layout::ImportResources() // imports external assets
 {
     QFontDatabase::addApplicationFont(":/resource/fonts/OldSportAthletic.ttf");
     QFontDatabase::addApplicationFont(":/resource/fonts/OldSansBlack.ttf");

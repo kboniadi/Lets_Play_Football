@@ -103,32 +103,32 @@ public:
 	/*!
 	 * \brief generateGraph from db
 	 */
-	void generateGraph();
+	void GenerateGraph();
 
 	/*!
 	 * \brief checks if graph is empty
 	 * \return bool
 	 */
-	bool empty() const;
+	bool Empty() const;
 
 	/*!
 	 * \brief size of graph
 	 * \return int
 	 */
-	int size() const;
+	int Size() const;
 
 	/*!
 	 * \brief insertVertex
 	 * \param vert; type T
 	 */
-	void insertVertex(const T &vert);
+	void InsertVertex(const T &vert);
 
 	/*!
 	 * \brief findVertex
 	 * \param vert
 	 * \return index in graph container
 	 */
-	int findVertex(const T &vert) const;
+	int FindVertex(const T &vert) const;
 
 	/*!
 	 * \brief insertEdge
@@ -136,19 +136,19 @@ public:
 	 * \param v; ending vert
 	 * \param weight; "distance"
 	 */
-	void insertEdge(const T &u, const T &v, int weight);
+	void InsertEdge(const T &u, const T &v, int weight);
 
 	/*!
 	 * \brief vertices
 	 * \return list of vertices in graph
 	 */
-	std::vector<T> vertices() const;
+	std::vector<T> Vertices() const;
 
 	/*!
 	 * \brief edges
 	 * \return list of edges in graph
 	 */
-	std::vector<T> edges() const;
+	std::vector<T> Edges() const;
 
 	/*!
 	 * \brief DijkstraPathFinder shortest path algorithm
@@ -168,7 +168,7 @@ public:
 	 * \param parent; array of parent verts
 	 * \return path
 	 */
-	std::vector<T> returnPath(const T &u,
+	std::vector<T> ReturnPath(const T &u,
 							  const T &v,
 							  const int parent[]);
 
@@ -178,24 +178,24 @@ private:
 
 	// fills the vector with the next closest vertex
 	// used in dijkstra algorithm
-	void findClosest(std::vector<T> &loadGraph, int costs[], int parent[]);
+	void FindClosest(std::vector<T> &loadGraph, int costs[], int parent[]);
 
-	int distanceFromStart(const T &u, int costs[], int parent[]);
+	int DistanceFromStart(const T &u, int costs[], int parent[]);
 
 	// returns the index for the smallest edge from a vertex
-	int smallestEdge(int vertex);
+	int SmallestEdge(int vertex);
 
 	// returns distance as an int between two vertices in the graph
 	// u denotes starting point and v is ending point
-	int distanceBetween(int u, int v);
+	int DistanceBetween(int u, int v);
 
 	// returns the number of verts visited
 	// used to check if search is completed
-	int verticesVisited();
+	int VerticesVisited();
 
 	// returns the number of edges visited
 	// returns 0 is nothing found
-	int edgesDiscovered(int currentVert);
+	int EdgesDiscovered(int currentVert);
 };
 
 
@@ -214,7 +214,7 @@ template<typename T>
 Graph<T>::Graph() : distance(0) {}
 
 template<typename T>
-void Graph<T>::generateGraph()
+void Graph<T>::GenerateGraph()
 {
 	QSqlQuery query;
 	QString queryString = "SELECT id,distanceTo "
@@ -231,13 +231,13 @@ void Graph<T>::generateGraph()
 		DBManager::instance()->GetTeams(teams);
 
 		for (int i = 1; i <= teams.size(); i++) {
-			insertVertex(teams[i - 1]);
+			InsertVertex(teams[i - 1]);
 			query.bindValue(":id", i);
 			if(!query.exec()) {
 				qDebug() << "DBManager::generateGraph vertex: " << i << " failed";
 			} else {
 				while(query.next())
-					insertEdge(teams[i - 1], teams[query.value(0).toInt() - 1], query.value(1).toInt());
+					InsertEdge(teams[i - 1], teams[query.value(0).toInt() - 1], query.value(1).toInt());
 			}
 		}
 	} else if constexpr (std::is_same<T, int>::value) {
@@ -245,13 +245,13 @@ void Graph<T>::generateGraph()
 
 		int i = 1;
 		while (i <= numTeams) {
-			insertVertex(i);
+			InsertVertex(i);
 			query.bindValue(":id", i);
 			if(!query.exec()) {
 				qDebug() << "DBManager::generateGraph vertex: " << i << " failed";
 			} else {
 				while(query.next())
-					insertEdge(i, query.value(0).toInt(), query.value(1).toInt());
+					InsertEdge(i, query.value(0).toInt(), query.value(1).toInt());
 				i++;
 			}
 		}
@@ -259,22 +259,22 @@ void Graph<T>::generateGraph()
 }
 
 template<typename T>
-bool Graph<T>::empty() const { return graph.empty(); }
+bool Graph<T>::Empty() const { return graph.empty(); }
 
 template<typename T>
-int Graph<T>::size() const { return graph.size(); }
+int Graph<T>::Size() const { return graph.size(); }
 
 template<typename T>
-void Graph<T>::insertVertex(const T &vert) {
-	if (findVertex(vert) == size())
+void Graph<T>::InsertVertex(const T &vert) {
+	if (FindVertex(vert) == Size())
 		graph.push_back(Vertex<T>{vert, false});
 }
 
 template<typename T>
-int Graph<T>::findVertex(const T &vert) const {
+int Graph<T>::FindVertex(const T &vert) const {
 	int index = 0;
 
-	while (index < size()) {
+	while (index < Size()) {
 		if (graph.at(index).vert == vert)
 			return index;
 		index++;
@@ -283,19 +283,19 @@ int Graph<T>::findVertex(const T &vert) const {
 }
 
 template<typename T>
-void Graph<T>::insertEdge(const T &u, const T &v, int weight) {
-	int index = findVertex(u);
+void Graph<T>::InsertEdge(const T &u, const T &v, int weight) {
+	int index = FindVertex(u);
 
-	if (index == size()) {
-		insertVertex(u);
-		insertEdge(u, v, weight);
+	if (index == Size()) {
+		InsertVertex(u);
+		InsertEdge(u, v, weight);
 	} else {
 		graph.at(index).edgeList.push_back(Edge<T>{u, v, weight});
 	}
 }
 
 template<typename T>
-std::vector<T> Graph<T>::vertices() const {
+std::vector<T> Graph<T>::Vertices() const {
 	std::vector<T> temp;
 	for (auto a: graph)
 		temp.push_back(a.vert);
@@ -303,9 +303,9 @@ std::vector<T> Graph<T>::vertices() const {
 }
 
 template<typename T>
-std::vector<T> Graph<T>::edges() const {
+std::vector<T> Graph<T>::Edges() const {
 	std::vector<std::string> temp;
-	for (size_t i = 0; i < size(); i++) {
+	for (size_t i = 0; i < Size(); i++) {
 		if (graph.at(i).NumOfEdges() != 0) {
 			for (size_t j = 0;
 				 j < graph.at(i).NumOfEdges(); j++) {
@@ -322,7 +322,7 @@ std::vector<T> Graph<T>::edges() const {
 template<typename T>
 void Graph<T>::DijkstraPathFinder(const T &u, std::vector<T> &loadGraph,
 								  int *costs, int *parent) {
-	if (verticesVisited() == size()) {
+	if (VerticesVisited() == Size()) {
 		for (auto &i : graph) {
 			i.visited = false;
 
@@ -331,7 +331,7 @@ void Graph<T>::DijkstraPathFinder(const T &u, std::vector<T> &loadGraph,
 		}
 	}
 
-	int currVert = findVertex(u);
+	int currVert = FindVertex(u);
 
 	loadGraph.push_back(graph[currVert].vert);
 
@@ -340,16 +340,16 @@ void Graph<T>::DijkstraPathFinder(const T &u, std::vector<T> &loadGraph,
 
 	graph[currVert].visited = true;
 
-	while ((int) loadGraph.size() != size())
-		findClosest(loadGraph, costs, parent);
+	while ((int) loadGraph.size() != Size())
+		FindClosest(loadGraph, costs, parent);
 }
 
 template<typename T>
 std::vector<T>
-Graph<T>::returnPath(const T& /*u*/, const T &v, const int *parent) {
+Graph<T>::ReturnPath(const T& /*u*/, const T &v, const int *parent) {
 	std::vector<T> path;
 
-	int vertex = findVertex(v);
+	int vertex = FindVertex(v);
 
 	while (parent[vertex] != -1) {
 		path.push_back(graph[vertex].vert);
@@ -365,13 +365,13 @@ Graph<T>::returnPath(const T& /*u*/, const T &v, const int *parent) {
 
 template<typename T>
 void
-Graph<T>::findClosest(std::vector<T> &loadGraph, int *costs, int *parent) {
+Graph<T>::FindClosest(std::vector<T> &loadGraph, int *costs, int *parent) {
 	if (loadGraph.size() == 1) {
-		int frontVer = findVertex(loadGraph.front());
+		int frontVer = FindVertex(loadGraph.front());
 
-		int nextVer = smallestEdge(frontVer);
+		int nextVer = SmallestEdge(frontVer);
 
-		costs[nextVer] = distanceBetween(frontVer, nextVer);
+		costs[nextVer] = DistanceBetween(frontVer, nextVer);
 		parent[nextVer] = frontVer;
 
 		graph[nextVer].visited = true;
@@ -387,24 +387,24 @@ Graph<T>::findClosest(std::vector<T> &loadGraph, int *costs, int *parent) {
 		int size = loadGraph.size();
 
 		while (comparatorID < size) {
-			int smallVer = findVertex(loadGraph[smallID]);
-			int compVer = findVertex(loadGraph[comparatorID]);
+			int smallVer = FindVertex(loadGraph[smallID]);
+			int compVer = FindVertex(loadGraph[comparatorID]);
 
-			if (graph[smallVer].NumOfEdges() == edgesDiscovered(smallVer)) {
+			if (graph[smallVer].NumOfEdges() == EdgesDiscovered(smallVer)) {
 				smallID++;
 			} else {
 				if (graph[compVer].NumOfEdges() !=
-					edgesDiscovered(compVer)) {
-					smallDistance = distanceBetween(smallVer,
-													smallestEdge(smallVer))
+					EdgesDiscovered(compVer)) {
+					smallDistance = DistanceBetween(smallVer,
+													SmallestEdge(smallVer))
 									+
-									distanceFromStart(graph[smallVer].vert,
+									DistanceFromStart(graph[smallVer].vert,
 													  costs,
 													  parent);
 
 					comparatorDistance =
-							distanceBetween(compVer, smallestEdge(compVer))
-							+ distanceFromStart(graph[compVer].vert, costs,
+							DistanceBetween(compVer, SmallestEdge(compVer))
+							+ DistanceFromStart(graph[compVer].vert, costs,
 												parent);
 
 					if (smallDistance > comparatorDistance) {
@@ -416,10 +416,10 @@ Graph<T>::findClosest(std::vector<T> &loadGraph, int *costs, int *parent) {
 			comparatorID++;
 		}
 
-		int smallestVertex = smallestEdge(findVertex(loadGraph[smallID]));
+		int smallestVertex = SmallestEdge(FindVertex(loadGraph[smallID]));
 
 		costs[smallestVertex] = smallDistance;
-		parent[smallestVertex] = findVertex(loadGraph[smallID]);
+		parent[smallestVertex] = FindVertex(loadGraph[smallID]);
 
 		graph[smallestVertex].visited = true;
 
@@ -428,13 +428,13 @@ Graph<T>::findClosest(std::vector<T> &loadGraph, int *costs, int *parent) {
 }
 
 template<typename T>
-int Graph<T>::distanceFromStart(const T &u, int *costs, int *parent) {
+int Graph<T>::DistanceFromStart(const T &u, int *costs, int *parent) {
 	int distance = 0;
 
-	int vertex = findVertex(u);
+	int vertex = FindVertex(u);
 
 	while (costs[vertex] != 0) {
-		distance += distanceBetween(vertex, parent[vertex]);
+		distance += DistanceBetween(vertex, parent[vertex]);
 		vertex = parent[vertex];
 	}
 
@@ -442,17 +442,17 @@ int Graph<T>::distanceFromStart(const T &u, int *costs, int *parent) {
 }
 
 template<typename T>
-int Graph<T>::smallestEdge(int vertex) {
+int Graph<T>::SmallestEdge(int vertex) {
 	int smallestIndex = 0;
 	int compIndex = smallestIndex + 1;
 
 	int size = graph.at(vertex).NumOfEdges();
 
 	while (compIndex < size) {
-		int smallestVertex = findVertex(
+		int smallestVertex = FindVertex(
 				graph.at(vertex).edgeList.at(smallestIndex).v);
 
-		int compVertex = findVertex(
+		int compVertex = FindVertex(
 				graph.at(vertex).edgeList.at(compIndex).v);
 
 		if (graph.at(smallestVertex).visited) {
@@ -466,21 +466,21 @@ int Graph<T>::smallestEdge(int vertex) {
 		}
 		compIndex++;
 	}
-	smallestIndex = findVertex(
+	smallestIndex = FindVertex(
 			graph.at(vertex).edgeList.at(smallestIndex).v);
 
 	return smallestIndex;
 }
 
 template<typename T>
-int Graph<T>::distanceBetween(int u, int v) {
+int Graph<T>::DistanceBetween(int u, int v) {
 	int i = 0;
 	while (graph[u].edgeList[i].v != graph[v].vert) i++;
 	return graph[u].edgeList[i].weight;
 }
 
 template<typename T>
-int Graph<T>::verticesVisited() {
+int Graph<T>::VerticesVisited() {
 	int visits = 0;
 
 	typename std::vector<Vertex<T>>::iterator graphIt = graph.begin();
@@ -494,12 +494,12 @@ int Graph<T>::verticesVisited() {
 }
 
 template<typename T>
-int Graph<T>::edgesDiscovered(int currentVert) {
+int Graph<T>::EdgesDiscovered(int currentVert) {
 	int visits = 0;
 
 	for (int i = 0; i < graph.at(currentVert).NumOfEdges(); i++) {
 		if (graph.at(
-				findVertex(graph.at(currentVert).edgeList.at(i).v)).visited)
+				FindVertex(graph.at(currentVert).edgeList.at(i).v)).visited)
 			visits++;
 	}
 
