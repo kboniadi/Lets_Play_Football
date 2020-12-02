@@ -41,8 +41,8 @@ void MainWindow::initializeLayout() // sets default pages on program restart
 	on_pushButton_pages_home_clicked();
 	on_comboBox_edit_activated(0);
 	ui->pushButton_pages_home->setDisabled(true);
-	ui->comboBox_list_sort->addItems(sort); // directory page
-	ui->comboBox_list_filterteams->addItems(filterTeams);
+    ui->comboBox_list_sort->addItems(sort);
+    ui->comboBox_list_filterteams->addItems(filterTeams);
 	ui->comboBox_list_filterstadiums->addItems(filterStadiums);
 	setResources();
 }
@@ -55,7 +55,7 @@ void MainWindow::setResources() // imports and assigns layout elements
 	QFont mainFont = QFont("OldSansBlack", 16); // main font
 	ui->centralwidget->setFont(mainFont);
 
-	QFont homeButtons = QFont("OLD SPORT 02 ATHLETIC NCV", 32); // page button font
+    QFont homeButtons = QFont("OLD SPORT 02 ATHLETIC NCV", 32); // main page button font
 	ui->pushButton_pages_home->setFont(homeButtons);
 	ui->pushButton_pages_view->setFont(homeButtons);
 	ui->pushButton_pages_plan->setFont(homeButtons);
@@ -111,26 +111,21 @@ void MainWindow::setResources() // imports and assigns layout elements
 	ui->lineEdit_edit_stadium_surface->setFont(tables);
 	ui->lineEdit_login_password->setFont(tables);
 	ui->lineEdit_login_username->setFont(tables);
-
 	/*----End Fonts----*/
 }
 void MainWindow::clearButtons() // resets most program states
 {
-	// home pages
-	ui->pushButton_pages_home->setDisabled(false);
+    ui->pushButton_pages_home->setDisabled(false); // home pages
 	ui->pushButton_pages_view->setDisabled(false);
 	ui->pushButton_pages_plan->setDisabled(false);
 	ui->pushButton_pages_admin->setDisabled(false);
 
-	// view page
-	ui->comboBox_list_sort->setCurrentIndex(NOSORT);
+    ui->comboBox_list_sort->setCurrentIndex(NOSORT); // view page
 	ui->comboBox_list_filterteams->setCurrentIndex(ALLTEAMS);
 	ui->comboBox_list_filterstadiums->setCurrentIndex(ALLSTADIUMS);
 	clearViewLabels();
 
-
-	// trip planning buttons
-	ui->pushButton_plan_sort->setVisible(false);
+    ui->pushButton_plan_sort->setVisible(false); // trip planning buttons
 	ui->gridWidget_plan_custom->setVisible(false);
 	ui->tableView_plan_custom->setVisible(false);
 	ui->pushButton_plan_continue->setDisabled(true);
@@ -138,8 +133,7 @@ void MainWindow::clearButtons() // resets most program states
 	ui->pushButton_plan_patriots->setDisabled(false);
 	ui->pushButton_plan_custom->setDisabled(false);
 
-	// admin buttons
-	ui->formWidget_edit_souvenir->setEnabled(false);
+    ui->formWidget_edit_souvenir->setEnabled(false); // admin buttons
 	ui->formWidget_edit_stadium->setEnabled(false);
 	ui->pushButton_edit_confirm->setDisabled(true);
 	ui->pushButton_edit_cancel->setDisabled(true);
@@ -149,8 +143,7 @@ void MainWindow::clearButtons() // resets most program states
 	ui->tabWidget_IMPORT->setCurrentIndex(IMPORT);
 	ui->comboBox_edit->setCurrentIndex(EDITSOUV);
 
-	// line edits
-	ui->lineEdit_edit_souvenir_name->clear();
+    ui->lineEdit_edit_souvenir_name->clear(); // line edits
 	ui->lineEdit_edit_souvenir_price->clear();
 	ui->lineEdit_edit_souvenir_team->clear();
 	ui->lineEdit_login_password->clear();
@@ -162,8 +155,7 @@ void MainWindow::clearButtons() // resets most program states
 	ui->lineEdit_edit_stadium_surface->clear();
 	ui->lineEdit_edit_stadium_dateopen->clear();
 
-    // labels
-    ui->label_pos_cost->setText("Total Cost: $0");
+    ui->label_pos_cost->setText("Total Cost: $0"); // labels
     ui->label_receipt_total->setText("Total Cost: $0");
 }
 
@@ -196,12 +188,11 @@ long MainWindow::calculateDistance(QStringList teams) // calculates trip distanc
 	return temp;
 }
 
-void MainWindow::CreateReceipt(QVector<Souvenir>& souvenirs)
+void MainWindow::CreateReceipt(QVector<Souvenir>& souvenirs) // adds quantity values to purchased items
 {
-	for(int souvIndex = 0; souvIndex < souvenirs.size(); souvIndex++)
+    for(int souvIndex = 0; souvIndex < souvenirs.size(); souvIndex++) // loops through the list of souvenirs
 	{
-		// Add food to item
-		souvenirs.operator[](souvIndex).purchaseQty = table->purchaseTableSpinBoxes->at(souvIndex)->value();
+        souvenirs.operator[](souvIndex).purchaseQty = table->purchaseTableSpinBoxes->at(souvIndex)->value(); // Add food to item
 	}
 }
 
@@ -812,15 +803,12 @@ void MainWindow::on_pushButton_plan_custom_clicked()
 
 }
 
-
 /*----END HELPER FUNCTIONS----*/
-
 
 void MainWindow::on_tableView_search_teams_doubleClicked(const QModelIndex &index)
 {
 	populateSouvenirs(index.data().toString());
 	table->showTeamInfo(ui->tableView_search_info, index.data().toString());
-
 }
 
 void MainWindow::on_comboBox_list_sort_currentIndexChanged(int index)
@@ -952,7 +940,6 @@ void MainWindow::on_pushButton_plan_add_clicked()
 {
     if(!(ui->pushButton_plan_packers->isEnabled()))
     {
-
         //disables the plan continue
         ui->pushButton_plan_continue->setDisabled(false);
         if(ui->tableView_plan_custom->currentIndex().row() >= 0 && ui->tableView_plan_custom->currentIndex().row() < availableTeams.size() && selectedTeams.size() <=1)
@@ -972,7 +959,6 @@ void MainWindow::on_pushButton_plan_add_clicked()
             ui->label_plan_distance->setText("Trip Distance: " + QString::number(totalDist) + " miles");
             //selectedTeams.clear
         }
-
     }
 
     else if (ui->tableView_plan_custom->currentIndex().row() >= 0 && ui->tableView_plan_custom->currentIndex().row() < availableTeams.size())
@@ -1013,7 +999,6 @@ void MainWindow::on_pushButton_plan_remove_clicked()
         long customDistance = calculateDistance(selectedTeams);
         ui->label_plan_distance->setText("Trip Distance: " + QString::number(customDistance) + " miles");
     }
-//    ui->label_plan_distance->setText("Trip Distance: ");
     table->showTeams(ui->tableView_plan_custom, availableTeams);
     table->showTeams(ui->tableView_plan_route, selectedTeams);
 
@@ -1038,7 +1023,6 @@ void MainWindow::on_pushButton_plan_sort_clicked()
         selectedTeams = sortedList;
         table->showTeams(ui->tableView_plan_route, selectedTeams);
         ui->label_plan_distance->setText("Trip Distance: " + QString::number(totalDistance) + " miles");
-
     }
 }
 
@@ -1054,22 +1038,3 @@ void MainWindow::updateCartTotal()
 	ui->label_pos_cost->setText("Total Cost: $" + totalString);
 	ui->label_receipt_total->setText("Total Cost: $" + totalString);
 }
-
-//void MainWindow::on_comboBox_admin_receipts_currentIndexChanged(int index)
-//{
-//    QString id = ui->comboBox_admin_receipts->currentData().toString();
-//    QVector<Souvenir> tempCart;
-//    DBManager::instance()->getPurchase(tempCart, id);
-
-
-//    table->clearTable(ui->tableWidget_admin_receipts);
-//    QStringList headers;
-//    headers.append("Team");
-//    headers.append("Souvenir");
-//    headers.append("Price");
-//    headers.append("Quantity");
-//    headers.append("Total");
-//    table->InitializeReceiptTable(ui->tableWidget_receipt,5,headers);
-//    table->PopulateReceiptTable(ui->tableWidget_admin_receipts,tempCart);
-
-//}

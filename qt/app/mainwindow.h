@@ -28,17 +28,26 @@ private:
 	void SetStatusBar(const QString & messg, int timeout = 0);
 
 	void SetAdminPurchaseDropDown();
-
+    /*!
+     * \brief sets default pages on program restart
+     */
 	void initializeLayout();
-
+    /*!
+     * \brief imports and applies external assets
+     */
 	void setResources();
-
+    /*!
+     * \brief resets most program states
+     */
 	void clearButtons();
 
 	void clearViewLabels();
 
 	long calculateDistance(QStringList);
-
+    /*!
+     * \brief assigns quantities to souvenirs
+     * \param souvenirs; list of souvenirs to edit
+     */
 	void CreateReceipt(QVector<Souvenir>& souvenirs);
 
 	//Used to set the total Distance for the LA rams BFS
@@ -61,38 +70,74 @@ private:
 	/*----END HELPER FUNCTIONS----*/
 private slots:
     /*----NAVIGATION----*/
+    /*!
+     * \brief on_pushButton_pages_home_clicked
+     */
     void on_pushButton_pages_home_clicked();
-
+    /*!
+     * \brief on_pushButton_pages_view_clicked
+     */
     void on_pushButton_pages_view_clicked();
-
+        /*!
+         * \brief on_pushButton_view_search_clicked
+         */
         void on_pushButton_view_search_clicked();
-
+        /*!
+         * \brief on_pushButton_view_list_clicked
+         */
         void on_pushButton_view_list_clicked();
-
+    /*!
+     * \brief on_pushButton_pages_plan_clicked
+     */
     void on_pushButton_pages_plan_clicked();
-
+        /*!
+         * \brief on_pushButton_plan_continue_clicked
+         */
         void on_pushButton_plan_continue_clicked();
-
+        /*!
+         * \brief on_pushButton_pos_cancel_clicked
+         */
         void on_pushButton_pos_cancel_clicked();
-
+        /*!
+         * \brief on_pushButton_pos_continue_clicked
+         */
         void on_pushButton_pos_continue_clicked();
-
+        /*!
+         * \brief on_pushButton_receipt_continue_clicked
+         */
         void on_pushButton_receipt_continue_clicked();
-
+    /*!
+     * \brief on_pushButton_pages_admin_clicked
+     */
     void on_pushButton_pages_admin_clicked();
-
+        /*!
+         * \brief on_pushButton_login_clicked
+         */
         void on_pushButton_login_clicked();
-
+        /*!
+         * \brief on_pushButton_admin_import_clicked
+         */
         void on_pushButton_admin_import_clicked();
-
+        /*!
+         * \brief on_pushButton_import_clicked
+         */
 		void on_pushButton_import_clicked();
-
+        /*!
+         * \brief on_pushButton_admin_edit_clicked
+         */
         void on_pushButton_admin_edit_clicked();
-
+        /*!
+         * \brief on_pushButton_admin_receipts_clicked
+         */
         void on_pushButton_admin_receipts_clicked();
-
+        /*!
+         * \brief on_comboBox_edit_activated
+         * \param index; decides which edit page to view
+         */
         void on_comboBox_edit_activated(int index);
-
+    /*!
+     * \brief on_pushButton_pages_exit_clicked
+     */
     void on_pushButton_pages_exit_clicked();
     /*----END NAVIGATION----*/
 
@@ -135,8 +180,6 @@ private slots:
 
 	void on_comboBox_admin_receipts_currentIndexChanged(int index);
 
-//    void on_comboBox_admin_receipts_currentIndexChanged(int index);
-
 public slots:
     void updateCartTotal();
 
@@ -145,6 +188,9 @@ signals:
 	void EmittedDelSignal(int row, int col);
 private:
     /*----NAVIGATION ENUMS----*/
+    /*!
+     * \brief The Pages enum
+     */
     enum Pages
     {
         HOME,
@@ -155,20 +201,26 @@ private:
         LOGIN,
         ADMIN
     };
-
+    /*!
+     * \brief The ViewPages enum
+     */
     enum ViewPages
     {
         SEARCH,
         LIST
     };
-
+    /*!
+     * \brief The AdminPages enum
+     */
     enum AdminPages
     {
         IMPORT,
 		EDIT,
         RECEIPTS
     };
-
+    /*!
+     * \brief The Sort enum
+     */
     enum Sort
     {
         NOSORT,
@@ -178,7 +230,9 @@ private:
         DATEOPENED,
         CAPACITY
     };
-
+    /*!
+     * \brief The FilterTeams enum
+     */
     enum FilterTeams
     {
         ALLTEAMS,
@@ -187,12 +241,17 @@ private:
         NFCNORTH,
         BERMUDAGRASS
     };
-
+    /*!
+     * \brief The FilterStadiums enum
+     */
     enum FilterStadiums
     {
         ALLSTADIUMS,
         OPENROOF
     };
+    /*!
+     * \brief The AdminEdit enum
+     */
 	enum AdminEdit {
 		EDITSOUV,
 		EDITSTAD
