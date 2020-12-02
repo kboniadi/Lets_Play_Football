@@ -63,8 +63,19 @@ private:
 
 	void recursiveAlgo(QString start, QStringList& selectedList, QStringList& availableList, long& distance);
 
+	/*!
+	 * \brief isValid
+	 * \param cur; new value
+	 * \param prev; old value
+	 * \return bool
+	 */
 	bool isValid(QString cur, QString prev);
 
+	/*!
+	 * \brief toUpperCase
+	 * \param str; un-modified string
+	 * \return string with upper case starting words
+	 */
 	QString toUpperCase(const QString &str);
 	/*----END HELPER FUNCTIONS----*/
 private slots:
