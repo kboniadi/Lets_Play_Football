@@ -101,6 +101,7 @@ void TableManager::AdminPuchaseTable(QTableView *table, int index)
 	table->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 	table->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 	table->setSelectionBehavior(QAbstractItemView::SelectRows);
+    table->verticalHeader()->hide();
 
 	table->setModel(model);
 }
@@ -238,7 +239,8 @@ void TableManager::showTeams(QTableView* table, QStringList& available)
 {
     QStringListModel* model = new QStringListModel;
     model->setStringList(available);
-
+    table->horizontalHeader()->hide();
+    table->verticalHeader()->hide();
     table->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     table->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     table->setEditTriggers(QTableView::NoEditTriggers);

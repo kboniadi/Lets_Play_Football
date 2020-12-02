@@ -84,20 +84,20 @@ void MainWindow::setResources() // imports and assigns layout elements
 	ui->pushButton_receipt_continue->setFont(buttons);
 	ui->pushButton_view_list->setFont(buttons);
 	ui->pushButton_view_search->setFont(buttons);
-;
+
 	QFont tables = QFont("MADE TOMMY", 16); // table font
 	ui->tableView_edit->setFont(tables);
 	ui->tableView_import->setFont(tables);
 	ui->tableView_import_2->setFont(tables);
 	ui->tableView_import_3->setFont(tables);
 	ui->tableView_list->setFont(tables);
-	ui->tableView_plan_custom->setFont(tables);
-	ui->tableView_plan_route->setFont(tables);
-	ui->tableView_pos_trip->setFont(tables);
+    ui->tableView_plan_custom->setFont(tables);
+    ui->tableView_plan_route->setFont(tables);
+    ui->tableView_pos_trip->setFont(tables);
 	ui->tableWidget_receipt->setFont(tables);
 	ui->tableView_search_info->setFont(tables);
 	ui->tableView_search_souvenirs->setFont(tables);
-	ui->tableView_search_teams->setFont(tables);
+    ui->tableView_search_teams->setFont(tables);
 	ui->tableWidget_edit->setFont(tables);
 	ui->tableWidget_pos_purchase->setFont(tables);
 	ui->lineEdit_edit_souvenir_name->setFont(tables);
@@ -111,6 +111,7 @@ void MainWindow::setResources() // imports and assigns layout elements
 	ui->lineEdit_edit_stadium_surface->setFont(tables);
 	ui->lineEdit_login_password->setFont(tables);
 	ui->lineEdit_login_username->setFont(tables);
+
 	/*----End Fonts----*/
 }
 void MainWindow::clearButtons() // resets most program states
@@ -160,6 +161,10 @@ void MainWindow::clearButtons() // resets most program states
 	ui->lineEdit_edit_stadium_roof->clear();
 	ui->lineEdit_edit_stadium_surface->clear();
 	ui->lineEdit_edit_stadium_dateopen->clear();
+
+    // labels
+    ui->label_pos_cost->setText("Total Cost: $0");
+    ui->label_receipt_total->setText("Total Cost: $0");
 }
 
 void MainWindow::clearViewLabels()
@@ -284,6 +289,7 @@ void MainWindow::populateStadiumInfo(int sortIndex, int teamFilterIndex, int sta
 
 	ui->tableView_list->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 	ui->tableView_list->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    ui->tableView_list->verticalHeader()->hide();
 
 	ui->tableView_list->setModel(model);
 
@@ -322,16 +328,7 @@ void MainWindow::populateTeams()
 {
 	QStringList teamList;
 	DBManager::instance()->GetTeams(teamList);
-
-	QStringListModel* model = new QStringListModel;
-	model->setStringList(teamList);
-	model->setHeaderData(0, Qt::Horizontal, QObject::tr("Teams"));
-
-	ui->tableView_search_teams->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-	ui->tableView_search_teams->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-
-	ui->tableView_search_teams->setModel(model);
-	ui->tableView_search_teams->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    table->showTeams(ui->tableView_search_teams, teamList);
 }
 
 void MainWindow::populateSouvenirs(QString team)
@@ -341,6 +338,7 @@ void MainWindow::populateSouvenirs(QString team)
 
 	model->setHeaderData(0, Qt::Horizontal, QObject::tr("Souvenir"));
 	model->setHeaderData(1, Qt::Horizontal, QObject::tr("Price"));
+    ui->tableView_search_souvenirs->verticalHeader()->hide();
 
 	ui->tableView_search_souvenirs->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 	ui->tableView_search_souvenirs->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
