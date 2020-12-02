@@ -210,8 +210,9 @@ void MainWindow::LaRams()
 	bfsObj.AddEdges();
 	bfsObj.bfsAlgo(19); // starting at La Rams (id: 19)
 	//table->showBFSTrip(ui->tableView_plan_route,bfsObj);
-
-	ui->label_plan_bfs->setText(QString("LA Rams Distance(BFS): %1").arg(bfsObj.GetTotalDistance()));
+	ui->label_plan_bfs->setText("LA Rams Distance(BFS): " +
+	QLocale(QLocale::English).toString(bfsObj.GetTotalDistance()) + " miles");
+//	ui->label_plan_bfs->setText(QString("LA Rams Distance(BFS): %1").arg(bfsObj.GetTotalDistance()));
 
 	//ui->pushButton_plan_continue->setDisabled(false);
 }
@@ -467,13 +468,13 @@ void MainWindow::on_pushButton_pages_plan_clicked()
 	std::vector<QString> temp;
 	int distanceDFS = graphDFS.dfs("Minnesota Vikings", temp);
 	ui->label_plan_dfs->setText("Vikings Trip Distance: " +
-								QLocale(QLocale::English).toString(distanceDFS));
+								QLocale(QLocale::English).toString(distanceDFS) + " miles");
 
 	mstGraph graph;
     vector<mstEdge> mstEdges;
 	graph.GetMST(mstEdges);
 	int distance = graph.GetMSTdistance();
-    ui->label_plan_mst->setText("Total Distance: "+ QString::number(distance) +" miles");
+	ui->label_plan_mst->setText("Total Distance: "+ QLocale(QLocale::English).toString(distance) +" miles");
 }
 
     void MainWindow::on_pushButton_plan_continue_clicked()
