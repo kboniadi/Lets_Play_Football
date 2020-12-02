@@ -55,7 +55,7 @@ void mstGraph::deleteMatrix(){
 
 bool mstGraph::isExist(mstVertex search)
 {
-    for (int i = 0; i < mstVec.size(); i++)
+	for (int i = 0; i < (int) mstVec.size(); i++)
         if (mstVec[i]->index == search.index)
             return true;
     return false;
@@ -65,7 +65,7 @@ mstVertex* mstGraph::extractMin() {
     if(!mstVec.empty()) {
         mstVertex* temp = mstVec[0];
         int smallestIndex = 0;
-        for (int i = 0; i < mstVec.size(); i++) {
+		for (int i = 0; i < (int) mstVec.size(); i++) {
             if (temp->key > mstVec[i]->key) {
                 temp = mstVec[i];
                 smallestIndex = i;
@@ -80,14 +80,14 @@ mstVertex* mstGraph::extractMin() {
 
 void mstGraph::primMST(int start){
     mstVec.clear();
-    for (int i = 0; i < vertices.size(); i++){
+	for (int i = 0; i < (int) vertices.size(); i++){
         vertices[i].index = i;
         vertices[i].key = INT_MAX;
         vertices[i].parent = nullptr;
     }
     vertices[start].key = 0;
 
-    for (int i = 0; i < vertices.size();i++)
+	for (int i = 0; i < (int) vertices.size();i++)
         mstVec.push_back(&vertices[i]);
 
     while(!mstVec.empty()){
@@ -105,7 +105,7 @@ void mstGraph::primMST(int start){
 
 void mstGraph::getMST(vector<mstEdge>& edgeVec){
     primMST(0);
-    for (int i = 0; i < vertices.size(); i++){
+	for (int i = 0; i < (int) vertices.size(); i++){
         if (vertices[i].parent != nullptr)
             edgeVec.push_back(mstEdge(vertices[i].parent->index, vertices[i].index, vertices[i].key));
     }
@@ -113,7 +113,7 @@ void mstGraph::getMST(vector<mstEdge>& edgeVec){
 
 long mstGraph::getMSTdistance(){
     long sum = 0;
-    for (int i = 0; i < vertices.size(); i++)
+	for (int i = 0; i < (int) vertices.size(); i++)
     {
         if (vertices[i].parent != nullptr)
             sum += vertices[i].key;

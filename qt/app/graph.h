@@ -340,7 +340,7 @@ void Graph<T>::DijkstraPathFinder(const T &u, std::vector<T> &loadGraph,
 
 	graph[currVert].visited = true;
 
-	while (loadGraph.size() != size())
+	while ((int) loadGraph.size() != size())
 		findClosest(loadGraph, costs, parent);
 }
 
