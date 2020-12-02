@@ -41,7 +41,10 @@ private:
 
 	void CreateReceipt(QVector<Souvenir>& souvenirs);
 
-	//Used to set the total Distance for the LA rams BFS
+
+    /*!
+     * @brief preforms a bfs and displays the total distance travelled
+     */
 	void laRams();
 
 	//Populate table for stadium view
