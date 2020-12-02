@@ -578,6 +578,9 @@ void MainWindow::on_pushButton_pages_admin_clicked()
 
     void MainWindow::on_pushButton_admin_import_clicked()
     {
+        table->AdminInfoTable(ui->tableView_import);
+        table->AdminDistTable(ui->tableView_import_2);
+        table->AdminSouvTable(ui->tableView_import_3);
         ui->stackedWidget_admin_pages->setCurrentIndex(IMPORT);
         ui->pushButton_admin_import->setDisabled(true);
         ui->pushButton_admin_edit->setDisabled(false);
