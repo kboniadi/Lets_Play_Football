@@ -21,7 +21,15 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
+	/*!
+	 * @brief Default MainWindow object constructor
+	 * @param parent; Pointer to parent object (null)
+	 */
     MainWindow(QWidget *parent = nullptr);
+
+	/*!
+	 * @brief Destructor
+	 */
     ~MainWindow();
 private:
 	/*----HELPER FUNCTIONS----*/
@@ -120,9 +128,32 @@ private slots:
     //Control stadium filter combobox
     void on_comboBox_list_filterstadiums_currentIndexChanged(int index);
 
+	/*!
+	 * \brief on_tableWidget_edit_cellClicked slot on edit table click
+	 * \param row; index
+	 * \param column; index
+	 */
 	void on_tableWidget_edit_cellClicked(int row, int column);
+
+	/*!
+	 * \brief ProcessDelete slot to process delete
+	 * \param row; index
+	 * \param col; index
+	 */
 	void ProcessDelete(int row, int col);
+
+	/*!
+	 * \brief on_tableWidget_edit_doubleClicked on edit table click
+	 * \param index
+	 */
 	void on_tableWidget_edit_doubleClicked(const QModelIndex &index);
+
+	/*!
+	 * \brief UpdateTable
+	 * \param row; index
+	 * \param col; index
+	 * \param prev; previous value at (row, column)
+	 */
 	void UpdateTable(int row, int col, QString prev);
 
 	void on_tableView_edit_doubleClicked(const QModelIndex &index);
@@ -141,7 +172,19 @@ public slots:
     void updateCartTotal();
 
 signals:
+	/*!
+	 * \brief EmittedSignal
+	 * \param row; index
+	 * \param col; index
+	 * \param prev; previous value at (row, column)
+	 */
 	void EmittedSignal(int row, int col, QString prev);
+
+	/*!
+	 * \brief EmittedDelSignal
+	 * \param row; index
+	 * \param col; index
+	 */
 	void EmittedDelSignal(int row, int col);
 private:
     /*----NAVIGATION ENUMS----*/
@@ -201,8 +244,10 @@ private:
     /*----END NAVIGATION ENUMS----*/
 
     /*----DIRECTORY COMBO BOXES----*/
-    QStringList sort = { "None", "Team Name", "Conference Name", "Stadium Name", "Date Opened", "Capacity" };
-    QStringList filterTeams = { "All", "AFC", "NFC", "NFC North", "Bermuda Grass" };
+	QStringList sort = { "None", "Team Name", "Conference Name",
+						 "Stadium Name", "Date Opened", "Capacity" };
+	QStringList filterTeams = { "All", "AFC", "NFC", "NFC North",
+								"Bermuda Grass" };
     QStringList filterStadiums = { "All", "Open Roof" };
     /*----END DIRECTORY COMBO BOXES----*/
 

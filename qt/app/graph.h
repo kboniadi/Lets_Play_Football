@@ -9,15 +9,14 @@
 #include <QVector>
 #include "dbmanager.h"
 
-/***********************************************************************
- * Edge struct
- *   This struct represents a Edge object. It manages 4 attributes:
- *   u, v, discoverEdge, weight.
- ***********************************************************************/
+
 template<typename T>
+/*!
+ * \brief The Edge struct
+ */
 struct Edge {
-	T u;    // start
-	T v;    // end
+	T u;    /// start
+	T v;    /// end
 	bool discoverEdge;
 	int weight;
 
@@ -46,12 +45,11 @@ struct Edge {
 	bool operator!=(const Edge<T> &rhs) const { return !operator==(rhs); }
 };
 
-/***********************************************************************
-* Vertex struct
-*   This struct represents a Vertex object. It manages 3 attributes:
-*   vert, visited, edgeList.
-***********************************************************************/
+
 template<typename T>
+/*!
+ * \brief The Vertex struct
+ */
 struct Vertex {
 
 	T vert;
@@ -86,141 +84,96 @@ struct Vertex {
 	int NumOfEdges() const { return edgeList.size(); }
 };
 
-/***********************************************************************
-* Graph class
-*   This struct represents a Graph object. It manages 2 attributes:
-*   distance, graph.
-***********************************************************************/
 template<typename T>
+/*!
+ * \brief The Graph class with dijkstra logic
+ */
 class Graph {
 public:
-	/***************************************************************
-	 * Graph();
-	 *   Constructor; Initialize class attributes
-	 *   Parameters: none
-	 *   Return: none
-	 ***************************************************************/
+	/*!
+	 * \brief Graph constructor
+	 */
 	Graph();
 
-	/*********************************************************************
-	 * ~Graph();
-	 *   Destructor; deallocates any allocated memory
-	 *   Parameters: none
-	 *   Return: none
-	 *********************************************************************/
+	/*!
+	 * \brief Graph destructor
+	 */
 	~Graph() = default;
 
+	/*!
+	 * \brief generateGraph from db
+	 */
 	void generateGraph();
-	/*******************************************************************
-	 * bool empty() const
-	 *
-	 *   Accessor; checks if list is empty
-	 *------------------------------------------------------------------
-	 *   Parameter: (none)
-	 *------------------------------------------------------------------
-	 *   Return: (bool) - isEmpty
-	 *******************************************************************/
+
+	/*!
+	 * \brief checks if graph is empty
+	 * \return bool
+	 */
 	bool empty() const;
 
-	/*******************************************************************
-	 * int size() const
-	 *
-	 *   Accessor; number of nodes
-	 *------------------------------------------------------------------
-	 *   Parameter: (none)
-	 *------------------------------------------------------------------
-	 *   Return: (int) - number of nodes in skip list
-	 *******************************************************************/
+	/*!
+	 * \brief size of graph
+	 * \return int
+	 */
 	int size() const;
 
-	/*******************************************************************
-	 * void insertVertex(T vert)
-	 *
-	 *   Mutator; adds vert to graph
-	 *------------------------------------------------------------------
-	 *   Parameter: (T) - vertex
-	 *------------------------------------------------------------------
-	 *   Return: (void) - nothing
-	 *******************************************************************/
+	/*!
+	 * \brief insertVertex
+	 * \param vert; type T
+	 */
 	void insertVertex(const T &vert);
 
-	/*******************************************************************
-	 * int findVertex(T vert) const
-	 *
-	 *   Mutator; index of vert in graph
-	 *------------------------------------------------------------------
-	 *   Parameter: (T) - vert
-	 *------------------------------------------------------------------
-	 *   Return: (void) - nothing
-	 *******************************************************************/
+	/*!
+	 * \brief findVertex
+	 * \param vert
+	 * \return index in graph container
+	 */
 	int findVertex(const T &vert) const;
 
-	/*******************************************************************
-	 * void insertEdge(T u, T v, int weight)
-	 *
-	 *   Mutator; adds vert to graph
-	 *------------------------------------------------------------------
-	 *   Parameter: (T) - starting vert
-	 *              (T) - end vert
-	 *              (int) - distance between
-	 *------------------------------------------------------------------
-	 *   Return: (void) - nothing
-	 *******************************************************************/
+	/*!
+	 * \brief insertEdge
+	 * \param u; starting vert
+	 * \param v; ending vert
+	 * \param weight; "distance"
+	 */
 	void insertEdge(const T &u, const T &v, int weight);
 
-	/*******************************************************************
-	 * std::vector<T> vertices() const
-	 *
-	 *   Mutator; finds all the verts
-	 *------------------------------------------------------------------
-	 *   Parameter: none
-	 *------------------------------------------------------------------
-	 *   Return: (std::vector<T>) - return all verts
-	 *******************************************************************/
+	/*!
+	 * \brief vertices
+	 * \return list of vertices in graph
+	 */
 	std::vector<T> vertices() const;
 
-	/*******************************************************************
-	 * std::vector<std::string> edges() const
-	 *
-	 *   Mutator; finds all the edges
-	 *------------------------------------------------------------------
-	 *   Parameter: none
-	 *------------------------------------------------------------------
-	 *   Return: (std::vector<T>) - return all edges
-	 *******************************************************************/
+	/*!
+	 * \brief edges
+	 * \return list of edges in graph
+	 */
 	std::vector<T> edges() const;
 
-	/*******************************************************************
-	 * int dfs(T start, std::vector<T> &list)
-	 *
-	 *   Mutator; find path between all verts
-	 *------------------------------------------------------------------
-	 *   Parameter: (T) - starting vert
-	 *              (std::vector<>) - empty list to contain dfs results
-	 *------------------------------------------------------------------
-	 *   Return: (int) - total distance
-	 *******************************************************************/
+	/*!
+	 * \brief DijkstraPathFinder shortest path algorithm
+	 * \param u; starting vert
+	 * \param loadGraph
+	 * \param costs; weights of the paths
+	 * \param parent; holds previous vert needed to path tracing
+	 */
 	void DijkstraPathFinder(const T &u,
 							std::vector<T> &loadGraph,
 							int *costs, int *parent);
 
-	/*******************************************************************
-	 * std::vector<T> returnPath(const T& u, ...
-	 *
-	 *   Mutator; gets the path between two points in graph
-	 *------------------------------------------------------------------
-	 *   Parameter: (T) - starting vert
-	 *              (T) - ending vert
-	 *              (int) - parent array used to backtrack
-	 *------------------------------------------------------------------
-	 *   Return: (std::vector<>) - shortest path between the two points
-	 *******************************************************************/
+	/*!
+	 * \brief returnPath
+	 * \param u; starting vert
+	 * \param v; ending vert
+	 * \param parent; array of parent verts
+	 * \return path
+	 */
 	std::vector<T> returnPath(const T &u,
 							  const T &v,
 							  const int parent[]);
 
 private:
-	std::vector<Vertex<T>> graph;
+	std::vector<Vertex<T>> graph;	/// Graph container
 	int distance;
 
 	// fills the vector with the next closest vertex
