@@ -201,6 +201,7 @@ void TableManager::PopulateAdminEditTable(QTableWidget *table)
 		} // END for iterate through food list
 	} // END for iterate through city list
 }
+#undef db
 
 // Deletes contents of passed in table
 void TableManager::DeleteAllTableRows(QTableWidget *table)
