@@ -474,7 +474,7 @@ void MainWindow::on_pushButton_pages_plan_clicked()
     vector<mstEdge> mstEdges;
 	graph.GetMST(mstEdges);
 	int distance = graph.GetMSTdistance();
-	ui->label_plan_mst->setText("Total Distance: "+ QLocale(QLocale::English).toString(distance) +" miles");
+    ui->label_plan_mst->setText("Total Distance (MST): "+ QLocale(QLocale::English).toString(distance) +" miles");
 }
 
     void MainWindow::on_pushButton_plan_continue_clicked()
@@ -591,6 +591,10 @@ void MainWindow::on_pushButton_pages_admin_clicked()
 
     void MainWindow::on_pushButton_admin_edit_clicked()
     {
+
+        disconnect(this, &MainWindow::EmittedSignal, this, &MainWindow::UpdateTable);
+        disconnect(ui->tableWidget_edit, &QTableWidget::cellChanged, nullptr, nullptr);
+
         ui->stackedWidget_admin_pages->setCurrentIndex(EDIT);
         on_comboBox_edit_activated(EDITSOUV);
         ui->pushButton_admin_import->setDisabled(false);
