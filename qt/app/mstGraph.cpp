@@ -33,7 +33,7 @@ void mstGraph::initializeMatrix(){
                   "AND endStadium = (SELECT beginStadium "
                   "FROM distance WHERE id = :teamID) AND id!= :teamID");
 
-    QLocale c(QLocale::C);
+    QLocale c(QLocale::C);  // variable to convert a formatted string into an int
     for (int i = 0; i <numVertex; i++)
     {
         query.bindValue(":teamID", i);

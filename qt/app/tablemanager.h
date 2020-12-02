@@ -122,14 +122,41 @@ public:
      */
     void showTeamNames(QTableView * table);
 
+    /**
+     * @brief Clear data from qtableview
+     * @param table: qtableview to clear
+     */
     void clearTable(QTableView * table);
 
+    /**
+     * @brief Show list of teams on a qtableview
+     * @param table: qtableview to display
+     * @param avilable: list of teams to display
+     */
     void showTeams(QTableView* table, QStringList& avilable);
 
+    /**
+     * @brief Insert column of spinboxes in purchase page
+     * @param table: table to insert spinboxes
+     * @param min: smallest value in spinbox
+     * @param max: largest value in spinbox
+     * @param col: column to insert the spinbox
+     */
     void InsertSpinBoxCol(QTableWidget* table, const int min, const int max, const int col);
 
+    /**
+     * @brief Create the layout for the purchase table
+     * @param purchaseTable: table to set the layout
+     * @param cols: number of columns in table
+     * @param headers: list of headers for the columns in table
+     */
     void InitializePurchaseTable(QTableWidget* purchaseTable, const int &cols, const QStringList &headers);
 
+    /**
+     * @brief Populate the purchase table with souvenir items
+     * @param purchaseTable: table to display the souvenir
+     * @param teamSouvenir: list of souvenirs ot display
+     */
     void PopulatePurchaseTable(QTableWidget* purchaseTable, QVector<Souvenir>& teamSouvenir);
 
     void InitializeReceiptTable(QTableWidget* receiptTable, const int &cols, const QStringList &headers);
@@ -146,6 +173,11 @@ public:
 
 
 public slots:
+    /**
+     * @brief Function to update total price of souvenirs after user selects an item
+     * @param table: table displaying the souvenirs
+     * @return the total cost of souvenirs
+     */
     double UpdateTotalPrice(QTableWidget* table);
 };
 

@@ -83,12 +83,32 @@ public:
 //    void getPurchase(QVector<Souvenir>& souvenirs, QString id);
 	QSqlQuery* getQuery() { return &query; }
 
+    /**
+     * @brief Get team name from team id
+     * @param id: id of the team
+     * @return name of the team
+     */
     QString getTeamName(int id);
 
+    /**
+     * @brief Get stadium name from team id
+     * @param id: id of the team
+     * @return name of the stadium
+     */
     QString getStadiumName(int id);
 
+    /**
+     * @brief Get id of the team
+     * @param teamName: team to get the id
+     * @return id of the team
+     */
     int getTeamID(QString teamName);
 
+    /**
+     * @brief Create a list of souvenirs of the teams selected
+     * @param teams: list of teams being selected
+     * @param teamSouvenirs: vector of souvenirs from the teams
+     */
     void CreateShoppingList(QStringList teams, QVector<Souvenir>& teamSouvenirs);
     /*!
      * @brief function gets all adjacent cities and distances based on the vertex input and

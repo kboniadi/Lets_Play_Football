@@ -44,15 +44,32 @@ private:
 	//Used to set the total Distance for the LA rams BFS
 	void laRams();
 
-	//Populate table for stadium view
-	void populateStadiumInfo(int sortIndex, int teamFilterIndex, int stadiumFilterIndex);
+    /**
+     * @brief Populate the stadium table with the right sort and filter condition
+     * @param sortIndex: int storing the sort condition
+     * @param teamFilterIndex: int storing the team filter condition
+     * @param stadiumFilterIndex: int storing the stadium filter condition
+     */
+    void populateStadiumInfo(int sortIndex, int teamFilterIndex, int stadiumFilterIndex);
 
-	//Populate table for team search view
-	void populateTeams();
+    /**
+     * @brief Populate the list of teams for display
+     */
+    void populateTeams();
 
-	//Populate souvenir table for selected team search
-	void populateSouvenirs(QString team);
+    /**
+     * @brief Populate the souvenirs of the team being selected
+     * @param team: team that contains the souvenirs info
+     */
+    void populateSouvenirs(QString team);
 
+    /**
+     * @brief Calculate and select the shortest distance from start location
+     * @param start: starting location
+     * @param selectedList: list storing the current in correct order trip
+     * @param availableList: list storing the list to be sorted
+     * @param distance: total distance for the trip
+     */
 	void recursiveAlgo(QString start, QStringList& selectedList, QStringList& availableList, long& distance);
 
 	bool isValid(QString cur, QString prev);
