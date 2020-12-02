@@ -117,7 +117,7 @@ if __name__ == "__main__":
     surfaceType = 'TEXT', roofType = 'TEXT', dateOpen = 'TEXT')
     ImportFile('nfl_team_souvenir.csv', 'souvenir', items = 'TEXT', price = 'TEXT')
     ImportAccounts('admin', 'password', 'ADMIN')
-    CreateTable('purchases', items = "TEXT", quantity = "TEXT")
+    CreateTable('purchases', items = "TEXT", price = "TEXT", quantity = "TEXT")
     
     # getData()
 
