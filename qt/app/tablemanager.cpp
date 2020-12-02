@@ -96,6 +96,7 @@ void TableManager::AdminPuchaseTable(QTableView *table, int index)
 	model->setHeaderData(0, Qt::Horizontal, adminTablePurchColNames[1], Qt::DisplayRole);
 	model->setHeaderData(1, Qt::Horizontal, adminTablePurchColNames[2], Qt::DisplayRole);
 	model->setHeaderData(2, Qt::Horizontal, adminTablePurchColNames[3], Qt::DisplayRole);
+	model->setHeaderData(3, Qt::Horizontal, adminTablePurchColNames[4], Qt::DisplayRole);
 
 	table->setEditTriggers(QAbstractItemView::NoEditTriggers);
 	table->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);

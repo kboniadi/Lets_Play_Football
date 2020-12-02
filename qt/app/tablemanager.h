@@ -76,7 +76,7 @@ public:
 	// ************************* Admin purchases Table Attributes ************************
 
 	/// Names of admin table column headers
-	QStringList adminTablePurchColNames = { "Key", "Item", "Price", "Quantity" };
+	QStringList adminTablePurchColNames = { "Key", "Team Name", "Item", "Price", "Quantity" };
 
 						/***********
 						 * Methods *
