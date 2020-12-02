@@ -1,0 +1,26 @@
+var classDBManager =
+[
+    [ "DBManager", "classDBManager.html#a14fa55f5fc5808730566dbc7724dbc99", null ],
+    [ "AddInfo", "classDBManager.html#a62476151181db208ab3fbaf81953b586", null ],
+    [ "AddPurchases", "classDBManager.html#a9ef13d35894cb4d25c8fd48b658d63c4", null ],
+    [ "AddSouvenir", "classDBManager.html#a062d2e7dbdff54e57aef3fdddad1e687", null ],
+    [ "CheckLogin", "classDBManager.html#ae95a08183114bd2d13b441600b98923c", null ],
+    [ "CreateShoppingList", "classDBManager.html#a49642ab9c64670031f5ab1476d0e34ad", null ],
+    [ "DeleteSouvenir", "classDBManager.html#a3be5d6d745e3714c44a3202a9a9e3973", null ],
+    [ "getAdjList", "classDBManager.html#a785333e74f594cf7227a2f68a6f67743", null ],
+    [ "GetNewID", "classDBManager.html#a52b9e7efd847e5b4fa762a567aa7a535", null ],
+    [ "GetNumSouvenir", "classDBManager.html#a0dc28a37806c0843eb4f00b3b1311f10", null ],
+    [ "GetNumTeams", "classDBManager.html#a13f19d1179facfca5d24c56439e5b98a", null ],
+    [ "GetSouvenirs", "classDBManager.html#af8290e09344772bdc925469bc5ae3a52", null ],
+    [ "GetStadiumName", "classDBManager.html#a95691a3e7fab29b9461e6396481f9643", null ],
+    [ "GetTeamID", "classDBManager.html#a741b4c46325eb7d9f657125d4c79a8f9", null ],
+    [ "GetTeamName", "classDBManager.html#a5c19c50713217ef713d168c7dadfb25b", null ],
+    [ "GetTeams", "classDBManager.html#af908f23cca7bd65991d38c5a446b2fe1", null ],
+    [ "ImportTeams", "classDBManager.html#a8cf8398b645ee71b46f3b2242327e59a", null ],
+    [ "isSouvenirExist", "classDBManager.html#ac26e64757f2d0dcf9f1f9460e9b39a34", null ],
+    [ "isTeamExist", "classDBManager.html#aca7f86d7b1120ea7b14ea6a5db4b755d", null ],
+    [ "operator=", "classDBManager.html#a24f1bb309ebd4f01f503b872e289247e", null ],
+    [ "SouvenirNameToPrice", "classDBManager.html#a407a1a6427c080f642f482f5d61e8bee", null ],
+    [ "UpdateInformation", "classDBManager.html#a7494ff0a41686d128e47c822331a68dc", null ],
+    [ "UpdateSouvenirPrice", "classDBManager.html#a1e4a9445f1d8e449d7a72f984fc16bdc", null ]
+];

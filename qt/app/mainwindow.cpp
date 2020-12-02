@@ -443,6 +443,9 @@ void MainWindow::on_pushButton_pages_view_clicked()
 
     void MainWindow::on_pushButton_view_list_clicked()
     {
+        ClearButtons();
+        ui->pushButton_pages_view->setDisabled(true);
+
         ui->stackedWidget_view_pages->setCurrentIndex(LIST);
         ui->pushButton_view_search->setDisabled(false);
         ui->pushButton_view_list->setDisabled(true);
@@ -467,14 +470,14 @@ void MainWindow::on_pushButton_pages_plan_clicked()
 	graphDFS.GenerateGraph();
 	std::vector<QString> temp;
 	int distanceDFS = graphDFS.dfs("Minnesota Vikings", temp);
-	ui->label_plan_dfs->setText("Vikings Trip Distance: " +
+    ui->label_plan_dfs->setText("Vikings Trip Distance(DFS): " +
 								QLocale(QLocale::English).toString(distanceDFS) + " miles");
 
 	mstGraph graph;
     vector<mstEdge> mstEdges;
 	graph.GetMST(mstEdges);
 	int distance = graph.GetMSTdistance();
-	ui->label_plan_mst->setText("Total Distance: "+ QLocale(QLocale::English).toString(distance) +" miles");
+    ui->label_plan_mst->setText("Total Distance (MST): "+ QLocale(QLocale::English).toString(distance) +" miles");
 }
 
     void MainWindow::on_pushButton_plan_continue_clicked()
@@ -591,6 +594,10 @@ void MainWindow::on_pushButton_pages_admin_clicked()
 
     void MainWindow::on_pushButton_admin_edit_clicked()
     {
+
+        disconnect(this, &MainWindow::EmittedSignal, this, &MainWindow::UpdateTable);
+        disconnect(ui->tableWidget_edit, &QTableWidget::cellChanged, nullptr, nullptr);
+
         ui->stackedWidget_admin_pages->setCurrentIndex(EDIT);
         on_comboBox_edit_activated(EDITSOUV);
         ui->pushButton_admin_import->setDisabled(false);

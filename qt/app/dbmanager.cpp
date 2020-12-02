@@ -405,7 +405,7 @@ bool DBManager::isSouvenirExist(QString teamName, QString item)
 void DBManager::AddPurchases(QVector<Souvenir> souvenirs)
 {
 	int id = GetNewID();
-    query.prepare("INSERT INTO purchases(teamID, purchaseID, items, quantity) VALUES(:teamID, :id, :item, :qty)");
+    query.prepare("INSERT INTO purchases(teamID, purchaseID, items, price, quantity) VALUES(:teamID, :id, :item, :price, :qty)");
 
     for (int i = 0; i < souvenirs.size(); i++)
     {
@@ -413,6 +413,7 @@ void DBManager::AddPurchases(QVector<Souvenir> souvenirs)
         query.bindValue(":teamID", souvenirs[i].teamID);
         query.bindValue(":id", id);
         query.bindValue(":item", souvenirs[i].name);
+        query.bindValue(":price", QString::number(souvenirs[i].price));
         query.bindValue(":qty", QString::number(souvenirs[i].purchaseQty));
 
         if (!query.exec())
