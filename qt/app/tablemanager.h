@@ -142,7 +142,7 @@ public:
      * @param table; Table to be displayed
      * @param teamName; name of teams whos info will be displayed
      */
-	void ShowTeamInfo(QTableView * table, QString teamName);
+    void ShowTeamInfo(QTableView * table, QString teamName);
 
     /*!
      * @brief shows list of teams user can visit

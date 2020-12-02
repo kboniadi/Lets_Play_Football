@@ -156,7 +156,6 @@ void MainWindow::ClearButtons() // resets most program states
 	ui->lineEdit_edit_stadium_dateopen->clear();
 
     ui->label_pos_cost->setText("Total Cost: $0"); // labels
-    ui->label_receipt_total->setText("Total Cost: $0");
 }
 
 void MainWindow::ClearViewLabels()
@@ -437,7 +436,8 @@ void MainWindow::on_pushButton_pages_view_clicked()
         ui->pushButton_view_list->setDisabled(false);
 
 		PopulateSouvenirs("");
-		table->ShowTeamInfo(ui->tableView_search_info,"");
+        table->ShowTeamInfo(ui->tableView_search_info,"");
+        ui->tableView_search_info->hideColumn(0);
 		PopulateTeams();
     }
 
@@ -578,6 +578,9 @@ void MainWindow::on_pushButton_pages_admin_clicked()
 
     void MainWindow::on_pushButton_admin_import_clicked()
     {
+        table->AdminInfoTable(ui->tableView_import);
+        table->AdminDistTable(ui->tableView_import_2);
+        table->AdminSouvTable(ui->tableView_import_3);
         ui->stackedWidget_admin_pages->setCurrentIndex(IMPORT);
         ui->pushButton_admin_import->setDisabled(true);
         ui->pushButton_admin_edit->setDisabled(false);
@@ -1045,5 +1048,4 @@ void MainWindow::UpdateCartTotal()
 	double total = table->UpdateTotalPrice(ui->tableWidget_pos_purchase);
 	QString totalString = QString::number(total,'f',2);
 	ui->label_pos_cost->setText("Total Cost: $" + totalString);
-	ui->label_receipt_total->setText("Total Cost: $" + totalString);
 }

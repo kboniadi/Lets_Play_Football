@@ -220,6 +220,16 @@ void TableManager::ShowTeamInfo(QTableView *table, QString teamName)
     QString query = "SELECT * FROM information WHERE id = (SELECT teams.id FROM teams WHERE teams.teamNames = '" + teamName + "')";
     model->setQuery(query);
 
+    model->setHeaderData(1, Qt::Horizontal, QObject::tr("Stadium"));
+    model->setHeaderData(2, Qt::Horizontal, QObject::tr("Capacity"));
+    model->setHeaderData(3, Qt::Horizontal, QObject::tr("Location"));
+    model->setHeaderData(4, Qt::Horizontal, QObject::tr("Conference"));
+    model->setHeaderData(5, Qt::Horizontal, QObject::tr("Division"));
+    model->setHeaderData(6, Qt::Horizontal, QObject::tr("Surface Type"));
+    model->setHeaderData(7, Qt::Horizontal, QObject::tr("Roof Type"));
+    model->setHeaderData(8, Qt::Horizontal, QObject::tr("Date Opened"));
+    table->verticalHeader()->hide();
+
     table->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
     table->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     table->hideColumn(0);

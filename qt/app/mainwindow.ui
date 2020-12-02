@@ -1540,7 +1540,7 @@ color: #DEA13F
        </palette>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="page_HOME">
        <layout class="QGridLayout" name="gridLayout_home">
@@ -2499,7 +2499,7 @@ color: #DEA13F
            </palette>
           </property>
           <property name="currentIndex">
-           <number>0</number>
+           <number>1</number>
           </property>
           <widget class="QWidget" name="page_SEARCH">
            <layout class="QGridLayout" name="gridLayout_search">
@@ -11494,18 +11494,6 @@ color: #DEA13F
        <layout class="QGridLayout" name="gridLayout_receipt_2">
         <item row="0" column="0">
          <layout class="QGridLayout" name="gridLayout_receipt">
-          <item row="1" column="0">
-           <widget class="QLabel" name="label_receipt_total">
-            <property name="font">
-             <font>
-              <pointsize>16</pointsize>
-             </font>
-            </property>
-            <property name="text">
-             <string>Total Price: </string>
-            </property>
-           </widget>
-          </item>
           <item row="0" column="0" colspan="4">
            <widget class="QTableWidget" name="tableWidget_receipt">
             <property name="palette">
@@ -11798,7 +11786,7 @@ color: #DEA13F
             </property>
            </widget>
           </item>
-          <item row="1" column="3">
+          <item row="1" column="0" colspan="4" alignment="Qt::AlignHCenter">
            <widget class="QPushButton" name="pushButton_receipt_continue">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
