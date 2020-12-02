@@ -156,7 +156,7 @@ void MainWindow::ClearButtons() // resets most program states
 	ui->lineEdit_edit_stadium_dateopen->clear();
 
     ui->label_pos_cost->setText("Total Cost: $0"); // labels
-    ui->label_receipt_total->setText("Total Cost: $0");
+//    ui->label_receipt_total->setText("Total Cost: $0");
 }
 
 void MainWindow::ClearViewLabels()
@@ -1045,5 +1045,5 @@ void MainWindow::UpdateCartTotal()
 	double total = table->UpdateTotalPrice(ui->tableWidget_pos_purchase);
 	QString totalString = QString::number(total,'f',2);
 	ui->label_pos_cost->setText("Total Cost: $" + totalString);
-	ui->label_receipt_total->setText("Total Cost: $" + totalString);
+//	ui->label_receipt_total->setText("Total Cost: $" + totalString);
 }
