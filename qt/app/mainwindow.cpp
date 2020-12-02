@@ -25,6 +25,404 @@ MainWindow::~MainWindow()
 	delete ui;
 }
 
+void MainWindow::SetAdminPurchaseDropDown()
+{
+	ui->comboBox_admin_receipts->clear();
+	QSqlQuery query;
+	query.prepare("SELECT DISTINCT purchaseID FROM purchases");
+	if (!query.exec())
+		qDebug() << "MainWindow::SetAdminPurchaseDropDown(): query failed";
+	while (query.next())
+		ui->comboBox_admin_receipts->addItem(query.value(0).toString());
+}
+
+void MainWindow::initializeLayout() // sets default pages on program restart
+{
+	on_pushButton_pages_home_clicked();
+	on_comboBox_edit_activated(0);
+	ui->pushButton_pages_home->setDisabled(true);
+	ui->comboBox_list_sort->addItems(sort); // directory page
+	ui->comboBox_list_filterteams->addItems(filterTeams);
+	ui->comboBox_list_filterstadiums->addItems(filterStadiums);
+	setResources();
+}
+
+void MainWindow::setResources() // imports and assigns layout elements
+{
+	/*----Fonts----*/
+	Layout::instance()->importResources();
+
+	QFont mainFont = QFont("OldSansBlack", 16); // main font
+	ui->centralwidget->setFont(mainFont);
+
+	QFont homeButtons = QFont("OLD SPORT 02 ATHLETIC NCV", 32); // page button font
+	ui->pushButton_pages_home->setFont(homeButtons);
+	ui->pushButton_pages_view->setFont(homeButtons);
+	ui->pushButton_pages_plan->setFont(homeButtons);
+	ui->pushButton_pages_admin->setFont(homeButtons);
+	ui->pushButton_pages_exit->setFont(homeButtons);
+
+	QFont buttons = QFont("OLD SPORT 02 ATHLETIC NCV", 20); // button font
+	ui->pushButton_admin_edit->setFont(buttons);
+	ui->pushButton_admin_import->setFont(buttons);
+	ui->pushButton_admin_receipts->setFont(buttons);
+	ui->pushButton_edit_add->setFont(buttons);
+	ui->pushButton_edit_cancel->setFont(buttons);
+	ui->pushButton_edit_confirm->setFont(buttons);
+	ui->pushButton_edit_delete->setFont(buttons);
+	ui->pushButton_import->setFont(buttons);
+	ui->pushButton_login->setFont(buttons);
+	ui->pushButton_plan_add->setFont(buttons);
+	ui->pushButton_plan_continue->setFont(buttons);
+	ui->pushButton_plan_custom->setFont(buttons);
+	ui->pushButton_plan_packers->setFont(buttons);
+	ui->pushButton_plan_patriots->setFont(buttons);
+	ui->pushButton_plan_remove->setFont(buttons);
+	ui->pushButton_plan_sort->setFont(buttons);
+	ui->pushButton_pos_cancel->setFont(buttons);
+	ui->pushButton_pos_continue->setFont(buttons);
+	ui->pushButton_receipt_continue->setFont(buttons);
+	ui->pushButton_view_list->setFont(buttons);
+	ui->pushButton_view_search->setFont(buttons);
+
+	QFont tables = QFont("MADE TOMMY", 16); // table font
+	ui->tableView_edit->setFont(tables);
+	ui->tableView_import->setFont(tables);
+	ui->tableView_import_2->setFont(tables);
+	ui->tableView_import_3->setFont(tables);
+	ui->tableView_list->setFont(tables);
+    ui->tableView_plan_custom->setFont(tables);
+    ui->tableView_plan_route->setFont(tables);
+    ui->tableView_pos_trip->setFont(tables);
+	ui->tableWidget_receipt->setFont(tables);
+	ui->tableView_search_info->setFont(tables);
+	ui->tableView_search_souvenirs->setFont(tables);
+    ui->tableView_search_teams->setFont(tables);
+	ui->tableWidget_edit->setFont(tables);
+	ui->tableWidget_pos_purchase->setFont(tables);
+	ui->lineEdit_edit_souvenir_name->setFont(tables);
+	ui->lineEdit_edit_souvenir_price->setFont(tables);
+	ui->lineEdit_edit_souvenir_team->setFont(tables);
+	ui->lineEdit_edit_stadium_capacity->setFont(tables);
+	ui->lineEdit_edit_stadium_dateopen->setFont(tables);
+	ui->lineEdit_edit_stadium_location->setFont(tables);
+	ui->lineEdit_edit_stadium_name->setFont(tables);
+	ui->lineEdit_edit_stadium_roof->setFont(tables);
+	ui->lineEdit_edit_stadium_surface->setFont(tables);
+	ui->lineEdit_login_password->setFont(tables);
+	ui->lineEdit_login_username->setFont(tables);
+
+	/*----End Fonts----*/
+}
+void MainWindow::clearButtons() // resets most program states
+{
+	// home pages
+	ui->pushButton_pages_home->setDisabled(false);
+	ui->pushButton_pages_view->setDisabled(false);
+	ui->pushButton_pages_plan->setDisabled(false);
+	ui->pushButton_pages_admin->setDisabled(false);
+
+	// view page
+	ui->comboBox_list_sort->setCurrentIndex(NOSORT);
+	ui->comboBox_list_filterteams->setCurrentIndex(ALLTEAMS);
+	ui->comboBox_list_filterstadiums->setCurrentIndex(ALLSTADIUMS);
+	clearViewLabels();
+
+
+	// trip planning buttons
+	ui->pushButton_plan_sort->setVisible(false);
+	ui->gridWidget_plan_custom->setVisible(false);
+	ui->tableView_plan_custom->setVisible(false);
+	ui->pushButton_plan_continue->setDisabled(true);
+	ui->pushButton_plan_packers->setDisabled(false);
+	ui->pushButton_plan_patriots->setDisabled(false);
+	ui->pushButton_plan_custom->setDisabled(false);
+
+	// admin buttons
+	ui->formWidget_edit_souvenir->setEnabled(false);
+	ui->formWidget_edit_stadium->setEnabled(false);
+	ui->pushButton_edit_confirm->setDisabled(true);
+	ui->pushButton_edit_cancel->setDisabled(true);
+	ui->pushButton_edit_delete->setDisabled(true);
+	ui->pushButton_edit_add->setDisabled(false);
+	ui->comboBox_edit->setDisabled(false);
+	ui->tabWidget_IMPORT->setCurrentIndex(IMPORT);
+	ui->comboBox_edit->setCurrentIndex(EDITSOUV);
+
+	// line edits
+	ui->lineEdit_edit_souvenir_name->clear();
+	ui->lineEdit_edit_souvenir_price->clear();
+	ui->lineEdit_edit_souvenir_team->clear();
+	ui->lineEdit_login_password->clear();
+	ui->lineEdit_login_username->clear();
+	ui->lineEdit_edit_stadium_capacity->clear();
+	ui->lineEdit_edit_stadium_location->clear();
+	ui->lineEdit_edit_stadium_name->clear();
+	ui->lineEdit_edit_stadium_roof->clear();
+	ui->lineEdit_edit_stadium_surface->clear();
+	ui->lineEdit_edit_stadium_dateopen->clear();
+
+    // labels
+    ui->label_pos_cost->setText("Total Cost: $0");
+    ui->label_receipt_total->setText("Total Cost: $0");
+}
+
+void MainWindow::clearViewLabels()
+{
+	ui->label_list_totalcapacity->hide();
+	ui->label_list_totalgrass->hide();
+	ui->label_list_totalroofs->hide();
+}
+
+long MainWindow::calculateDistance(QStringList teams) // calculates trip distance for unsorted custom trips
+{
+	long temp = 0;
+	for (int i = 0; i < teams.size() - 1; i++) // gets dijkstra distance between each city on list progressively
+	{
+		QString start = teams[i];
+		QString end = teams[i + 1];
+
+		Graph<QString> graph;
+		graph.generateGraph();
+		std::vector<QString> vect(graph.vertices());
+		std::vector<QString> dijkstra;
+		int costsD[graph.size()];
+		int parentD[graph.size()];
+		graph.DijkstraPathFinder(start,
+									 dijkstra, costsD, parentD);
+
+		temp += costsD[graph.findVertex(end)]; // totals up distance
+	}
+	return temp;
+}
+
+void MainWindow::CreateReceipt(QVector<Souvenir>& souvenirs)
+{
+	for(int souvIndex = 0; souvIndex < souvenirs.size(); souvIndex++)
+	{
+		// Add food to item
+		souvenirs.operator[](souvIndex).purchaseQty = table->purchaseTableSpinBoxes->at(souvIndex)->value();
+	}
+}
+
+void MainWindow::laRams()
+{
+	clearButtons();
+	//ui->pushButton_plan_rams->setDisabled(true);
+
+	//clearTable
+	table->clearTable(ui->tableView_plan_route);  //reset table
+	ui->label_plan_distance->setText("Distance"); // reset label
+
+	//Create bfs obj
+	bfs bfsObj;
+	bfsObj.addEdges();
+	bfsObj.bfsAlgo(19); // starting at La Rams (id: 19)
+	//table->showBFSTrip(ui->tableView_plan_route,bfsObj);
+
+	ui->label_plan_bfs->setText(QString("LA Rams Distance(BFS): %1").arg(bfsObj.getTotalDistance()));
+
+	//ui->pushButton_plan_continue->setDisabled(false);
+}
+
+void MainWindow::populateStadiumInfo(int sortIndex, int teamFilterIndex, int stadiumsFilterIndex)
+{
+
+	if (sortIndex < 0 || teamFilterIndex < 0 || stadiumsFilterIndex < 0)
+		return;
+
+	clearViewLabels();
+
+	int capacity = 0;
+	int openRoofCount = 0;
+
+	QString sort[] = {"None","teamNames", "conference","stadiumName", "dateOpen", "seatCap"};
+
+	QSqlQuery query;
+	QString queryString = "SELECT (SELECT teams.teamNames FROM teams WHERE "
+						  "teams.id = information.id) as teamNames, "
+						  "stadiumName,seatCap,conference,division,surfaceType,"
+						  "roofType,dateOpen FROM information";
+
+	switch(teamFilterIndex)
+	{
+	case 1: queryString+= " WHERE division LIKE '%" + filterTeams[teamFilterIndex] + "%'";
+			break;
+	case 2: queryString+= " WHERE division LIKE '%" + filterTeams[teamFilterIndex] + "%'";
+			break;
+	case 3: queryString+= " WHERE division = '" + filterTeams[teamFilterIndex] + "'";
+			break;
+	case 4: queryString+= " WHERE surfaceType = '" + filterTeams[teamFilterIndex] + "'";
+			break;
+	default: break;
+	}
+
+
+
+
+	 if (stadiumsFilterIndex == OPENROOF)
+	 {
+		if (teamFilterIndex==0)
+			queryString+= " WHERE roofType = 'Open' ";
+		else
+			queryString+= " AND roofType = 'Open'";
+	 }
+
+	 QString queryStringWithoutOrder = queryString;
+	 if (sortIndex != 0)
+		queryString += " ORDER BY " + sort[sortIndex] + " ASC";
+
+
+	query.exec(queryString);
+
+
+	QSqlQueryModel* model = new QSqlQueryModel;
+	model->setQuery(query);
+	model->setHeaderData(0, Qt::Horizontal, QObject::tr("Team Name"));
+	model->setHeaderData(1, Qt::Horizontal, QObject::tr("Stadium Name"));
+	model->setHeaderData(2, Qt::Horizontal, QObject::tr("Seat Cap"));
+	model->setHeaderData(3, Qt::Horizontal, QObject::tr("Conference"));
+	model->setHeaderData(4, Qt::Horizontal, QObject::tr("Division"));
+	model->setHeaderData(5, Qt::Horizontal, QObject::tr("Surface Type"));
+	model->setHeaderData(6, Qt::Horizontal, QObject::tr("Roof Type"));
+	model->setHeaderData(7, Qt::Horizontal, QObject::tr("Date Open"));
+
+	ui->tableView_list->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+	ui->tableView_list->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    ui->tableView_list->verticalHeader()->hide();
+
+	ui->tableView_list->setModel(model);
+
+	QLocale c(QLocale::C);  // to set the string with "," (ex: 12,500) into int
+	query.exec(queryStringWithoutOrder + " GROUP BY stadiumName");
+	while(query.next())
+	{
+
+		capacity += c.toInt(query.value(2).toString());
+		if (query.value(6).toString() == "Open")
+			openRoofCount++;
+	}
+
+	if (sortIndex == CAPACITY)
+	{
+		ui->label_list_totalcapacity->setText("Total Capacity: " + QString("%L1").arg(capacity));
+		ui->label_list_totalcapacity->show();
+	}
+
+	if (teamFilterIndex == BERMUDAGRASS)
+	{
+		ui->label_list_totalgrass->setText("Total Bermuda Grass Teams: " + QString::number(ui->tableView_list->model()->rowCount()));
+		ui->label_list_totalgrass->show();
+	}
+
+	if (stadiumsFilterIndex == OPENROOF)
+	{
+		ui->label_list_totalroofs->setText("Total Open Roof Stadiums: " + QString::number(openRoofCount));
+		ui->label_list_totalroofs->show();
+	}
+
+
+}
+
+void MainWindow::populateTeams()
+{
+	QStringList teamList;
+	DBManager::instance()->GetTeams(teamList);
+    table->showTeams(ui->tableView_search_teams, teamList);
+}
+
+void MainWindow::populateSouvenirs(QString team)
+{
+	QSqlQueryModel *model = new QSqlQueryModel;
+	model->setQuery("SELECT items, price FROM souvenir WHERE id = (SELECT teams.id FROM teams WHERE teams.teamNames = '" + team + "')");
+
+	model->setHeaderData(0, Qt::Horizontal, QObject::tr("Souvenir"));
+	model->setHeaderData(1, Qt::Horizontal, QObject::tr("Price"));
+    ui->tableView_search_souvenirs->verticalHeader()->hide();
+
+	ui->tableView_search_souvenirs->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+	ui->tableView_search_souvenirs->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+	ui->tableView_search_souvenirs->setModel(model);
+}
+
+void MainWindow::recursiveAlgo(QString start, QStringList& selectedList, QStringList& availableList, long& distance)
+{
+	if (availableList.size() == 0)
+		return;
+
+	Graph<QString> graph;
+	graph.generateGraph();
+	std::vector<QString> vect(graph.vertices());
+	std::vector<QString> dijkstra;
+	int costsD[graph.size()];
+	int parentD[graph.size()];
+	graph.DijkstraPathFinder(start,
+								 dijkstra, costsD, parentD);
+
+	int smallestIndex = 0;
+	int shortestPath = INT_MAX;
+	for (int i = 0 ; i < (int) vect.size(); i++) {
+		std::vector<QString> path = graph.returnPath(start, vect[i], parentD);
+		if (shortestPath > costsD[graph.findVertex(vect[i])])
+		{
+			if(!selectedList.contains(vect[i]) && availableList.contains(vect[i]))
+			{
+				shortestPath = costsD[graph.findVertex(vect[i])];
+				smallestIndex = i;
+			}
+		}
+	   // qDebug() << "Arizona Cardinals to " << vect[i] << "...\nPath: ";
+	   // qDebug() << path;
+	   // qDebug() << "\nTotal Distance: " << costsD[graph.findVertex(vect[i])] << "\n\n";
+	}
+
+	distance+= costsD[graph.findVertex(vect[smallestIndex])];
+	selectedList.push_back(vect[smallestIndex]);
+	for (int i = 0; i < availableList.size(); i++)
+	{
+		if(availableList[i] == vect[smallestIndex])
+		{
+			availableList.removeAt(i);
+		}
+	}
+
+	recursiveAlgo(vect[smallestIndex],selectedList,availableList,distance);
+}
+
+bool MainWindow::isValid(QString cur, QString prev)
+{
+	bool isNum;
+	cur.toDouble(&isNum);
+	QRegExp regNum("[0-9]{0,255}[.]{1}[0-9]{0,2}");
+	QRegExp regStr("[A-Za-z_ ]{0,255}");
+	if (regNum.exactMatch(prev)) {
+		if (regNum.exactMatch(cur)) {
+			return true;
+		} else {
+			return false;
+		}
+	} else if (regStr.exactMatch(prev)) {
+		return false;
+//		if (regStr.exactMatch(cur)) {
+//			return true;
+//		} else {
+//			return false;
+//		}
+	}
+	qDebug() << "Something went wrong: MainWindow::isValid(QString, QString)";
+	assert(false);
+}
+
+QString MainWindow::toUpperCase(const QString &str)
+{
+	QStringList parts = str.split(" ", QString::SkipEmptyParts);
+	for (int i = 0; i < parts.size(); i++)
+		parts[i].replace(0, 1, parts[i][0].toUpper());
+
+	return parts.join(" ");
+}
+
+
 /*----NAVIGATION----*/
 void MainWindow::on_pushButton_pages_home_clicked()
 {
@@ -79,16 +477,8 @@ void MainWindow::on_pushButton_pages_plan_clicked()
 	int distanceDFS = graphDFS.dfs("Minnesota Vikings", temp);
 	ui->label_plan_dfs->setText("Vikings Trip Distance: " +
 								QLocale(QLocale::English).toString(distanceDFS));
-//	query.prepare("SELECT stadiumName FROM information WHERE information.id = "
-//				  "(SELECT id FROM teams WHERE teams.teamNames = :teamName)");
-//	for (auto a: temp) {
-//		query.bindValue(":teamName", a);
-//		query.exec();
-//		query.first();
-//		qDebug() << a << "\t\t" << query.value(0).toString();
-//	}
-//	qDebug() << distance;
-    mstGraph graph;
+
+	mstGraph graph;
     vector<mstEdge> mstEdges;
     graph.getMST(mstEdges);
     int distance = graph.getMSTdistance();
@@ -217,6 +607,15 @@ void MainWindow::on_pushButton_pages_admin_clicked()
 		table->PopulateAdminEditTable(ui->tableWidget_edit);
     }
 
+	void MainWindow::on_pushButton_admin_receipts_clicked()
+	{
+		SetAdminPurchaseDropDown();
+		ui->stackedWidget_admin_pages->setCurrentIndex(RECEIPTS);
+		ui->pushButton_admin_import->setDisabled(false);
+		ui->pushButton_admin_edit->setDisabled(false);
+		ui->pushButton_admin_receipts->setDisabled(true);
+	}
+
     void MainWindow::on_comboBox_edit_activated(int index)
     {
         if (index == EDITSOUV)
@@ -247,20 +646,6 @@ void MainWindow::on_pushButton_pages_admin_clicked()
         }
     }
 
-    void MainWindow::on_pushButton_admin_receipts_clicked()
-    {
-        ui->stackedWidget_admin_pages->setCurrentIndex(RECEIPTS);
-        ui->pushButton_admin_import->setDisabled(false);
-        ui->pushButton_admin_edit->setDisabled(false);
-        ui->pushButton_admin_receipts->setDisabled(true);
-
-        // initialize purchases combo box
-//        QStringList ids;
-//        DBManager::instance()->getPurchaseIDS(ids);
-//        ui->comboBox_admin_receipts->addItems(ids);
-    }
-
-
 void MainWindow::on_pushButton_pages_exit_clicked() // exit button
 {
     QApplication::quit();
@@ -268,138 +653,6 @@ void MainWindow::on_pushButton_pages_exit_clicked() // exit button
 /*----END NAVIGATION----*/
 
 /*----HELPER FUNCTIONS----*/
-void MainWindow::initializeLayout() // sets default pages on program restart
-{
-    on_pushButton_pages_home_clicked();
-    on_comboBox_edit_activated(0);
-    ui->pushButton_pages_home->setDisabled(true);
-    ui->comboBox_list_sort->addItems(sort); // directory page
-    ui->comboBox_list_filterteams->addItems(filterTeams);
-    ui->comboBox_list_filterstadiums->addItems(filterStadiums);
-    setResources();
-}
-
-void MainWindow::setResources() // imports and assigns layout elements
-{
-    /*----Fonts----*/
-    Layout::instance()->importResources();
-
-    QFont mainFont = QFont("OldSansBlack", 16); // main font
-    ui->centralwidget->setFont(mainFont);
-
-    QFont homeButtons = QFont("OLD SPORT 02 ATHLETIC NCV", 32); // page button font
-    ui->pushButton_pages_home->setFont(homeButtons);
-    ui->pushButton_pages_view->setFont(homeButtons);
-    ui->pushButton_pages_plan->setFont(homeButtons);
-    ui->pushButton_pages_admin->setFont(homeButtons);
-    ui->pushButton_pages_exit->setFont(homeButtons);
-
-    QFont buttons = QFont("OLD SPORT 02 ATHLETIC NCV", 20); // button font
-    ui->pushButton_admin_edit->setFont(buttons);
-    ui->pushButton_admin_import->setFont(buttons);
-    ui->pushButton_admin_receipts->setFont(buttons);
-    ui->pushButton_edit_add->setFont(buttons);
-    ui->pushButton_edit_cancel->setFont(buttons);
-    ui->pushButton_edit_confirm->setFont(buttons);
-    ui->pushButton_edit_delete->setFont(buttons);
-    ui->pushButton_import->setFont(buttons);
-    ui->pushButton_login->setFont(buttons);
-    ui->pushButton_plan_add->setFont(buttons);
-    ui->pushButton_plan_continue->setFont(buttons);
-    ui->pushButton_plan_custom->setFont(buttons);
-    ui->pushButton_plan_packers->setFont(buttons);
-    ui->pushButton_plan_patriots->setFont(buttons);
-    ui->pushButton_plan_remove->setFont(buttons);
-    ui->pushButton_plan_sort->setFont(buttons);
-    ui->pushButton_pos_cancel->setFont(buttons);
-    ui->pushButton_pos_continue->setFont(buttons);
-    ui->pushButton_receipt_continue->setFont(buttons);
-    ui->pushButton_view_list->setFont(buttons);
-    ui->pushButton_view_search->setFont(buttons);
-;
-    QFont tables = QFont("MADE TOMMY", 16); // table font
-    ui->tableView_edit->setFont(tables);
-    ui->tableView_import->setFont(tables);
-    ui->tableView_import_2->setFont(tables);
-    ui->tableView_import_3->setFont(tables);
-    ui->tableView_list->setFont(tables);
-    ui->tableView_plan_custom->setFont(tables);
-    ui->tableView_plan_route->setFont(tables);
-    ui->tableView_pos_trip->setFont(tables);
-    ui->tableWidget_receipt->setFont(tables);
-    ui->tableView_search_info->setFont(tables);
-    ui->tableView_search_souvenirs->setFont(tables);
-    ui->tableView_search_teams->setFont(tables);
-    ui->tableWidget_edit->setFont(tables);
-    ui->tableWidget_pos_purchase->setFont(tables);
-    ui->lineEdit_edit_souvenir_name->setFont(tables);
-    ui->lineEdit_edit_souvenir_price->setFont(tables);
-    ui->lineEdit_edit_souvenir_team->setFont(tables);
-    ui->lineEdit_edit_stadium_capacity->setFont(tables);
-    ui->lineEdit_edit_stadium_dateopen->setFont(tables);
-    ui->lineEdit_edit_stadium_location->setFont(tables);
-    ui->lineEdit_edit_stadium_name->setFont(tables);
-    ui->lineEdit_edit_stadium_roof->setFont(tables);
-    ui->lineEdit_edit_stadium_surface->setFont(tables);
-    ui->lineEdit_login_password->setFont(tables);
-    ui->lineEdit_login_username->setFont(tables);
-    /*----End Fonts----*/
-}
-void MainWindow::clearButtons() // resets most program states
-{
-    // home pages
-    ui->pushButton_pages_home->setDisabled(false);
-    ui->pushButton_pages_view->setDisabled(false);
-    ui->pushButton_pages_plan->setDisabled(false);
-    ui->pushButton_pages_admin->setDisabled(false);
-
-    // view page
-    ui->comboBox_list_sort->setCurrentIndex(NOSORT);
-    ui->comboBox_list_filterteams->setCurrentIndex(ALLTEAMS);
-    ui->comboBox_list_filterstadiums->setCurrentIndex(ALLSTADIUMS);
-    clearViewLabels();
-
-
-    // trip planning buttons
-    ui->pushButton_plan_sort->setVisible(false);
-    ui->gridWidget_plan_custom->setVisible(false);
-    ui->tableView_plan_custom->setVisible(false);
-    ui->pushButton_plan_continue->setDisabled(true);
-    ui->pushButton_plan_packers->setDisabled(false);
-    ui->pushButton_plan_patriots->setDisabled(false);
-    ui->pushButton_plan_custom->setDisabled(false);
-
-    // admin buttons
-    ui->formWidget_edit_souvenir->setEnabled(false);
-    ui->formWidget_edit_stadium->setEnabled(false);
-    ui->pushButton_edit_confirm->setDisabled(true);
-    ui->pushButton_edit_cancel->setDisabled(true);
-    ui->pushButton_edit_delete->setDisabled(true);
-    ui->pushButton_edit_add->setDisabled(false);
-    ui->comboBox_edit->setDisabled(false);
-    ui->tabWidget_IMPORT->setCurrentIndex(IMPORT);
-    ui->comboBox_edit->setCurrentIndex(EDITSOUV);
-
-    // line edits
-    ui->lineEdit_edit_souvenir_name->clear();
-    ui->lineEdit_edit_souvenir_price->clear();
-    ui->lineEdit_edit_souvenir_team->clear();
-    ui->lineEdit_login_password->clear();
-    ui->lineEdit_login_username->clear();
-	ui->lineEdit_edit_stadium_capacity->clear();
-	ui->lineEdit_edit_stadium_location->clear();
-	ui->lineEdit_edit_stadium_name->clear();
-	ui->lineEdit_edit_stadium_roof->clear();
-	ui->lineEdit_edit_stadium_surface->clear();
-	ui->lineEdit_edit_stadium_dateopen->clear();
-}
-
-void MainWindow::clearViewLabels()
-{
-    ui->label_list_totalcapacity->hide();
-    ui->label_list_totalgrass->hide();
-    ui->label_list_totalroofs->hide();
-}
 
 void MainWindow::on_pushButton_edit_add_clicked() // admin add button
 {
@@ -420,85 +673,6 @@ void MainWindow::on_pushButton_edit_add_clicked() // admin add button
     ui->pushButton_edit_confirm->setEnabled(true);
 
 }
-
-void MainWindow::on_tableWidget_edit_cellClicked(int row, int col)
-{
-    on_pushButton_edit_cancel_clicked();
-	static int rowStat;
-	static int colStat;
-	rowStat = row;
-	colStat = col;
-
-	ui->pushButton_edit_delete->setDisabled(false);
-	connect(ui->pushButton_edit_delete, &QPushButton::clicked, [this]() {
-		emit this->EmittedDelSignal(rowStat, colStat);
-	});
-	connect(this, &MainWindow::EmittedDelSignal, this, &MainWindow::ProcessDelete);
-}
-
-#define table(row, column) ui->tableWidget_edit->item(row, column)->text()
-void MainWindow::ProcessDelete(int row, int /*col*/)
-{
-	disconnect(this, &MainWindow::EmittedSignal, this, &MainWindow::UpdateTable);
-	disconnect(ui->tableWidget_edit, &QTableWidget::cellChanged, nullptr, nullptr);
-	disconnect(ui->pushButton_edit_delete, &QPushButton::clicked, nullptr, nullptr);
-	disconnect(this, &MainWindow::EmittedDelSignal, this, &MainWindow::ProcessDelete);
-
-	QString teamName;
-	QString item = table(row, table->A_ITEM);
-	for (int i = row; i >= 0; i--) {
-		if (table(i, table->A_TEAMNAME_SOUVENIR) != QString{}) {
-			teamName = table(i, table->A_TEAMNAME_SOUVENIR);
-			break;
-		}
-	}
-
-	DBManager::instance()->DeleteSouvenir(teamName, item);
-	table->InitializeAdminEditTable(ui->tableWidget_edit);
-	table->PopulateAdminEditTable(ui->tableWidget_edit);
-    ui->pushButton_edit_delete->setDisabled(true);
-}
-#undef table
-
-void MainWindow::on_tableWidget_edit_doubleClicked(const QModelIndex &index)
-{
-	static QString temp;
-	temp = index.data().toString();
-
-	connect(ui->tableWidget_edit, &QTableWidget::cellChanged, [this](int row, int column) {
-		emit this->EmittedSignal(row, column, temp);
-	});
-
-	connect(this, &MainWindow::EmittedSignal, this, &MainWindow::UpdateTable);
-}
-
-#define table(row, column) ui->tableWidget_edit->item(row, column)->text()
-void MainWindow::UpdateTable(int row, int column, QString prev)
-{
-	disconnect(this, &MainWindow::EmittedSignal, this, &MainWindow::UpdateTable);
-	disconnect(ui->tableWidget_edit, &QTableWidget::cellChanged, nullptr, nullptr);
-
-	QString entry = table(row, column);
-
-	if (!isValid(entry, prev)) {
-		ui->tableWidget_edit->item(row, column)->setText(prev);
-		QMessageBox::warning(this, tr("Warning"),
-							 tr("That query was not valid, please try again"));
-	} else {
-		QString teamName;
-		QString item = table(row, column - 1);
-		for (int i = row; i >= 0; i--) {
-			if (table(i, 1) != QString{}) {
-				teamName = table(i, 1);
-				break;
-			}
-		}
-
-		DBManager::instance()->UpdateSouvenirPrice(teamName,
-						   table(row, column - 1), table(row, column));
-	}
-}
-#undef table
 
 void MainWindow::on_pushButton_edit_confirm_clicked()
 {
@@ -562,9 +736,186 @@ void MainWindow::on_pushButton_edit_confirm_clicked()
 
 void MainWindow::on_pushButton_edit_cancel_clicked()
 {
-    clearButtons();
+	clearButtons();
 	ui->pushButton_pages_admin->setDisabled(true);
 }
+
+void MainWindow::on_pushButton_plan_packers_clicked()
+{
+	clearButtons();
+	ui->label_plan_distance->setText("Trip Distance: ");
+
+	//disable Continue
+	ui->pushButton_plan_continue->setDisabled(true);
+
+	ui->pushButton_pages_plan->setDisabled(true);
+	ui->pushButton_plan_packers->setDisabled(true);
+	ui->gridWidget_plan_custom->setVisible(true);
+	ui->tableView_plan_custom->setVisible(true);
+	//clears the routes table
+	table->clearTable(ui->tableView_plan_route);
+	availableTeams.clear();
+	selectedTeams.clear();
+
+	DBManager::instance()->GetTeams(availableTeams);
+	availableTeams.removeAll("Green Bay Packers");
+
+	table->showTeams(ui->tableView_plan_custom, availableTeams);
+}
+
+void MainWindow::on_pushButton_plan_patriots_clicked()
+{
+	clearButtons();
+	ui->label_plan_distance->setText("Trip Distance: ");// sets default label
+
+	ui->pushButton_pages_plan->setDisabled(true);
+	ui->pushButton_plan_patriots->setDisabled(true);
+
+	availableTeams.clear(); //clears avaialableTeams
+	selectedTeams.clear();  //Clears selected teams
+	DBManager::instance()->GetTeams(selectedTeams); // all teams names
+
+	long totalDistance = 0; // initialize total distance
+
+	QString startingTeam = "New England Patriots";
+	selectedTeams.removeAll("New England Patriots");
+	QStringList sortedList; // temp list
+	sortedList.push_back(startingTeam);
+
+	recursiveAlgo(startingTeam, sortedList, selectedTeams,totalDistance);
+
+	selectedTeams = sortedList;
+	table->showTeams(ui->tableView_plan_route, selectedTeams);
+	ui->label_plan_distance->setText("Trip Distance: " + QString::number(totalDistance) + " miles");
+
+	ui->pushButton_plan_continue->setDisabled(false);
+}
+
+void MainWindow::on_pushButton_plan_custom_clicked()
+{
+	clearButtons();
+	ui->label_plan_distance->setText("Trip Distance: ");
+
+	availableTeams.clear();
+	selectedTeams.clear();
+
+	DBManager::instance()->GetTeams(availableTeams);
+
+	ui->pushButton_pages_plan->setDisabled(true);
+	ui->pushButton_plan_sort->setVisible(true);
+	ui->gridWidget_plan_custom->setVisible(true);
+	ui->tableView_plan_custom->setVisible(true);
+	ui->pushButton_plan_custom->setDisabled(true);
+
+	table->showTeamNames(ui->tableView_plan_custom);
+	table->showTeams(ui->tableView_plan_route,selectedTeams);
+
+}
+
+
+/*----END HELPER FUNCTIONS----*/
+
+
+void MainWindow::on_tableView_search_teams_doubleClicked(const QModelIndex &index)
+{
+	populateSouvenirs(index.data().toString());
+	table->showTeamInfo(ui->tableView_search_info, index.data().toString());
+
+}
+
+void MainWindow::on_comboBox_list_sort_currentIndexChanged(int index)
+{
+	populateStadiumInfo(index, ui->comboBox_list_filterteams->currentIndex(), ui->comboBox_list_filterstadiums->currentIndex());
+}
+
+void MainWindow::on_comboBox_list_filterteams_currentIndexChanged(int index)
+{
+	populateStadiumInfo(ui->comboBox_list_sort->currentIndex(), index, ui->comboBox_list_filterstadiums->currentIndex());
+}
+
+void MainWindow::on_comboBox_list_filterstadiums_currentIndexChanged(int index)
+{
+	populateStadiumInfo(ui->comboBox_list_sort->currentIndex(), ui->comboBox_list_filterteams->currentIndex(), index);
+}
+
+void MainWindow::on_tableWidget_edit_cellClicked(int row, int col)
+{
+	on_pushButton_edit_cancel_clicked();
+	static int rowStat;
+	static int colStat;
+	rowStat = row;
+	colStat = col;
+
+	ui->pushButton_edit_delete->setDisabled(false);
+	connect(ui->pushButton_edit_delete, &QPushButton::clicked, [this]() {
+		emit this->EmittedDelSignal(rowStat, colStat);
+	});
+	connect(this, &MainWindow::EmittedDelSignal, this, &MainWindow::ProcessDelete);
+}
+
+#define table(row, column) ui->tableWidget_edit->item(row, column)->text()
+void MainWindow::ProcessDelete(int row, int /*col*/)
+{
+	disconnect(this, &MainWindow::EmittedSignal, this, &MainWindow::UpdateTable);
+	disconnect(ui->tableWidget_edit, &QTableWidget::cellChanged, nullptr, nullptr);
+	disconnect(ui->pushButton_edit_delete, &QPushButton::clicked, nullptr, nullptr);
+	disconnect(this, &MainWindow::EmittedDelSignal, this, &MainWindow::ProcessDelete);
+
+	QString teamName;
+	QString item = table(row, table->A_ITEM);
+	for (int i = row; i >= 0; i--) {
+		if (table(i, table->A_TEAMNAME_SOUVENIR) != QString{}) {
+			teamName = table(i, table->A_TEAMNAME_SOUVENIR);
+			break;
+		}
+	}
+
+	DBManager::instance()->DeleteSouvenir(teamName, item);
+	table->InitializeAdminEditTable(ui->tableWidget_edit);
+	table->PopulateAdminEditTable(ui->tableWidget_edit);
+	ui->pushButton_edit_delete->setDisabled(true);
+}
+#undef table
+
+void MainWindow::on_tableWidget_edit_doubleClicked(const QModelIndex &index)
+{
+	static QString temp;
+	temp = index.data().toString();
+
+	connect(ui->tableWidget_edit, &QTableWidget::cellChanged, [this](int row, int column) {
+		emit this->EmittedSignal(row, column, temp);
+	});
+
+	connect(this, &MainWindow::EmittedSignal, this, &MainWindow::UpdateTable);
+}
+
+#define table(row, column) ui->tableWidget_edit->item(row, column)->text()
+void MainWindow::UpdateTable(int row, int column, QString prev)
+{
+	disconnect(this, &MainWindow::EmittedSignal, this, &MainWindow::UpdateTable);
+	disconnect(ui->tableWidget_edit, &QTableWidget::cellChanged, nullptr, nullptr);
+
+	QString entry = table(row, column);
+
+	if (!isValid(entry, prev)) {
+		ui->tableWidget_edit->item(row, column)->setText(prev);
+		QMessageBox::warning(this, tr("Warning"),
+							 tr("That query was not valid, please try again"));
+	} else {
+		QString teamName;
+		QString item = table(row, column - 1);
+		for (int i = row; i >= 0; i--) {
+			if (table(i, 1) != QString{}) {
+				teamName = table(i, 1);
+				break;
+			}
+		}
+
+		DBManager::instance()->UpdateSouvenirPrice(teamName,
+						   table(row, column - 1), table(row, column));
+	}
+}
+#undef table
 
 void MainWindow::on_tableView_edit_doubleClicked(const QModelIndex &index)
 {
@@ -597,263 +948,6 @@ void MainWindow::on_tableView_edit_doubleClicked(const QModelIndex &index)
 	}
 }
 
-void MainWindow::on_pushButton_plan_packers_clicked()
-{
-    clearButtons();
-    ui->label_plan_distance->setText("Trip Distance: ");
-
-    //disable Continue
-    ui->pushButton_plan_continue->setDisabled(true);
-
-    ui->pushButton_pages_plan->setDisabled(true);
-    ui->pushButton_plan_packers->setDisabled(true);
-    ui->gridWidget_plan_custom->setVisible(true);
-    ui->tableView_plan_custom->setVisible(true);
-    //clears the routes table
-    table->clearTable(ui->tableView_plan_route);
-    availableTeams.clear();
-    selectedTeams.clear();
-
-    DBManager::instance()->GetTeams(availableTeams);
-    availableTeams.removeAll("Green Bay Packers");
-
-    table->showTeams(ui->tableView_plan_custom, availableTeams);
-}
-
-void MainWindow::on_pushButton_plan_patriots_clicked()
-{
-    clearButtons();
-    ui->label_plan_distance->setText("Trip Distance: ");// sets default label
-
-    ui->pushButton_pages_plan->setDisabled(true);
-    ui->pushButton_plan_patriots->setDisabled(true);
-
-    availableTeams.clear(); //clears avaialableTeams
-    selectedTeams.clear();  //Clears selected teams
-    DBManager::instance()->GetTeams(selectedTeams); // all teams names
-
-    long totalDistance = 0; // initialize total distance
-
-    QString startingTeam = "New England Patriots";
-    selectedTeams.removeAll("New England Patriots");
-    QStringList sortedList; // temp list
-    sortedList.push_back(startingTeam);
-
-    recursiveAlgo(startingTeam, sortedList, selectedTeams,totalDistance);
-
-    selectedTeams = sortedList;
-    table->showTeams(ui->tableView_plan_route, selectedTeams);
-    ui->label_plan_distance->setText("Trip Distance: " + QString::number(totalDistance) + " miles");
-
-    ui->pushButton_plan_continue->setDisabled(false);
-}
-
-void MainWindow::on_pushButton_plan_custom_clicked()
-{
-    clearButtons();
-    ui->label_plan_distance->setText("Trip Distance: ");
-
-    availableTeams.clear();
-    selectedTeams.clear();
-
-    DBManager::instance()->GetTeams(availableTeams);
-
-    ui->pushButton_pages_plan->setDisabled(true);
-    ui->pushButton_plan_sort->setVisible(true);
-    ui->gridWidget_plan_custom->setVisible(true);
-    ui->tableView_plan_custom->setVisible(true);
-    ui->pushButton_plan_custom->setDisabled(true);
-
-    table->showTeamNames(ui->tableView_plan_custom);
-    table->showTeams(ui->tableView_plan_route,selectedTeams);
-
-}
-
-/*----END HELPER FUNCTIONS----*/
-
-void MainWindow::populateStadiumInfo(int sortIndex, int teamFilterIndex, int stadiumsFilterIndex)
-{
-
-    if (sortIndex < 0 || teamFilterIndex < 0 || stadiumsFilterIndex < 0)
-        return;
-
-    clearViewLabels();
-
-    int capacity = 0;
-    int openRoofCount = 0;
-
-    QString sort[] = {"None","teamNames", "conference","stadiumName", "dateOpen", "seatCap"};
-
-    QSqlQuery query;
-	QString queryString = "SELECT (SELECT teams.teamNames FROM teams WHERE "
-						  "teams.id = information.id) as teamNames, "
-						  "stadiumName,seatCap,conference,division,surfaceType,"
-						  "roofType,dateOpen FROM information";
-
-    switch(teamFilterIndex)
-    {
-    case 1: queryString+= " WHERE division LIKE '%" + filterTeams[teamFilterIndex] + "%'";
-            break;
-    case 2: queryString+= " WHERE division LIKE '%" + filterTeams[teamFilterIndex] + "%'";
-            break;
-    case 3: queryString+= " WHERE division = '" + filterTeams[teamFilterIndex] + "'";
-            break;
-    case 4: queryString+= " WHERE surfaceType = '" + filterTeams[teamFilterIndex] + "'";
-            break;
-    default: break;
-    }
-
-
-
-
-     if (stadiumsFilterIndex == OPENROOF)
-     {
-        if (teamFilterIndex==0)
-            queryString+= " WHERE roofType = 'Open' ";
-        else
-            queryString+= " AND roofType = 'Open'";
-     }
-
-     QString queryStringWithoutOrder = queryString;
-     if (sortIndex != 0)
-        queryString += " ORDER BY " + sort[sortIndex] + " ASC";
-
-
-    query.exec(queryString);
-
-
-    QSqlQueryModel* model = new QSqlQueryModel;
-    model->setQuery(query);
-    model->setHeaderData(0, Qt::Horizontal, QObject::tr("Team Name"));
-    model->setHeaderData(1, Qt::Horizontal, QObject::tr("Stadium Name"));
-    model->setHeaderData(2, Qt::Horizontal, QObject::tr("Seat Cap"));
-    model->setHeaderData(3, Qt::Horizontal, QObject::tr("Conference"));
-    model->setHeaderData(4, Qt::Horizontal, QObject::tr("Division"));
-    model->setHeaderData(5, Qt::Horizontal, QObject::tr("Surface Type"));
-    model->setHeaderData(6, Qt::Horizontal, QObject::tr("Roof Type"));
-    model->setHeaderData(7, Qt::Horizontal, QObject::tr("Date Open"));
-
-    ui->tableView_list->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-    ui->tableView_list->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-
-    ui->tableView_list->setModel(model);
-
-    QLocale c(QLocale::C);  // to set the string with "," (ex: 12,500) into int
-    query.exec(queryStringWithoutOrder + " GROUP BY stadiumName");
-    while(query.next())
-    {
-
-        capacity += c.toInt(query.value(2).toString());
-        if (query.value(6).toString() == "Open")
-            openRoofCount++;
-    }
-
-    if (sortIndex == CAPACITY)
-    {
-        ui->label_list_totalcapacity->setText("Total Capacity: " + QString("%L1").arg(capacity));
-        ui->label_list_totalcapacity->show();
-    }
-
-    if (teamFilterIndex == BERMUDAGRASS)
-    {
-        ui->label_list_totalgrass->setText("Total Bermuda Grass Teams: " + QString::number(ui->tableView_list->model()->rowCount()));
-        ui->label_list_totalgrass->show();
-    }
-
-    if (stadiumsFilterIndex == OPENROOF)
-    {
-        ui->label_list_totalroofs->setText("Total Open Roof Stadiums: " + QString::number(openRoofCount));
-        ui->label_list_totalroofs->show();
-    }
-
-
-}
-
-void MainWindow::populateTeams()
-{
-    QStringList teamList;
-    DBManager::instance()->GetTeams(teamList);
-
-    QStringListModel* model = new QStringListModel;
-    model->setStringList(teamList);
-    model->setHeaderData(0, Qt::Horizontal, QObject::tr("Teams"));
-
-    ui->tableView_search_teams->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-    ui->tableView_search_teams->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-
-    ui->tableView_search_teams->setModel(model);
-    ui->tableView_search_teams->setEditTriggers(QAbstractItemView::NoEditTriggers);
-}
-
-void MainWindow::on_tableView_search_teams_doubleClicked(const QModelIndex &index)
-{
-    populateSouvenirs(index.data().toString());
-    table->showTeamInfo(ui->tableView_search_info, index.data().toString());
-
-}
-
-void MainWindow::populateSouvenirs(QString team)
-{
-    QSqlQueryModel *model = new QSqlQueryModel;
-    model->setQuery("SELECT items, price FROM souvenir WHERE id = (SELECT teams.id FROM teams WHERE teams.teamNames = '" + team + "')");
-
-    model->setHeaderData(0, Qt::Horizontal, QObject::tr("Souvenir"));
-    model->setHeaderData(1, Qt::Horizontal, QObject::tr("Price"));
-
-    ui->tableView_search_souvenirs->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-    ui->tableView_search_souvenirs->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-    ui->tableView_search_souvenirs->setModel(model);
-}
-
-
-void MainWindow::on_comboBox_list_sort_currentIndexChanged(int index)
-{
-    populateStadiumInfo(index, ui->comboBox_list_filterteams->currentIndex(), ui->comboBox_list_filterstadiums->currentIndex());
-}
-
-void MainWindow::on_comboBox_list_filterteams_currentIndexChanged(int index)
-{
-    populateStadiumInfo(ui->comboBox_list_sort->currentIndex(), index, ui->comboBox_list_filterstadiums->currentIndex());
-}
-
-void MainWindow::on_comboBox_list_filterstadiums_currentIndexChanged(int index)
-{
-    populateStadiumInfo(ui->comboBox_list_sort->currentIndex(), ui->comboBox_list_filterteams->currentIndex(), index);
-}
-
-bool MainWindow::isValid(QString cur, QString prev)
-{
-	bool isNum;
-	cur.toDouble(&isNum);
-	QRegExp regNum("[0-9]{0,255}[.]{1}[0-9]{0,2}");
-	QRegExp regStr("[A-Za-z_ ]{0,255}");
-	if (regNum.exactMatch(prev)) {
-		if (regNum.exactMatch(cur)) {
-			return true;
-		} else {
-			return false;
-		}
-	} else if (regStr.exactMatch(prev)) {
-		return false;
-//		if (regStr.exactMatch(cur)) {
-//			return true;
-//		} else {
-//			return false;
-//		}
-	}
-	qDebug() << "Something went wrong: MainWindow::isValid(QString, QString)";
-	assert(false);
-}
-
-QString MainWindow::toUpperCase(const QString &str)
-{
-	QStringList parts = str.split(" ", QString::SkipEmptyParts);
-	for (int i = 0; i < parts.size(); i++)
-		parts[i].replace(0, 1, parts[i][0].toUpper());
-
-	return parts.join(" ");
-}
-
 void MainWindow::on_pushButton_plan_add_clicked()
 {
     if(!(ui->pushButton_plan_packers->isEnabled()))
@@ -872,7 +966,7 @@ void MainWindow::on_pushButton_plan_add_clicked()
             QStringList selected;
             selected.push_back("Green Bay Packers");
             selectedTeams.push_back(selectedString);
-            long totalDist;
+			long totalDist = 0;
             recursiveAlgo("Green Bay Packers",selected,selectedTeams,totalDist);
             selectedTeams = selected;
             ui->label_plan_distance->setText("Trip Distance: " + QString::number(totalDist) + " miles");
@@ -928,14 +1022,6 @@ void MainWindow::on_pushButton_plan_remove_clicked()
 
 }
 
-void MainWindow::updateCartTotal()
-{
-    double total = table->UpdateTotalPrice(ui->tableWidget_pos_purchase);
-    QString totalString = QString::number(total,'f',2);
-    ui->label_pos_cost->setText("Total Cost: $" + totalString);
-    ui->label_receipt_total->setText("Total Cost: $" + totalString);
-}
-
 void MainWindow::on_pushButton_plan_sort_clicked()
 {
     if (selectedTeams.size() > 1)
@@ -956,98 +1042,17 @@ void MainWindow::on_pushButton_plan_sort_clicked()
     }
 }
 
-void MainWindow::recursiveAlgo(QString start, QStringList& selectedList, QStringList& availableList, long& distance)
+void MainWindow::on_comboBox_admin_receipts_currentIndexChanged(int index)
 {
-    if (availableList.size() == 0)
-        return;
-
-    Graph<QString> graph;
-    graph.generateGraph();
-    std::vector<QString> vect(graph.vertices());
-    std::vector<QString> dijkstra;
-    int costsD[graph.size()];
-    int parentD[graph.size()];
-    graph.DijkstraPathFinder(start,
-                                 dijkstra, costsD, parentD);
-
-    int smallestIndex = 0;
-    int shortestPath = INT_MAX;
-    for (int i = 0 ; i < vect.size(); i++) {
-        std::vector<QString> path = graph.returnPath(start, vect[i], parentD);
-        if (shortestPath > costsD[graph.findVertex(vect[i])])
-        {
-            if(!selectedList.contains(vect[i]) && availableList.contains(vect[i]))
-            {
-                shortestPath = costsD[graph.findVertex(vect[i])];
-                smallestIndex = i;
-            }
-        }
-       // qDebug() << "Arizona Cardinals to " << vect[i] << "...\nPath: ";
-       // qDebug() << path;
-       // qDebug() << "\nTotal Distance: " << costsD[graph.findVertex(vect[i])] << "\n\n";
-    }
-
-    distance+= costsD[graph.findVertex(vect[smallestIndex])];
-    selectedList.push_back(vect[smallestIndex]);
-    for (int i = 0; i < availableList.size(); i++)
-    {
-        if(availableList[i] == vect[smallestIndex])
-        {
-            availableList.removeAt(i);
-        }
-    }
-
-    recursiveAlgo(vect[smallestIndex],selectedList,availableList,distance);
+	table->AdminPuchaseTable(ui->tableView_admin_receipts, index);
 }
 
-void MainWindow::CreateReceipt(QVector<Souvenir>& souvenirs)
+void MainWindow::updateCartTotal()
 {
-    for(int souvIndex = 0; souvIndex < souvenirs.size(); souvIndex++)
-    {
-        // Add food to item
-        souvenirs.operator[](souvIndex).purchaseQty = table->purchaseTableSpinBoxes->at(souvIndex)->value();
-    }
-}
-void MainWindow::laRams()
-{
-    clearButtons();
-    //ui->pushButton_plan_rams->setDisabled(true);
-
-    //clearTable
-    table->clearTable(ui->tableView_plan_route);  //reset table
-    ui->label_plan_distance->setText("Distance"); // reset label
-
-    //Create bfs obj
-    bfs bfsObj;
-    bfsObj.addEdges();
-    bfsObj.bfsAlgo(19); // starting at La Rams (id: 19)
-    //table->showBFSTrip(ui->tableView_plan_route,bfsObj);
-
-    ui->label_plan_bfs->setText(QString("LA Rams Distance(BFS): %1").arg(bfsObj.getTotalDistance()));
-
-    //ui->pushButton_plan_continue->setDisabled(false);
-}
-
-long MainWindow::calculateDistance(QStringList teams) // calculates trip distance for unsorted custom trips
-{
-    long temp = 0;
-    for (int i = 0; i < teams.size() - 1; i++) // gets dijkstra distance between each city on list progressively
-    {
-        QString start = teams[i];
-        QString end = teams[i + 1];
-
-        Graph<QString> graph;
-        graph.generateGraph();
-        std::vector<QString> vect(graph.vertices());
-        std::vector<QString> dijkstra;
-        int costsD[graph.size()];
-        int parentD[graph.size()];
-        graph.DijkstraPathFinder(start,
-                                     dijkstra, costsD, parentD);
-
-        temp += costsD[graph.findVertex(end)]; // totals up distance
-    }
-    return temp;
+	double total = table->UpdateTotalPrice(ui->tableWidget_pos_purchase);
+	QString totalString = QString::number(total,'f',2);
+	ui->label_pos_cost->setText("Total Cost: $" + totalString);
+	ui->label_receipt_total->setText("Total Cost: $" + totalString);
 }
 
 //void MainWindow::on_comboBox_admin_receipts_currentIndexChanged(int index)

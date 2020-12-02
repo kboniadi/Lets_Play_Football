@@ -70,14 +70,39 @@ void TableManager::AdminSouvTable(QTableView *table)
 	if (!model->query().exec())
 		qDebug() << "TableManager::InitializeAdminSouvTable() : query failed";
 
-	model->setHeaderData(0, Qt::Horizontal, adminTableSouvColNames[0], Qt::DisplayRole);
-	model->setHeaderData(1, Qt::Horizontal, adminTableDistColNames[1], Qt::DisplayRole);
-	model->setHeaderData(2, Qt::Horizontal, adminTableDistColNames[2], Qt::DisplayRole);
+	model->setHeaderData(0, Qt::Horizontal, adminTableSouvColNames[1], Qt::DisplayRole);
+	model->setHeaderData(1, Qt::Horizontal, adminTableSouvColNames[2], Qt::DisplayRole);
+	model->setHeaderData(2, Qt::Horizontal, adminTableSouvColNames[3], Qt::DisplayRole);
 
 	table->setEditTriggers(QAbstractItemView::NoEditTriggers);
 	table->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 	table->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 	table->setSelectionBehavior(QAbstractItemView::SelectRows);
+	table->setModel(model);
+}
+
+void TableManager::AdminPuchaseTable(QTableView *table, int index)
+{
+	if (index < 0)
+		return;
+	QSqlQueryModel *model = new QSqlQueryModel;
+	model->setQuery("SELECT teamNames, purchases.items, price, quantity FROM teams, souvenir, purchases "
+					"WHERE purchaseID = '" + QString::number(index + 1) + "' "
+					"AND souvenir.id = purchaseID AND purchases.items = souvenir.items AND teams.id = teamID");
+
+	if (!model->query().exec())
+		qDebug() << "TableManager::AdminPuchaseTable(QTableView *table, int index) : query failed";
+
+	model->setHeaderData(0, Qt::Horizontal, adminTablePurchColNames[1], Qt::DisplayRole);
+	model->setHeaderData(1, Qt::Horizontal, adminTablePurchColNames[2], Qt::DisplayRole);
+	model->setHeaderData(2, Qt::Horizontal, adminTablePurchColNames[3], Qt::DisplayRole);
+
+	table->setEditTriggers(QAbstractItemView::NoEditTriggers);
+	table->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+	table->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+	table->setSelectionBehavior(QAbstractItemView::SelectRows);
+    table->verticalHeader()->hide();
+
 	table->setModel(model);
 }
 
@@ -214,7 +239,8 @@ void TableManager::showTeams(QTableView* table, QStringList& available)
 {
     QStringListModel* model = new QStringListModel;
     model->setStringList(available);
-
+    table->horizontalHeader()->hide();
+    table->verticalHeader()->hide();
     table->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     table->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     table->setEditTriggers(QTableView::NoEditTriggers);

@@ -66,6 +66,11 @@ public:
 	/// Names of admin table column headers
 	QStringList adminTableSouvColNames = { "Key", "Team Name", "Item", "Price" };
 
+	// ************************* Admin purchases Table Attributes ************************
+
+	/// Names of admin table column headers
+	QStringList adminTablePurchColNames = { "Key", "Item", "Price", "Quantity" };
+
 						/***********
 						 * Methods *
 						 ***********/
@@ -83,6 +88,7 @@ public:
 	void AdminDistTable(QTableView *table);
 
 	void AdminSouvTable(QTableView *table);
+	void AdminPuchaseTable(QTableView *table, int index);
 
 	/*!
 	 * @brief Initializes admin table manually
