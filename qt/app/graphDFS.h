@@ -98,7 +98,7 @@ public:
 	/*!
 	 * \brief generateGraph from db
 	 */
-	void generateGraph()
+	void GenerateGraph()
 	{
 		QSqlQuery query;
 		QString queryString = "SELECT id,distanceTo "
@@ -115,13 +115,13 @@ public:
 			DBManager::instance()->GetTeams(teams);
 
 			for (int i = 1; i <= teams.size(); i++) {
-				addVertex(teams[i - 1]);
+				AddVertex(teams[i - 1]);
 				query.bindValue(":id", i);
 				if(!query.exec()) {
 					qDebug() << "DBManager::generateGraph vertex: " << i << " failed";
 				} else {
 					while(query.next())
-						addEdge(teams[i - 1], teams[query.value(0).toInt() - 1], query.value(1).toInt());
+						AddEdge(teams[i - 1], teams[query.value(0).toInt() - 1], query.value(1).toInt());
 				}
 			}
 		} else if constexpr (std::is_same<T, int>::value) {
@@ -129,13 +129,13 @@ public:
 
 			int i = 1;
 			while (i <= numTeams) {
-				addVertex(i);
+				AddVertex(i);
 				query.bindValue(":id", i);
 				if(!query.exec()) {
 					qDebug() << "DBManager::generateGraph vertex: " << i << " failed";
 				} else {
 					while(query.next())
-						addEdge(i, query.value(0).toInt(), query.value(1).toInt());
+						AddEdge(i, query.value(0).toInt(), query.value(1).toInt());
 					i++;
 				}
 			}
@@ -147,20 +147,20 @@ public:
 	 * \brief checks if graph is empty
 	 * \return bool
 	 */
-	bool empty() const { return graph.empty(); }
+	bool Empty() const { return graph.empty(); }
 
 	/*!
 	 * \brief size of graph
 	 * \return int
 	 */
-	int size() const { return graph.size(); }
+	int Size() const { return graph.size(); }
 
 	/*!
 	 * \brief addVertex
 	 * \param vert; type T
 	 */
-	void addVertex(T vert) {
-		if (findVertex(vert) == -1)
+	void AddVertex(T vert) {
+		if (FindVertex(vert) == -1)
 			graph.push_back(Vertex<T>{vert, false});
 	}
 
@@ -170,12 +170,12 @@ public:
 	 * \param v; ending vert
 	 * \param weight; "distance"
 	 */
-	void addEdge(T u, T v, int weight) {
-		int index = findVertex(u);
+	void AddEdge(T u, T v, int weight) {
+		int index = FindVertex(u);
 
 		if (index == -1) {
-			addVertex(u);
-			addEdge(u, v, weight);
+			AddVertex(u);
+			AddEdge(u, v, weight);
 		} else {
 			graph.at(index).edgeList.push_back(Edge<T>{u, v, weight});
 		}
@@ -186,10 +186,10 @@ public:
 	 * \param vert
 	 * \return index in graph container
 	 */
-	int findVertex(T vert) const {
+	int FindVertex(T vert) const {
 		int index = 0;
 
-		while (index < size()) {
+		while (index < Size()) {
 			if (graph.at(index).vert == vert)
 				return index;
 			index++;
@@ -201,7 +201,7 @@ public:
 	 * \brief vertices
 	 * \return list of vertices in graph
 	 */
-	std::vector<T> vertices() const {
+	std::vector<T> Vertices() const {
 		std::vector<T> temp;
 		for (auto a: graph)
 			temp.push_back(a.vert);
@@ -212,9 +212,9 @@ public:
 	 * \brief edges
 	 * \return list of edges in graph
 	 */
-	std::vector<std::string> edges() const {
+	std::vector<std::string> Edges() const {
 		std::vector<std::string> temp;
-		for (int i = 0; i < size(); i++) {
+		for (int i = 0; i < Size(); i++) {
 			if (graph.at(i).NumOfEdges() != 0) {
 				for (unsigned int j = 0;
 					 j < graph.at(i).NumOfEdges(); j++) {
@@ -233,7 +233,7 @@ public:
 	 * \return total distance "cost"
 	 */
 	int dfs(T start, std::vector<T> &list) {
-		int index = findVertex(start);
+		int index = FindVertex(start);
 		graph.at(index).visited = true;
 
 		typename std::vector<T>::iterator itrNext = std::find(list.begin(),
@@ -243,8 +243,8 @@ public:
 		if (itrNext == list.end())
 			list.push_back(start);
 
-		if (verticesVisited() != size()) {
-			int next = smallestEdgeDFS(index, list);
+		if (VerticesVisited() != Size()) {
+			int next = SmallestEdgeDFS(index, list);
 			dfs(graph.at(next).vert, list);
 		}
 		return dfsDistance;
@@ -255,11 +255,11 @@ public:
 	 * \param dfs
 	 * \return list of discovery edges
 	 */
-	std::vector<std::string> getDiscoveryEdges(const std::vector<T> &dfs) {
+	std::vector<std::string> GetDiscoveryEdges(const std::vector<T> &dfs) {
 		std::vector<Edge<T>> discEdges;
 
-		for (int i = 0; i < size(); i++) {
-			int index = findVertex(dfs.at(i));
+		for (int i = 0; i < Size(); i++) {
+			int index = FindVertex(dfs.at(i));
 			for (int j = 0; j < graph.at(index).NumOfEdges(); j++) {
 				if (graph.at(index).edgeList.at(j).discoverEdge)
 					discEdges.push_back(graph.at(index).edgeList.at(j));
@@ -284,11 +284,11 @@ public:
 	 * \param dfs; list containing dfs list
 	 * \return list of back edges
 	 */
-	std::vector<std::string> getBackEdges(const std::vector<T> &dfs) {
+	std::vector<std::string> GetBackEdges(const std::vector<T> &dfs) {
 		std::vector<Edge<T>> backEdges;
 
-		for (int i = 0; i < size(); i++) {
-			int index = findVertex(dfs.at(i));
+		for (int i = 0; i < Size(); i++) {
+			int index = FindVertex(dfs.at(i));
 			for (int j = 0; j < graph.at(index).NumOfEdges(); j++) {
 				if (!(graph.at(index).edgeList.at(j).discoverEdge))
 					backEdges.push_back(graph.at(index).edgeList.at(j));
@@ -311,16 +311,16 @@ public:
 private:
 	// returns the index of the next smallest weighted path from vert
 	// recursively backtracks if none is found
-	int smallestEdgeDFS(int vert, std::vector<T> &dfs) {
-		if (edgesDiscovered(vert) != graph.at(vert).NumOfEdges()) {
+	int SmallestEdgeDFS(int vert, std::vector<T> &dfs) {
+		if (EdgesDiscovered(vert) != graph.at(vert).NumOfEdges()) {
 			int smallestIndex = 0;
 			int compIndex = smallestIndex + 1;
 			int size = graph.at(vert).NumOfEdges();
 
 			while (compIndex < size) {
-				int smallestVert = findVertex(
+				int smallestVert = FindVertex(
 						graph.at(vert).edgeList.at(smallestIndex).v);
-				int compVertex = findVertex(
+				int compVertex = FindVertex(
 						graph.at(vert).edgeList.at(compIndex).v);
 
 				if (graph.at(smallestVert).visited) {
@@ -342,7 +342,7 @@ private:
 
 			T next = graph.at(vert).edgeList.at(smallestIndex).v;
 
-			smallestIndex = findVertex(next);
+			smallestIndex = FindVertex(next);
 
 			for (int i = 0; i < graph.at(smallestIndex).NumOfEdges(); i++) {
 				if (graph.at(vert).vert ==
@@ -357,14 +357,14 @@ private:
 			typename std::vector<T>::iterator itr =
 					std::find(dfs.begin(), dfs.end(), graph.at(vert).vert);
 			itr--;
-			int backIndex = findVertex(*itr);
-			return smallestEdgeDFS(backIndex, dfs);
+			int backIndex = FindVertex(*itr);
+			return SmallestEdgeDFS(backIndex, dfs);
 		}
 	}
 
 	// returns the number of verts visited
 	// used to check if search is completed
-	int verticesVisited() {
+	int VerticesVisited() {
 		std::size_t count = 0;
 
 		typename std::vector<Vertex<T>>::iterator itr = graph.begin();
@@ -379,11 +379,11 @@ private:
 
 	// returns the number of edges visited
 	// returns 0 is nothing found
-	int edgesDiscovered(int currVertex) {
+	int EdgesDiscovered(int currVertex) {
 		int numVisited = 0;
 
 		for (int i = 0; i < graph.at(currVertex).NumOfEdges(); i++) {
-			if (graph.at(findVertex(
+			if (graph.at(FindVertex(
 					graph.at(currVertex).edgeList.at(i).v)).visited)
 				numVisited++;
 		}

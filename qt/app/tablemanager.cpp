@@ -96,6 +96,7 @@ void TableManager::AdminPuchaseTable(QTableView *table, int index)
 	model->setHeaderData(0, Qt::Horizontal, adminTablePurchColNames[1], Qt::DisplayRole);
 	model->setHeaderData(1, Qt::Horizontal, adminTablePurchColNames[2], Qt::DisplayRole);
 	model->setHeaderData(2, Qt::Horizontal, adminTablePurchColNames[3], Qt::DisplayRole);
+	model->setHeaderData(3, Qt::Horizontal, adminTablePurchColNames[4], Qt::DisplayRole);
 
 	table->setEditTriggers(QAbstractItemView::NoEditTriggers);
 	table->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
@@ -200,6 +201,7 @@ void TableManager::PopulateAdminEditTable(QTableWidget *table)
 		} // END for iterate through food list
 	} // END for iterate through city list
 }
+#undef db
 
 // Deletes contents of passed in table
 void TableManager::DeleteAllTableRows(QTableWidget *table)
@@ -212,7 +214,7 @@ void TableManager::DeleteAllTableRows(QTableWidget *table)
 	}
 }
 
-void TableManager::showTeamInfo(QTableView *table, QString teamName)
+void TableManager::ShowTeamInfo(QTableView *table, QString teamName)
 {
     QSqlQueryModel *model = new QSqlQueryModel;
     QString query = "SELECT * FROM information WHERE id = (SELECT teams.id FROM teams WHERE teams.teamNames = '" + teamName + "')";
@@ -223,7 +225,7 @@ void TableManager::showTeamInfo(QTableView *table, QString teamName)
     table->hideColumn(0);
     table->setModel(model);
 }
-void TableManager::showTeamNames(QTableView *table)
+void TableManager::ShowTeamNames(QTableView *table)
 {
     QSqlQueryModel * model = new QSqlQueryModel;
     QString query = "SELECT teamNames FROM teams";
@@ -235,7 +237,7 @@ void TableManager::showTeamNames(QTableView *table)
     table->setModel(model);
 }
 
-void TableManager::showTeams(QTableView* table, QStringList& available)
+void TableManager::ShowTeams(QTableView* table, QStringList& available)
 {
     QStringListModel* model = new QStringListModel;
     model->setStringList(available);
@@ -283,9 +285,9 @@ void TableManager::PopulatePurchaseTable(QTableWidget* purchaseTable, QVector<So
         if(purchaseTable->rowCount() != 0)
         {
                 // Check to see if there's a match between this row's city name and the previous row's city name
-            currentName = DBManager::instance()->getTeamName(teamSouvenirs[index-1].teamID);
+			currentName = DBManager::instance()->GetTeamName(teamSouvenirs[index-1].teamID);
                     //purchaseTable->item(purchaseTable->rowCount() -1, 0)->data(0).toString();
-            previousName = DBManager::instance()->getTeamName(teamSouvenirs[index].teamID);
+			previousName = DBManager::instance()->GetTeamName(teamSouvenirs[index].teamID);
 
                 // Add a row to the end
             purchaseTable->insertRow(purchaseTable->rowCount());
@@ -297,7 +299,7 @@ void TableManager::PopulatePurchaseTable(QTableWidget* purchaseTable, QVector<So
             if(!match)
             {
                 // Insert city name into city name column
-                purchaseTable->setItem(purchaseTable->rowCount() - 1, 0, new QTableWidgetItem(DBManager::instance()->getTeamName(teamSouvenirs[index].teamID)));
+				purchaseTable->setItem(purchaseTable->rowCount() - 1, 0, new QTableWidgetItem(DBManager::instance()->GetTeamName(teamSouvenirs[index].teamID)));
             }
             else // Else, insert blank name
             {
@@ -310,7 +312,7 @@ void TableManager::PopulatePurchaseTable(QTableWidget* purchaseTable, QVector<So
             purchaseTable->insertRow(purchaseTable->rowCount());
 
                 // Insert city name into city name column
-            purchaseTable->setItem(purchaseTable->rowCount() - 1, 0, new QTableWidgetItem(DBManager::instance()->getTeamName(teamSouvenirs[index].teamID)));
+			purchaseTable->setItem(purchaseTable->rowCount() - 1, 0, new QTableWidgetItem(DBManager::instance()->GetTeamName(teamSouvenirs[index].teamID)));
         }
 
             // Insert city name into key column
@@ -320,7 +322,7 @@ void TableManager::PopulatePurchaseTable(QTableWidget* purchaseTable, QVector<So
             // Add food price
         purchaseTable->setItem(purchaseTable->rowCount() - 1, 2, priceItem);
 
-        QString teamname = DBManager::instance()->getTeamName(teamSouvenirs[index].teamID);
+		QString teamname = DBManager::instance()->GetTeamName(teamSouvenirs[index].teamID);
         QString souName = teamSouvenirs[index].name;
         QString price = QString::number(teamSouvenirs[index].price);
     } // END for iterate through food list
@@ -371,8 +373,8 @@ void TableManager::PopulateReceiptTable(QTableWidget* receiptTable, QVector<Souv
 
         if(receiptTable->rowCount() != 0) // If list is not empty
         {         
-            currentName = DBManager::instance()->getTeamName(teamSouvenirs[index-1].teamID); // Check to see if there's a match between this row's city name and the previous row's city name
-            previousName = DBManager::instance()->getTeamName(teamSouvenirs[index].teamID);
+			currentName = DBManager::instance()->GetTeamName(teamSouvenirs[index-1].teamID); // Check to see if there's a match between this row's city name and the previous row's city name
+			previousName = DBManager::instance()->GetTeamName(teamSouvenirs[index].teamID);
 
             receiptTable->insertRow(receiptTable->rowCount()); // Add a row to the end
 
@@ -386,7 +388,7 @@ void TableManager::PopulateReceiptTable(QTableWidget* receiptTable, QVector<Souv
 
                 teamCounter = 0; //start team counter over
                 // Insert city name into city name column
-                receiptTable->setItem(receiptTable->rowCount() - 1, 0, new QTableWidgetItem(DBManager::instance()->getTeamName(teamSouvenirs[index].teamID)));
+				receiptTable->setItem(receiptTable->rowCount() - 1, 0, new QTableWidgetItem(DBManager::instance()->GetTeamName(teamSouvenirs[index].teamID)));
             }
             else // Else, insert blank name
             {
@@ -397,7 +399,7 @@ void TableManager::PopulateReceiptTable(QTableWidget* receiptTable, QVector<Souv
         {    
             receiptTable->insertRow(receiptTable->rowCount()); // Add new row
                 // Insert city name into city name column
-            receiptTable->setItem(receiptTable->rowCount() - 1, 0, new QTableWidgetItem(DBManager::instance()->getTeamName(teamSouvenirs[index].teamID)));
+			receiptTable->setItem(receiptTable->rowCount() - 1, 0, new QTableWidgetItem(DBManager::instance()->GetTeamName(teamSouvenirs[index].teamID)));
         }
         if (teamSouvenirs[index].purchaseQty != 0)
         {
@@ -406,7 +408,7 @@ void TableManager::PopulateReceiptTable(QTableWidget* receiptTable, QVector<Souv
             receiptTable->setItem(receiptTable->rowCount() - 1, 3, qtyItem); // Add food qty
             receiptTable->setItem(receiptTable->rowCount() - 1, 4, totalItem); // add total
 
-            QString teamname = DBManager::instance()->getTeamName(teamSouvenirs[index].teamID);
+			QString teamname = DBManager::instance()->GetTeamName(teamSouvenirs[index].teamID);
             QString souName = teamSouvenirs[index].name;
             QString price = QString::number(teamSouvenirs[index].price);
         }
@@ -447,7 +449,7 @@ void TableManager::InsertSpinBoxCol(QTableWidget* table, const int min, const in
     }
 }
 
-void TableManager::clearTable(QTableView *table)
+void TableManager::ClearTable(QTableView *table)
 {
     QSqlQueryModel *model = new QSqlQueryModel;
     table->setModel(model);

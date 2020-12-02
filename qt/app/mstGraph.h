@@ -43,24 +43,24 @@ private:
     /**
      * @brief Function to create the adjacency matrix and initialize all the element to -1
      **/
-    void initializeMatrix();
+	void InitializeMatrix();
 
     /**
      * @brief Function to delete the matrix
      **/
-    void deleteMatrix();
+	void DeleteMatrix();
 
     /**
      * @brief Function to find the minimum value for MST and remove from the "queue"
      * @return the pointer to the vertex with the minimum key
      **/
-    mstVertex* extractMin();
+	mstVertex* ExtractMin();
 
     /**
      * @brief Function to do the MST
      * @param start: starting location
      */
-    void primMST(int start);
+	void PrimMST(int start);
 
 
 
@@ -82,18 +82,18 @@ public:
      * @param end: ending location
      * @param weight: distance between 2 states
      **/
-    void addEdge(int start, int end,int weight);
+	void AddEdge(int start, int end,int weight);
 
     /**
      * @brief Function to get the total mileage of the MST
      * @return total mileage of MST
      **/
-    long getMSTdistance();
+	long GetMSTdistance();
 
     /**
      * @brief Function to do the MST and store the edges into a vector
      */
-    void getMST(vector<mstEdge>&);
+	void GetMST(vector<mstEdge>&);
 
     /**
      * Class destructor

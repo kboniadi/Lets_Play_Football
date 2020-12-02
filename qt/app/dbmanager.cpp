@@ -31,7 +31,7 @@ DBManager* DBManager::instance()
     return &instance;
 }
 
-bool DBManager::checkLogin(const QString &username, const QString &password)
+bool DBManager::CheckLogin(const QString &username, const QString &password)
 {
     // Prep initial login bool
     bool found = false;
@@ -61,7 +61,7 @@ bool DBManager::checkLogin(const QString &username, const QString &password)
     return found;
 }
 
-QStringList DBManager::parser(QString &line, const char delim)
+QStringList DBManager::Parser(QString &line, const char delim)
 {
 	QStringList list;
 	bool inString = false;
@@ -132,7 +132,7 @@ void DBManager::ImportTeams()
 			}
 
 			// parse each line in teh csv into a QStringList
-			list = parser(line, ',');
+			list = Parser(line, ',');
 
 			// only insert if the city is unique
 			if (!teams.contains(list[0])) {
@@ -402,9 +402,9 @@ bool DBManager::isSouvenirExist(QString teamName, QString item)
 	return (bool) query.value(0).toInt();
 }
 
-void DBManager::addPurchases(QVector<Souvenir> souvenirs)
+void DBManager::AddPurchases(QVector<Souvenir> souvenirs)
 {
-    int id = getNewID();
+	int id = GetNewID();
     query.prepare("INSERT INTO purchases(teamID, purchaseID, items, quantity) VALUES(:teamID, :id, :item, :qty)");
 
     for (int i = 0; i < souvenirs.size(); i++)
@@ -421,7 +421,7 @@ void DBManager::addPurchases(QVector<Souvenir> souvenirs)
     }
 }
 
-int DBManager::getNewID()
+int DBManager::GetNewID()
 {
     int maxID = 1;
     query.prepare("SELECT purchaseID FROM purchases ORDER BY purchaseID DESC LIMIT 1");
@@ -440,7 +440,7 @@ int DBManager::getNewID()
     return -1;
 }
 
-QString DBManager::getTeamName(int id)
+QString DBManager::GetTeamName(int id)
 {
     QString queryString;
     queryString = "SELECT teamNames FROM teams WHERE id = :id";
@@ -464,7 +464,7 @@ void DBManager::CreateShoppingList(QStringList teams,QVector<Souvenir>& teamSouv
     // Prep general query
     int teamsAsInt[teams.size()];
     for (int i = 0; i < teams.size(); i++)
-        teamsAsInt[i] = getTeamID(teams[i]);
+		teamsAsInt[i] = GetTeamID(teams[i]);
 
     query.prepare("SELECT id,items, price FROM souvenir WHERE "
                   "id = :teamID");
@@ -500,7 +500,7 @@ void DBManager::CreateShoppingList(QStringList teams,QVector<Souvenir>& teamSouv
     }
 }
 
-int DBManager::getTeamID(QString teamName)
+int DBManager::GetTeamID(QString teamName)
 {
     query.prepare("SELECT id FROM teams where teamNames = :team");
     query.bindValue(":team", teamName);
@@ -513,7 +513,7 @@ int DBManager::getTeamID(QString teamName)
 
 }
 
-QString DBManager::getStadiumName(int id)
+QString DBManager::GetStadiumName(int id)
 {
     query.exec("SELECT stadiumName FROM information WHERE id = " + QString::number(id));
     query.first();
