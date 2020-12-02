@@ -11,6 +11,9 @@
 #include <QMessageBox>
 #include <bfsNamespace.h>
 
+/*!
+ * \brief The Souvenir struct
+ */
 struct Souvenir
 {
     int teamID;
@@ -22,7 +25,11 @@ struct Souvenir
     Souvenir(const Souvenir&) = default;
 };
 
-
+/*!
+ * @class DBManager
+ * @brief The DBManager class manages core methods used to access the data
+ * stored in the database
+ */
 class DBManager: public QWidget, public QSqlDatabase {
     Q_OBJECT
 public:
@@ -48,68 +55,153 @@ public:
      */
     bool checkLogin(const QString &username, const QString &password);
 
+	/*!
+	 * \brief ImportTeams to db
+	 */
 	void ImportTeams();
 
+	/*!
+	 * \brief GetTeams from db
+	 * \param teams; list of teams
+	 */
 	void GetTeams(QStringList &teams);
 
+	/*!
+	 * \brief GetSouvenirs from db
+	 * \param teamName; teams that souvenir belongs to
+	 * \param list; list of souvenir's
+	 */
 	void GetSouvenirs(QString teamName, QStringList &list);
 
+	/*!
+	 * \brief GetNumSouvenir from dn
+	 * \param teamName
+	 * \return number of souvenir's
+	 */
 	int GetNumSouvenir(QString teamName);
 
+	/*!
+	 * \brief GetNumTeams from db
+	 * \return number of teams in db
+	 */
 	int GetNumTeams();
 
+	/*!
+	 * \brief SouvenirNameToPrice from db
+	 * \param team; name
+	 * \param souvenir; name
+	 * \return price of souvenir
+	 */
 	QString SouvenirNameToPrice(QString team, QString souvenir);
 
+	/*!
+	 * \brief AddInfo to db
+	 * \param teamName
+	 * \param stadiumName
+	 * \param seatCap
+	 * \param location
+	 * \param conference
+	 * \param division
+	 * \param surfaceType
+	 * \param roofType
+	 * \param dateOpen
+	 */
 	void AddInfo(QString teamName, QString stadiumName, QString seatCap,
 				 QString location, QString conference, QString division,
 				 QString surfaceType, QString roofType, QString dateOpen);
 
+	/*!
+	 * \brief AddSouvenir to db
+	 * \param teamName
+	 * \param item
+	 * \param price
+	 */
 	void AddSouvenir(QString teamName, QString item, QString price);
+
+	/*!
+	 * \brief UpdateSouvenirPrice on db
+	 * \param teamName
+	 * \param item
+	 * \param price
+	 */
 	void UpdateSouvenirPrice(QString teamName, QString item, QString price);
+
+	/*!
+	 * \brief DeleteSouvenir from db
+	 * \param teamName
+	 * \param item
+	 */
 	void DeleteSouvenir(QString teamName, QString item);
+
+	/*!
+	 * \brief UpdateInformation on db
+	 * \param id; linked to team name
+	 * \param stadiumName
+	 * \param cap; capacity
+	 * \param loc; location
+	 * \param surfaceType
+	 * \param roofType
+	 * \param dateOpen
+	 */
 	void UpdateInformation(int id, QString stadiumName, QString cap,
 						   QString loc, QString surfaceType, QString roofType,
 						   QString dateOpen);
+
+	/*!
+	 * \brief isTeamExist in db
+	 * \param teamName
+	 * \return bool
+	 */
 	bool isTeamExist(QString teamName);
+
+	/*!
+	 * \brief isSouvenirExist
+	 * \param teamName
+	 * \param item
+	 * \return bool
+	 */
 	bool isSouvenirExist(QString teamName, QString item);
 
     /*!
-     * @brief function adds souvenirs from recent purchase into the 'purchases' database table
-     * @param souvenirs; collection of all souvenirs
+	 * \brief function adds souvenirs from recent purchase into the 'purchases' database table
+	 * \param souvenirs; collection of all souvenirs
      */
     void addPurchases(QVector<Souvenir> souvenirs);
-    int getNewID();
-//    void getPurchaseIDS(QStringList& ids);
-//    void getPurchase(QVector<Souvenir>& souvenirs, QString id);
-	QSqlQuery* getQuery() { return &query; }
 
-    /**
-     * @brief Get team name from team id
-     * @param id: id of the team
-     * @return name of the team
-     */
+	/*!
+	 * \brief getNewID
+	 * \return a new id from db
+	 */
+    int getNewID();
+
+	/*!
+	 * \brief getTeamName
+	 * \param id; linked to team name
+	 * \return name of team
+	 */
     QString getTeamName(int id);
 
-    /**
-     * @brief Get stadium name from team id
-     * @param id: id of the team
-     * @return name of the stadium
-     */
+	/*!
+	 * \brief getStadiumName
+	 * \param id; team linker
+	 * \return stadium name
+	 */
     QString getStadiumName(int id);
 
-    /**
-     * @brief Get id of the team
-     * @param teamName: team to get the id
-     * @return id of the team
-     */
+	/*!
+	 * \brief getTeamID
+	 * \param teamName
+	 * \return id in db linked to a team name
+	 */
     int getTeamID(QString teamName);
 
-    /**
-     * @brief Create a list of souvenirs of the teams selected
-     * @param teams: list of teams being selected
-     * @param teamSouvenirs: vector of souvenirs from the teams
-     */
+	/*!
+	 * \brief CreateShoppingList
+	 * \param teams
+	 * \param teamSouvenirs; list of souvenir for a team
+	 */
     void CreateShoppingList(QStringList teams, QVector<Souvenir>& teamSouvenirs);
+
     /*!
      * @brief function gets all adjacent cities and distances based on the vertex input and
      * returns it all as a vector of type node
@@ -126,7 +218,7 @@ public:
      */
     static bool comparater(generalContainer::node n1, generalContainer::node n2);
 private:
-    QSqlQuery query;
+	QSqlQuery query;	/// Generic reusable query
 	/*!
 	 * @brief DBManager (private)
 	 * @param parent; Linked to QWidget class
@@ -137,6 +229,12 @@ private:
 	 * @brief Destructor
 	 */
 	~DBManager();
+	/*!
+	 * \brief parser helper function
+	 * \param line; string of char
+	 * \param delim
+	 * \return QStringList of strings separated by delim
+	 */
 	QStringList parser(QString &line, const char delim);
 };
 
